@@ -4,16 +4,16 @@
  * 
  * Análisis:
  * 		
- * 		Diseña un algoritmo para calcular el área y el volumen del prisma, cuyos datos
+ * 		Diseña un algoritmo para calcular el área y el volumen del cubo, cuyos datos
  * 		se leerán de teclado y pintar en pantalla los resultados correspondientes.
  * 
  * 		
- * 		-Entradas: Datos del prisma
- * 		-Salidas: Area y volumen del prisma
+ * 		-Entradas: Lado del cubo
+ * 		-Salidas: Area y volumen del cubo
  * 
  * PG:
  * 		Inicio
- * 			Preguntar y leer datos del prisma
+ * 			Leer lado del cubo
  * 			Calcular area
  * 			Calcular volumen
  * 			Escribir área y volumen
@@ -21,6 +21,7 @@
  * 
  */
 
+import java.lang.*;
 import java.util.*;
 
 public class Boletin2Ejercicio11 {
@@ -29,37 +30,32 @@ public class Boletin2Ejercicio11 {
 		
 		//Declaro las variables
 		int area='0';
-		int volumen='0';
+		double volumen='0';
 		
-		int ancho='0';
-		int alto='0';
-		int fondo='0';
+		int lado='0';
 		
 		//Inicializar el scanner
 		Scanner teclado = new Scanner (System.in);
 		
 		//Inicio
-			//Preguntar y leer datos del prisma
-			System.out.println("Buenas!");
+			//Leer lado del cubo
+			System.out.println("Bienvenido!");
 			
-			System.out.print("Por favor, indique el ancho del prisma: ");
-			ancho = teclado.nextInt();
-			
-			System.out.print("Por favor, indique el alto del prisma: ");
-			alto = teclado.nextInt();
-			
-			System.out.print("Por favor, indique el fondo del prisma: ");
-			fondo = teclado.nextInt();
+			System.out.print("Por favor, indique cuanto mide un lado del cubo: ");
+			lado = teclado.nextInt();
 			
 			//Calcular area
-			area = (ancho*alto)*6;
+			area = (lado*lado)*6;
 			
 			//Calcular volumen
-			volumen = area*3;
+			volumen = Math.pow(lado,3);
 			
 			//Escribir área y volumen
+			System.out.println(" ");
 			System.out.println("El area es: " +area);
+			System.out.println(" ");
 			System.out.println("El volumen es: " +volumen);
+			System.out.println(" ");
 			
 		//Fin
 		
