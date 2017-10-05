@@ -18,17 +18,44 @@
  * 
  */
 
+import java.util.*;
+import java.lang.*;
 
 public class Boletin2Ejercicio12 {
 	
 	public static void main (String args[]) {
 		
-Inicio
-	Leer y validar el numero
-	Calcular el cuadrado
-	Calcular el cubo
-	Pintar resultado
-Fin
+	//Declaro las variables
+	double numero = 0;
+	double cuadrado = 0;
+	double cubo = 0;
+		
+	//Inicialilzo el scanner
+	Scanner teclado = new Scanner (System.in);
+		
+	//Inicio
+		
+		System.out.println("\t---------------");
+		System.out.println("\t| Bienvenido! |");
+		System.out.println("\t---------------");
+	
+		//Leer y validar el numero
+		System.out.println(" ");
+		System.out.print("Por favor introduzca un numero: ");
+		
+		numero = teclado.nextDouble();
+		
+		//Calcular el cuadrado
+		cuadrado = Math.pow(numero,2);
+		
+		//Calcular el cubo
+		cubo = Math.pow(numero,3);
+		
+		//Pintar resultados
+		System.out.println(" ");
+		System.out.println("El cuadrado de " +numero +" es: " +cuadrado);
+		System.out.print("El cubo de " +numero +" es: " +cubo);
+	//Fin
 		
 	}
 }
