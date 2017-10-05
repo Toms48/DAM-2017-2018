@@ -9,11 +9,12 @@
  * 
  * PG:
  * 		Inicio
- * 			Hacer
+ * 			Preguntar, leer y validar respuesta
+ * 			Mientras respuesta sea s
  * 				Generar numero aleatorio
  * 				Según el numero aleatorio imprimir lado del dado
- * 				Preguntar por repetir
- * 			Mientras repetir sea s
+ * 				Preguntar para repetir
+ * 			Fin_Mientras
  * 		Fin
  * 
  */
@@ -25,7 +26,7 @@ public class dado {
 	public static void main (String[] args) {
 		
 		//Declaraciones de las variables
-		char repetir = ' ';
+		char respuesta = ' ';
 		
 		int aleatorio = 0;
 		
@@ -35,15 +36,25 @@ public class dado {
 		Random random = new Random ();
 		
 		//Inicio
-			
 			System.out.println("\t---------------");
 			System.out.println("\t| BIENVENIDO! |");
 			System.out.println("\t---------------");
 			
- 			//Hacer
+ 			//Preguntar, leer y validar respuesta
  			do{
+				System.out.print("Quiere ejecutar el programa? (s/n): ");
+ 			
+				respuesta = Character.toLowerCase(teclado.next().charAt(0));
+			}
+			
+			while(respuesta!='s' && respuesta!='n');
+ 			
+ 			//Mientras respuesta sea s
+ 			while(respuesta == 's'){
+				
 				//Generar numero aleatorio
 				System.out.println(" ");
+				
 				aleatorio = random.nextInt(6)+1;
 				
  				//Según el numero aleatorio imprimir lado del dado
@@ -92,18 +103,16 @@ public class dado {
 					break;
 				}
  				
- 				//Preguntar, leer y validar para repetir
+ 				//Preguntar para repetir
  				do{
 					System.out.println(" ");
 					System.out.print("Quiere tirar otra vez el dado? (s/n): ");
  				
-					repetir = Character.toLowerCase(teclado.next().charAt(0));
+					respuesta = Character.toLowerCase(teclado.next().charAt(0));
 				}
-				while(repetir!='s' && repetir!='n');
-			}	
-			
- 			//Mientras repetir sea s
- 			while(repetir == 's');
+				while(respuesta!='s' && respuesta!='n');
+ 				
+			}//Fin_Mientras
  		//Fin
 		
 	}
