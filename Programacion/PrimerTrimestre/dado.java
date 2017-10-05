@@ -11,7 +11,7 @@
  * 		Inicio
  * 			Hacer
  * 				Generar numero aleatorio
- * 				Imprimir numero aleatorio
+ * 				Según el numero aleatorio imprimir lado del dado
  * 				Preguntar por repetir
  * 			Mientras repetir sea s
  * 		Fin
@@ -46,10 +46,51 @@ public class dado {
 				System.out.println(" ");
 				aleatorio = random.nextInt(6)+1;
 				
- 				//Imprimir numero aleatorio
- 				System.out.println("\t*___*");
- 				System.out.println("\t| " +aleatorio +" |");
- 				System.out.println("\t*___*");
+ 				//Según el numero aleatorio imprimir lado del dado
+ 				switch(aleatorio){
+					
+					case 1:	System.out.println("\t---------");
+							System.out.println("\t|       |");
+							System.out.println("\t|   O   |");
+							System.out.println("\t|       |");
+							System.out.println("\t---------");
+					break;
+						
+					case 2:	System.out.println("\t---------");
+							System.out.println("\t| O     |");
+							System.out.println("\t|       |");
+							System.out.println("\t|     O |");
+							System.out.println("\t---------");
+					break;
+						
+					case 3:	System.out.println("\t---------");
+							System.out.println("\t| O     |");
+							System.out.println("\t|   O   |");
+							System.out.println("\t|     O |");
+							System.out.println("\t---------");
+					break;
+						
+					case 4:	System.out.println("\t---------");
+							System.out.println("\t| O   O |");
+							System.out.println("\t|       |");
+							System.out.println("\t| O   O |");
+							System.out.println("\t---------");
+					break;
+						
+					case 5:	System.out.println("\t---------");
+							System.out.println("\t| O   O |");
+							System.out.println("\t|   O   |");
+							System.out.println("\t| O   O |");
+							System.out.println("\t---------");
+					break;
+						
+					case 6:	System.out.println("\t---------");
+							System.out.println("\t| O   O |");
+							System.out.println("\t| O   O |");
+							System.out.println("\t| O   O |");
+							System.out.println("\t---------");
+					break;
+				}
  				
  				//Preguntar, leer y validar para repetir
  				do{
