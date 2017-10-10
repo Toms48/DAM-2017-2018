@@ -68,6 +68,8 @@ public class DadosApuesta {
 	public static void main (String[] args) {
 		
 		//Declaraciones
+		char respuesta = ' ';
+		
 		int dineroJugador = 0;
 		int dineroPc = dineroJugador;
 		
@@ -79,6 +81,14 @@ public class DadosApuesta {
 		
 		int sumaDadosPc = 0;
 		int sumaDadosJugador = 0;
+		
+		int aleatorioPc1 = 0;
+		int aleatorioPc2 = 0;
+		int aleatorioJugador1 = 0;
+		int aleatorioJugador2 = 0;
+		
+		int restaPc = 0;
+		int restaJugador = 0;
 		
 		//Inicializaciones
 		Scanner teclado = new Scanner (System.in);
@@ -95,6 +105,8 @@ public class DadosApuesta {
 				
 				//Generar numero aleatorio para la opcion del Pc
 				opcionPc = random.nextInt(10) +2;
+				
+				System.out.println(opcionPc);
 				
 				//Escoger un numero (Opcion del Jugador)
 				System.out.print("Elija el numero que cree que saldrá en los dados: ");
@@ -153,7 +165,7 @@ public class DadosApuesta {
 				//Sino
 				else{
 					//Si restaPc > restaJugador (Gana Jugador)
-					if(){
+					if(restaPc > restaJugador){
 						//Al jugador se le suma la apuesta
 						dineroJugador = dineroJugador + apuestaJugador;
 						//Al Pc se le resta la apuesta
@@ -174,14 +186,14 @@ public class DadosApuesta {
 				do{
 					System.out.print("Quiere seguir jugando? (s/n): ");
 				
-				respuesta = Character.toLowerCase(chino.next().charAt(0));
+				respuesta = Character.toLowerCase(teclado.next().charAt(0));
 				}
 				
-				while();
+				while(respuesta !='s' || respuesta !='n');
 			}
 
 			//Mientras DineroJugador no sea 0 o DineroPc no sea 0 y se quiera jugar otra vez (repetir)
-			while();
+			while((dineroJugador != 0 || dineroPc != 0) && respuesta == 's');
 		//Fin
 		
 	}
