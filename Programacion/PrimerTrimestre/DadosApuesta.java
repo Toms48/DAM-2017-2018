@@ -74,6 +74,12 @@ public class DadosApuesta {
 		int opcionPc = 0;
 		int opcionJugador = 0;
 		
+		int apuestaPc = 0;
+		int apuestaJugador = 0;
+		
+		int sumaDadosPc = 0;
+		int sumaDadosJugador = 0;
+		
 		//Inicializaciones
 		Scanner teclado = new Scanner (System.in);
 		
@@ -101,43 +107,77 @@ public class DadosApuesta {
 				System.out.print("La puesta del Pc es: " +apuestaPc);
 				
 				//Apuesta Jugador
+				do{
+					System.out.print("Introduzca su apuesta: ");
+					
+					apuestaJugador = teclado.nextInt();
+				}
+				
+				while(apuestaJugador > dineroJugador);
 				
 				//Generar aleatorioPc1 (dado 1)
+				aleatorioPc1 = random.nextInt(6) +1;
 				//Generar aleatorioPc2 (dado 2)
+				aleatorioPc2 = random.nextInt(6) +1;
 				//Sumar aleatorios de Pc (sumaDadosPc)
+				sumaDadosPc = aleatorioPc1 + aleatorioPc2;
 				
 				//Generar aleatorioJugador1 (dado 1)
+				aleatorioJugador1 = random.nextInt(6) +1;
 				//Generar aleatorioJugador2 (dado 2)
+				aleatorioJugador2 = random.nextInt(6) +1;
 				//Sumar aleatorios de Jugador (sumaDadosJugador)
+				sumaDadosJugador = aleatorioJugador1 + aleatorioJugador2;
 				
 				//Resta opcionPc menos sumaDadosPc
+				restaPc = opcionPc - sumaDadosPc;
+				
 				//Si restaPc < 0
-					//restaPc * -1
-				//Fin_Si
+				if(restaPc < 0){
+					restaPc = restaPc * -1;
+				}
 				
 				//Resta opcionJugador menos sumaDadosJugador
+				restaJugador = opcionJugador - sumaDadosJugador;
+				
 				//Si restaJugador < 0
-					//restaJugador * -1
-				//Fin_Si
+				if(restaJugador < 0){
+					restaJugador = restaJugador * -1;
+				}
 				
 				//Si restaPc y restaJugador es igual
-					//Empate
-				//Fin_Si
+				if(restaPc == restaJugador){
+					System.out.print("");
+				}
 				
 				//Sino
+				else{
 					//Si restaPc > restaJugador (Gana Jugador)
+					if(){
 						//Al jugador se le suma la apuesta
+						dineroJugador = dineroJugador + apuestaJugador;
 						//Al Pc se le resta la apuesta
-					//Fin_Si
+						dineroPc = dineroPc - apuestaPc;
+					}
 					
 					//Sino (Gana Pc)
+					else{
 						//Al jugador se le resta la apuesta
+						dineroJugador = dineroJugador - apuestaJugador;
 						//Al Pc se le suma la apuesta
-					//Fin_Sino
-					
-				//Fin_Sino
+						dineroPc = dineroPc + apuestaPc;
+					}
+						
+				}
 				
-				//Preguntar para repetir
+				//Preguntar, leer y validar para repetir
+				do{
+					System.out.print("Quiere seguir jugando? (s/n): ");
+				
+				respuesta = Character.toLowerCase(chino.next().charAt(0));
+				}
+				
+				while();
 			}
 
 			//Mientras DineroJugador no sea 0 o DineroPc no sea 0 y se quiera jugar otra vez (repetir)
