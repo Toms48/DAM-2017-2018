@@ -71,7 +71,7 @@ public class DadosApuesta {
 		char respuesta = ' ';
 		
 		int dineroJugador = 0;
-		int dineroPc = dineroJugador;
+		int dineroPc = 0;
 		
 		int opcionPc = 0;
 		int opcionJugador = 0;
@@ -96,27 +96,31 @@ public class DadosApuesta {
 		Random random = new Random ();
 		
 		//Inicio
-			//Hacer
+		
+			//Preguntar, leer y validar dinero incial
 			do{
-				//Escoger dinero incial
 				System.out.print("Introduzca su dinero inicial: ");
 				
 				dineroJugador = teclado.nextInt();
 				
+				dineroPc = dineroJugador;
+			}
+			while(dineroJugador < 0);
+				
+			//Hacer
+			do{
 				//Generar numero aleatorio para la opcion del Pc
 				opcionPc = random.nextInt(10) +2;
 				
-				System.out.println(opcionPc);
-				
 				//Escoger un numero (Opcion del Jugador)
-				System.out.print("Elija el numero que cree que saldrá en los dados: ");
+				System.out.print("Elija el numero que cree que saldra en los dados: ");
 				
 				opcionJugador = teclado.nextInt();
 				
 				//Apuesta Pc
 				apuestaPc = random.nextInt(dineroPc) +1;
 				
-				System.out.print("La puesta del Pc es: " +apuestaPc);
+				System.out.println("La puesta del Pc es: " +apuestaPc);
 				
 				//Apuesta Jugador
 				do{
@@ -129,17 +133,27 @@ public class DadosApuesta {
 				
 				//Generar aleatorioPc1 (dado 1)
 				aleatorioPc1 = random.nextInt(6) +1;
+				System.out.println("Dado 1 del Pc: " +aleatorioPc1);
+				
 				//Generar aleatorioPc2 (dado 2)
 				aleatorioPc2 = random.nextInt(6) +1;
+				System.out.println("Dado 2 del Pc: " +aleatorioPc2);
+				
 				//Sumar aleatorios de Pc (sumaDadosPc)
 				sumaDadosPc = aleatorioPc1 + aleatorioPc2;
+				System.out.println("Suma de los dados: " +sumaDadosPc);
 				
 				//Generar aleatorioJugador1 (dado 1)
 				aleatorioJugador1 = random.nextInt(6) +1;
+				System.out.println("Dado 1 del Jugador: " +aleatorioJugador1);
+				
 				//Generar aleatorioJugador2 (dado 2)
 				aleatorioJugador2 = random.nextInt(6) +1;
+				System.out.println("Dado 2 del Jugador: " +aleatorioJugador2);
+				
 				//Sumar aleatorios de Jugador (sumaDadosJugador)
 				sumaDadosJugador = aleatorioJugador1 + aleatorioJugador2;
+				System.out.println("Suma de los dados: " +sumaDadosJugador);
 				
 				//Resta opcionPc menos sumaDadosPc
 				restaPc = opcionPc - sumaDadosPc;
@@ -149,6 +163,8 @@ public class DadosApuesta {
 					restaPc = restaPc * -1;
 				}
 				
+				System.out.println("RestaPc: " +restaPc);
+				
 				//Resta opcionJugador menos sumaDadosJugador
 				restaJugador = opcionJugador - sumaDadosJugador;
 				
@@ -157,29 +173,48 @@ public class DadosApuesta {
 					restaJugador = restaJugador * -1;
 				}
 				
+				System.out.println("RestaJugador: " +restaJugador);
+				
 				//Si restaPc y restaJugador es igual
 				if(restaPc == restaJugador){
-					System.out.print("");
+					System.out.print("Hay un empate, nadie gana ni pierde nada");
 				}
 				
 				//Sino
 				else{
 					//Si restaPc > restaJugador (Gana Jugador)
 					if(restaPc > restaJugador){
+						System.out.println("GANA EL JUGADOR!");
+						System.out.println(" ");
+						
 						//Al jugador se le suma la apuesta
 						dineroJugador = dineroJugador + apuestaJugador;
+						
+						System.out.println("El Jugador gana " +apuestaJugador +" y se queda con un total de " +dineroJugador);
+						System.out.println(" ");
+						
 						//Al Pc se le resta la apuesta
 						dineroPc = dineroPc - apuestaPc;
+						
+						System.out.println("El Pc pierde " +apuestaPc +" y se queda con un total de " +dineroPc);
 					}
 					
 					//Sino (Gana Pc)
 					else{
+						System.out.println("GANA EL PC!");
+						System.out.println(" ");
+						
 						//Al jugador se le resta la apuesta
 						dineroJugador = dineroJugador - apuestaJugador;
+						
+						System.out.println("El Jugador pierde " +apuestaJugador +" y se queda con un total de " +dineroJugador);
+						System.out.println(" ");
+						
 						//Al Pc se le suma la apuesta
 						dineroPc = dineroPc + apuestaPc;
-					}
 						
+						System.out.println("El Pc gana " +apuestaPc +" y se queda con un total de " +dineroPc);
+					}	
 				}
 				
 				//Preguntar, leer y validar para repetir
@@ -189,7 +224,7 @@ public class DadosApuesta {
 				respuesta = Character.toLowerCase(teclado.next().charAt(0));
 				}
 				
-				while(respuesta !='s' || respuesta !='n');
+				while(respuesta !='s' && respuesta !='n');
 			}
 
 			//Mientras DineroJugador no sea 0 o DineroPc no sea 0 y se quiera jugar otra vez (repetir)
