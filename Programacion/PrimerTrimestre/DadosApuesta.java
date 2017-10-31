@@ -1,63 +1,75 @@
 /*
  * Nombre: DadosApuesta
  * 
- * Comentario: Se escoge un numero entre 2 y 12, se apuesta una cantidad de dinero y se comparan los resultados
+ * Comentario: Empezando con un dinero inicial igual, la máquina y el jugador dicen
+ * 			   el numero que creen que saldrá en la suma de sus dados,
+ * 		       después hacen una apuesta cada uno y según los resultados se suman y restan las apuestas.
  * 
  * Análisis:
- * 		-Entra:
- * 		-Salida:
+ * 		-Entra: un caracter para repetir, un numero que sea el dinero inicial,
+ * 				un numero para la apuesta del jugador y un numero por el que se apuesta
+ * 		-Salida: pinta por pantalla
  * 
- * PG:
+ * Estudio de los bucles:
+ * -----------------------------------
+ * 		- Nombre: ValidacionRespuesta
+ * 		- VCB:
+ * 		- Inicialización VCB:
+ * 		- Actualización VBC:
+ * 		- Condición de salida:
+ * -----------------------------------
+ * 
+ * -----------------------------------
+ * 		- Nombre: BucleEjecutarPrograma
+ * 		- VCB:
+ * 		- Inicialización VCB:
+ * 		- Actualización VBC:
+ * 		- Condición de salida:
+ * -----------------------------------
+ * 
+ * PG Nivel-0:
+ * 
  * 		Inicio
- * 			Hacer
+ * 			Preguntar, leer y validar para ejecutar
+ * 			Mientras dineroJugador!=0 y dineroPc!=0 y respuesta!='n'
  * 				Escoger dinero incial
- * 
- * 				Generar numero aleatorio para la opcion del Pc
- * 				Escoger un numero (Opcion del Jugador)
+ * 				
+ * 				Generar numero aleatorio para el numero a postado por el Pc
+ * 				Escoger un numero (numeroApostadoJugador)
  * 
  * 				Apuesta Pc
  * 				Apuesta Jugador
- * 
- * 				Generar aleatorioPc1 (dado 1)
- * 				Generar aleatorioPc2 (dado 2)
- * 				Sumar aleatorios de Pc (sumaDadosPc)
- * 
- * 				Generar aleatorioJugador1 (dado 1)
- * 				Generar aleatorioJugador2 (dado 2)
- * 				Sumar aleatorios de Jugador (sumaDadosJugador)
- * 
- * 				Resta opcionPc menos sumaDadosPc
- * 				Si restaPc < 0
- * 					restaPc * -1
- * 				Fin_Si
- * 
- * 				Resta opcionJugador menos sumaDadosJugador
- * 				Si restaJugador < 0
- * 					restaJugador * -1
- * 				Fin_Si
- * 
+ * 				
+ * 				GenerarSumarDadosPc
+ * 				GenerarSumarDadosJugador
+ * 				
+ * 				Calcular diferencias con el numero apostado
+ * 				
  * 				Si restaPc y restaJugador es igual
  * 					Empate
- * 				Fin_Si
- * 
  * 				Sino
- * 
- * 					Si restaPc > restaJugador (Gana Jugador)
+ * 					Si restaPc es mayor que restaJugador (Gana Jugador)
  * 						Al jugador se le suma la apuesta
  * 						Al Pc se le resta la apuesta
- * 					Fin_Si
- * 
  * 					Sino (Gana Pc)
  * 						Al jugador se le resta la apuesta
  * 						Al Pc se le suma la apuesta
- * 					Fin_Sino
+ * 				Fin_Si
  * 
- * 				Fin_Sino
- * 
- * 				Preguntar para repetir
- * 
- * 			Mientras DineroJugador no sea 0 o DineroPc no sea 0 y se quiera jugar otra vez (repetir)
+ * 				Preguntar, leer y validar para repetir
+ *			Fin_Mientras
  * 		Fin
+ * 
+ * Calcular diferencias con el numero apostado
+ * 					Resta numeroApostadoPc menos sumaDadosPc
+ * 						Si restaPc es menor que 0
+ * 							restaPc por -1
+ * 						Fin_Si
+ * 
+ * 					Resta numeroApostadoJugador menos sumaDadosJugador
+ * 						Si restaJugador es menor que 0
+ * 							restaJugador por -1
+ * 						Fin_Si
  * 
  */
 
@@ -73,8 +85,8 @@ public class DadosApuesta {
 		int dineroJugador = 0;
 		int dineroPc = 0;
 		
-		int opcionPc = 0;
-		int opcionJugador = 0;
+		int numeroApostadoPc = 0;
+		int numeroApostadoJugador = 0;
 		
 		int apuestaPc = 0;
 		int apuestaJugador = 0;
@@ -92,8 +104,14 @@ public class DadosApuesta {
 		
 		//Inicializaciones
 		Scanner teclado = new Scanner (System.in);
-		
+
 		Random random = new Random ();
+		
+		
+		
+		
+		
+		
 		
 		//Inicio
 		
@@ -105,14 +123,14 @@ public class DadosApuesta {
 				
 				dineroPc = dineroJugador;
 			}
-			while(dineroJugador < 0);
+			while(dineroJugador <= 0);
 				
-			//Hacer
 			do{
 				//Generar numero aleatorio para la opcion del Pc
 				opcionPc = random.nextInt(10) +2;
 				
 				//Escoger un numero (Opcion del Jugador)
+				System.out.println();
 				System.out.print("Elija el numero que cree que saldra en los dados: ");
 				
 				opcionJugador = teclado.nextInt();
@@ -120,6 +138,7 @@ public class DadosApuesta {
 				//Apuesta Pc
 				apuestaPc = random.nextInt(dineroPc) +1;
 				
+				System.out.println();
 				System.out.println("La puesta del Pc es: " +apuestaPc);
 				
 				//Apuesta Jugador
@@ -127,6 +146,8 @@ public class DadosApuesta {
 					System.out.print("Introduzca su apuesta: ");
 					
 					apuestaJugador = teclado.nextInt();
+					
+					System.out.println();
 				}
 				
 				while(apuestaJugador > dineroJugador);
@@ -145,6 +166,7 @@ public class DadosApuesta {
 				
 				//Generar aleatorioJugador1 (dado 1)
 				aleatorioJugador1 = random.nextInt(6) +1;
+				System.out.println();
 				System.out.println("Dado 1 del Jugador: " +aleatorioJugador1);
 				
 				//Generar aleatorioJugador2 (dado 2)
@@ -154,44 +176,48 @@ public class DadosApuesta {
 				//Sumar aleatorios de Jugador (sumaDadosJugador)
 				sumaDadosJugador = aleatorioJugador1 + aleatorioJugador2;
 				System.out.println("Suma de los dados: " +sumaDadosJugador);
+				System.out.println();
 				
 				//Resta opcionPc menos sumaDadosPc
 				restaPc = opcionPc - sumaDadosPc;
 				
-				//Si restaPc < 0
 				if(restaPc < 0){
 					restaPc = restaPc * -1;
 				}
 				
 				System.out.println("RestaPc: " +restaPc);
+				System.out.println();
 				
 				//Resta opcionJugador menos sumaDadosJugador
 				restaJugador = opcionJugador - sumaDadosJugador;
 				
-				//Si restaJugador < 0
 				if(restaJugador < 0){
 					restaJugador = restaJugador * -1;
 				}
 				
 				System.out.println("RestaJugador: " +restaJugador);
 				
-				//Si restaPc y restaJugador es igual
 				if(restaPc == restaJugador){
-					System.out.print("Hay un empate, nadie gana ni pierde nada");
+					System.out.println();
+					System.out.println("#-----------------------------#");
+					System.out.println("|           EMPATE!           |");
+					System.out.println("| (nadie gana ni pierde nada) |");
+					System.out.println("#-----------------------------#");
 				}
 				
-				//Sino
 				else{
-					//Si restaPc > restaJugador (Gana Jugador)
 					if(restaPc > restaJugador){
-						System.out.println("GANA EL JUGADOR!");
-						System.out.println(" ");
+						System.out.println();
+						System.out.println("#------------------#");
+						System.out.println("| GANA EL JUGADOR! |");
+						System.out.println("#------------------#");
 						
 						//Al jugador se le suma la apuesta
 						dineroJugador = dineroJugador + apuestaJugador;
 						
+						System.out.println();
 						System.out.println("El Jugador gana " +apuestaJugador +" y se queda con un total de " +dineroJugador);
-						System.out.println(" ");
+						System.out.println();
 						
 						//Al Pc se le resta la apuesta
 						dineroPc = dineroPc - apuestaPc;
@@ -199,16 +225,18 @@ public class DadosApuesta {
 						System.out.println("El Pc pierde " +apuestaPc +" y se queda con un total de " +dineroPc);
 					}
 					
-					//Sino (Gana Pc)
 					else{
-						System.out.println("GANA EL PC!");
-						System.out.println(" ");
+						System.out.println();
+						System.out.println("#-------------#");
+						System.out.println("| GANA EL PC! |");
+						System.out.println("#-------------#");
 						
 						//Al jugador se le resta la apuesta
 						dineroJugador = dineroJugador - apuestaJugador;
 						
+						System.out.println();
 						System.out.println("El Jugador pierde " +apuestaJugador +" y se queda con un total de " +dineroJugador);
-						System.out.println(" ");
+						System.out.println();
 						
 						//Al Pc se le suma la apuesta
 						dineroPc = dineroPc + apuestaPc;
@@ -219,16 +247,16 @@ public class DadosApuesta {
 				
 				//Preguntar, leer y validar para repetir
 				do{
+					System.out.println();
 					System.out.print("Quiere seguir jugando? (s/n): ");
 				
 				respuesta = Character.toLowerCase(teclado.next().charAt(0));
 				}
-				
 				while(respuesta !='s' && respuesta !='n');
+				
 			}
-
-			//Mientras DineroJugador no sea 0 o DineroPc no sea 0 y se quiera jugar otra vez (repetir)
-			while((dineroJugador != 0 || dineroPc != 0) && respuesta == 's');
+			
+			while((dineroJugador != 0 || dineroPc != 0) && respuesta == 's'); //Mientras DineroJugador no sea 0 o DineroPc no sea 0 y se quiera jugar otra vez (repetir)
 		//Fin
 		
 	}
