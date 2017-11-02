@@ -31,36 +31,44 @@
  * 
  * 		Inicio
  * 			Preguntar, leer y validar para ejecutar
- * 			Mientras dineroJugador!=0 y dineroPc!=0 y respuesta!='n'
+ * 			Mientras el jugador quiera seguir y el dinero del jugador y de la maquina no sea 0 //dineroJugador!=0 y dineroPc!=0 y respuesta!='n'
  * 				Escoger dinero incial
  * 				
- * 				Generar numero aleatorio para el numero a postado por el Pc
- * 				Escoger un numero (numeroApostadoJugador)
+ * 				Generar
+ * 				leer numeros elegidos
  * 
- * 				Apuesta Pc
- * 				Apuesta Jugador
+ * 				GenerarApuestaPcLeerApuestaJugador
  * 				
- * 				GenerarSumarDadosPc
- * 				GenerarSumarDadosJugador
+ * 				GenerarSumarDadosPcYJugador
  * 				
  * 				Calcular diferencias con el numero apostado
  * 				
- * 				Si restaPc y restaJugador es igual
- * 					Empate
- * 				Sino
- * 					Si restaPc es mayor que restaJugador (Gana Jugador)
- * 						Al jugador se le suma la apuesta
- * 						Al Pc se le resta la apuesta
- * 					Sino (Gana Pc)
- * 						Al jugador se le resta la apuesta
- * 						Al Pc se le suma la apuesta
- * 				Fin_Si
+ * 				Mostrar ganador y actualizar dinero
  * 
  * 				Preguntar, leer y validar para repetir
  *			Fin_Mientras
  * 		Fin
  * 
- * Calcular diferencias con el numero apostado
+ * 
+ * PG Nivel-1:
+ * 
+ * 		Inicio
+ * 			Mientras el jugador quiera seguir y el dinero del jugador y de la maquina no sea 0
+ * 				Escoger dinero incial
+ * 				
+ * 				Generar y leer numeros elegidos
+ * 					Generar numero aleatorio para el numero a postado por el Pc
+ * 					Escoger un numero (numeroApostadoJugador)
+ * 
+ * 				GenerarApuestaPcLeerApuestaJugador
+ * 					Generar apuesta Pc
+ * 					Leer apuesta Jugador
+ * 
+ * 				GenerarSumarDadosPcYJugador
+ * 					GenerarSumarDadosPc
+ * 					GenerarSumarDadosJugador
+ * 
+ * 				Calcular diferencias con el numero apostado
  * 					Resta numeroApostadoPc menos sumaDadosPc
  * 						Si restaPc es menor que 0
  * 							restaPc por -1
@@ -71,6 +79,20 @@
  * 							restaJugador por -1
  * 						Fin_Si
  * 
+ * 				Mostrar ganador y actualizar dinero
+ * 					Si restaPc y restaJugador es igual
+ * 						Empate
+ * 					Sino
+ * 						Si restaPc es mayor que restaJugador (Gana Jugador)
+ * 							Al jugador se le suma la apuesta
+ * 							Al Pc se le resta la apuesta
+ * 						Sino (Gana Pc)
+ * 							Al jugador se le resta la apuesta
+ * 							Al Pc se le suma la apuesta
+ * 					Fin_Si
+ * 
+ * 			Fin_Mientras
+ * 		Fin
  */
 
 import java.util.*;
@@ -85,8 +107,8 @@ public class DadosApuesta {
 		int dineroJugador = 0;
 		int dineroPc = 0;
 		
-		int numeroApostadoPc = 0;
-		int numeroApostadoJugador = 0;
+		int numeroElegidoPc = 0;
+		int numeroElegidoJugador = 0;
 		
 		int apuestaPc = 0;
 		int apuestaJugador = 0;
@@ -106,12 +128,6 @@ public class DadosApuesta {
 		Scanner teclado = new Scanner (System.in);
 
 		Random random = new Random ();
-		
-		
-		
-		
-		
-		
 		
 		//Inicio
 		
