@@ -10,90 +10,37 @@
  * 				un numero para la apuesta del jugador y un numero por el que se apuesta
  * 		-Salida: pinta por pantalla
  * 
- * Estudio de los bucles:
- * -----------------------------------
- * 		- Nombre: ValidacionRespuesta
- * 		- VCB:
- * 		- Inicialización VCB:
- * 		- Actualización VBC:
- * 		- Condición de salida:
- * -----------------------------------
  * 
- * -----------------------------------
- * 		- Nombre: BucleEjecutarPrograma
- * 		- VCB:
- * 		- Inicialización VCB:
- * 		- Actualización VBC:
- * 		- Condición de salida:
- * -----------------------------------
- * 
- * PG Nivel-0:
+ * PG:
  * 
  * 		Inicio
- * 			Preguntar, leer y validar para ejecutar
- * 			Mientras el jugador quiera seguir y el dinero del jugador y de la maquina no sea 0 //dineroJugador!=0 y dineroPc!=0 y respuesta!='n'
+ * 			Leer y validar para ejecutar
+ * 			Mientras el jugador quiera seguir 
  * 				Escoger dinero incial
  * 				
- * 				Generar
- * 				leer numeros elegidos
- * 
- * 				GenerarApuestaPcLeerApuestaJugador
+ * 				Generar numero elegido por el Pc
+ * 				Leer numero elegido por el Jugador
  * 				
- * 				GenerarSumarDadosPcYJugador
+ * 				Generar apuesta del Pc
+ * 				Leer apuesta del jugador
  * 				
- * 				Calcular diferencias con el numero apostado
+ * 				Generar y sumar los dados del Pc
+ * 				Generar y sumar los dados del Jugador
+ * 				
+ * 				Calcular diferencia con la apuesta Pc
+ * 				Calcular diferencia con la apuesta Jugador
  * 				
  * 				Mostrar ganador y actualizar dinero
  * 
- * 				Preguntar, leer y validar para repetir
+ * 				Leer y validar para repetir
  *			Fin_Mientras
  * 		Fin
- * 
- * 
- * PG Nivel-1:
- * 
- * 		Inicio
- * 			Mientras el jugador quiera seguir y el dinero del jugador y de la maquina no sea 0
- * 				Escoger dinero incial
- * 				
- * 				Generar y leer numeros elegidos
- * 					Generar numero aleatorio para el numero a postado por el Pc
- * 					Escoger un numero (numeroApostadoJugador)
- * 
- * 				GenerarApuestaPcLeerApuestaJugador
- * 					Generar apuesta Pc
- * 					Leer apuesta Jugador
- * 
- * 				GenerarSumarDadosPcYJugador
- * 					GenerarSumarDadosPc
- * 					GenerarSumarDadosJugador
- * 
- * 				Calcular diferencias con el numero apostado
- * 					Resta numeroApostadoPc menos sumaDadosPc
- * 						Si restaPc es menor que 0
- * 							restaPc por -1
- * 						Fin_Si
- * 
- * 					Resta numeroApostadoJugador menos sumaDadosJugador
- * 						Si restaJugador es menor que 0
- * 							restaJugador por -1
- * 						Fin_Si
- * 
- * 				Mostrar ganador y actualizar dinero
- * 					Si restaPc y restaJugador es igual
- * 						Empate
- * 					Sino
- * 						Si restaPc es mayor que restaJugador (Gana Jugador)
- * 							Al jugador se le suma la apuesta
- * 							Al Pc se le resta la apuesta
- * 						Sino (Gana Pc)
- * 							Al jugador se le resta la apuesta
- * 							Al Pc se le suma la apuesta
- * 					Fin_Si
- * 
- * 			Fin_Mientras
- * 		Fin
  */
+ 
+//Inicio
+	//Leer y validar respuesta
+	//Mientras
+//Fin
 
 import java.util.*;
 
@@ -130,34 +77,76 @@ public class DadosApuesta {
 		Random random = new Random ();
 		
 		//Inicio
-		
-			//Preguntar, leer y validar dinero incial
+			//Leer y validar para ejecutar
+			
+			/*-----------------------------------
+				- Nombre: ValidacionRespuesta1
+				- VCB: Centinela
+				- Inicialización VCB: Lectura anticipada por teclado antes de la primera iteración
+				- Actualización VBC: Fisicamente al final del bucle, antes de la siguiente iteración
+				- Condición de salida: respuesta=='s' o respuesta=='n'
+			-----------------------------------*/
+			
 			do{
-				System.out.print("Introduzca su dinero inicial: ");
+				System.out.print("Quiere ejecutar el programa? (s/n): ");
 				
-				dineroJugador = teclado.nextInt();
-				
-				dineroPc = dineroJugador;
+				respuesta = Character.toLowerCase(teclado.next().charAt(0));
 			}
-			while(dineroJugador <= 0);
+			while(respuesta !='s' && respuesta !='n');
+			
+			/*-----------------------------------
+				- Nombre: BucleEjecutarPrograma
+				- VCB: Centinela
+				- Inicialización VCB: Lectura anticipada por teclado antes de la primera iteración
+				- Actualización VBC: Fisicamente al final del bucle, antes de la siguiente iteración
+				- Condición de salida: dineroJugador==0 o dineroJugadPc==0 o respuesta=='n'
+			-----------------------------------*/
+			
+			while(dineroJugador!=0 && dineroPc!=0 && respuesta!='n'){
+				//Escoger dinero incial
 				
-			do{
-				//Generar numero aleatorio para la opcion del Pc
-				opcionPc = random.nextInt(10) +2;
+				/*-----------------------------------
+					- Nombre: ValidacionDineroInicial
+					- VCB: Centinela
+					- Inicialización VCB: Lectura anticipada por teclado antes de la primera iteración
+					- Actualización VBC: Fisicamente al final del bucle, antes de la siguiente iteración
+					- Condición de salida: dineroJugador>0
+				-----------------------------------*/
 				
-				//Escoger un numero (Opcion del Jugador)
+				do{
+					System.out.print("Introduzca su dinero inicial: ");
+				
+					dineroJugador = teclado.nextInt();
+				
+					dineroPc = dineroJugador;
+				}
+				while(dineroJugador <= 0);
+				
+				//Generar numero elegido por el Pc
+				numeroElegidoPc = random.nextInt(10) +2;
+				
+				//Leer numero elegido por el Jugador
 				System.out.println();
 				System.out.print("Elija el numero que cree que saldra en los dados: ");
 				
-				opcionJugador = teclado.nextInt();
+				numeroElegidoJugador = teclado.nextInt();
 				
-				//Apuesta Pc
+				//Generar apuesta del Pc
 				apuestaPc = random.nextInt(dineroPc) +1;
 				
 				System.out.println();
 				System.out.println("La puesta del Pc es: " +apuestaPc);
 				
-				//Apuesta Jugador
+				//Leer apuesta del jugador
+				
+				/*-----------------------------------
+					- Nombre: ValidacionApuestaJugador
+					- VCB: Centinela
+					- Inicialización VCB: Lectura anticipada por teclado antes de la primera iteración
+					- Actualización VBC: Fisicamente al final del bucle, antes de la siguiente iteración
+					- Condición de salida: apuestaJugador<=dineroJugador
+				-----------------------------------*/
+				
 				do{
 					System.out.print("Introduzca su apuesta: ");
 					
@@ -165,37 +154,34 @@ public class DadosApuesta {
 					
 					System.out.println();
 				}
-				
 				while(apuestaJugador > dineroJugador);
 				
-				//Generar aleatorioPc1 (dado 1)
-				aleatorioPc1 = random.nextInt(6) +1;
+				//Generar y sumar los dados del Pc
+				aleatorioPc1 = random.nextInt(6) +1; //Generar dado 1 del pc
 				System.out.println("Dado 1 del Pc: " +aleatorioPc1);
 				
-				//Generar aleatorioPc2 (dado 2)
-				aleatorioPc2 = random.nextInt(6) +1;
+				
+				aleatorioPc2 = random.nextInt(6) +1; //Generar dado 2 del pc
 				System.out.println("Dado 2 del Pc: " +aleatorioPc2);
 				
-				//Sumar aleatorios de Pc (sumaDadosPc)
-				sumaDadosPc = aleatorioPc1 + aleatorioPc2;
+				
+				sumaDadosPc = aleatorioPc1 + aleatorioPc2; //Sumar dados del pc
 				System.out.println("Suma de los dados: " +sumaDadosPc);
 				
-				//Generar aleatorioJugador1 (dado 1)
-				aleatorioJugador1 = random.nextInt(6) +1;
+				//Generar y sumar los dados del Jugador
+				aleatorioJugador1 = random.nextInt(6) +1; //Generar dado 1 del Jugador
 				System.out.println();
 				System.out.println("Dado 1 del Jugador: " +aleatorioJugador1);
 				
-				//Generar aleatorioJugador2 (dado 2)
-				aleatorioJugador2 = random.nextInt(6) +1;
+				aleatorioJugador2 = random.nextInt(6) +1; //Generar dado 2 del Jugador
 				System.out.println("Dado 2 del Jugador: " +aleatorioJugador2);
 				
-				//Sumar aleatorios de Jugador (sumaDadosJugador)
-				sumaDadosJugador = aleatorioJugador1 + aleatorioJugador2;
+				sumaDadosJugador = aleatorioJugador1 + aleatorioJugador2; //Sumar dados del Jugador
 				System.out.println("Suma de los dados: " +sumaDadosJugador);
 				System.out.println();
 				
-				//Resta opcionPc menos sumaDadosPc
-				restaPc = opcionPc - sumaDadosPc;
+				//Calcular diferencia con la apuesta Pc
+				restaPc = numeroElegidoPc - sumaDadosPc;
 				
 				if(restaPc < 0){
 					restaPc = restaPc * -1;
@@ -204,8 +190,8 @@ public class DadosApuesta {
 				System.out.println("RestaPc: " +restaPc);
 				System.out.println();
 				
-				//Resta opcionJugador menos sumaDadosJugador
-				restaJugador = opcionJugador - sumaDadosJugador;
+				//Calcular diferencia con la apuesta Jugador
+				restaJugador = numeroElegidoJugador - sumaDadosJugador;
 				
 				if(restaJugador < 0){
 					restaJugador = restaJugador * -1;
@@ -213,6 +199,7 @@ public class DadosApuesta {
 				
 				System.out.println("RestaJugador: " +restaJugador);
 				
+				//Mostrar ganador y actualizar dinero
 				if(restaPc == restaJugador){
 					System.out.println();
 					System.out.println("#-----------------------------#");
@@ -228,15 +215,13 @@ public class DadosApuesta {
 						System.out.println("| GANA EL JUGADOR! |");
 						System.out.println("#------------------#");
 						
-						//Al jugador se le suma la apuesta
-						dineroJugador = dineroJugador + apuestaJugador;
+						dineroJugador = dineroJugador + apuestaJugador; //Al jugador se le suma la apuesta
 						
 						System.out.println();
 						System.out.println("El Jugador gana " +apuestaJugador +" y se queda con un total de " +dineroJugador);
 						System.out.println();
 						
-						//Al Pc se le resta la apuesta
-						dineroPc = dineroPc - apuestaPc;
+						dineroPc = dineroPc - apuestaPc; //Al Pc se le resta la apuesta
 						
 						System.out.println("El Pc pierde " +apuestaPc +" y se queda con un total de " +dineroPc);
 					}
@@ -247,21 +232,28 @@ public class DadosApuesta {
 						System.out.println("| GANA EL PC! |");
 						System.out.println("#-------------#");
 						
-						//Al jugador se le resta la apuesta
-						dineroJugador = dineroJugador - apuestaJugador;
+						dineroJugador = dineroJugador - apuestaJugador; //Al jugador se le resta la apuesta
 						
 						System.out.println();
 						System.out.println("El Jugador pierde " +apuestaJugador +" y se queda con un total de " +dineroJugador);
 						System.out.println();
 						
-						//Al Pc se le suma la apuesta
-						dineroPc = dineroPc + apuestaPc;
+						dineroPc = dineroPc + apuestaPc; //Al Pc se le suma la apuesta
 						
 						System.out.println("El Pc gana " +apuestaPc +" y se queda con un total de " +dineroPc);
-					}	
+					}
 				}
 				
-				//Preguntar, leer y validar para repetir
+				//Leer y validar para ejecutar otra vez
+				
+				/*-----------------------------------
+					- Nombre: ValidacionRespuesta2
+					- VCB: Centinela
+					- Inicialización VCB: Lectura anticipada por teclado antes de la primera iteración
+					- Actualización VBC: Fisicamente al final del bucle, antes de la siguiente iteración
+					- Condición de salida: respuesta=='s' o respuesta=='n'
+				-----------------------------------*/
+				
 				do{
 					System.out.println();
 					System.out.print("Quiere seguir jugando? (s/n): ");
@@ -270,11 +262,23 @@ public class DadosApuesta {
 				}
 				while(respuesta !='s' && respuesta !='n');
 				
-			}
-			
-			while((dineroJugador != 0 || dineroPc != 0) && respuesta == 's'); //Mientras DineroJugador no sea 0 o DineroPc no sea 0 y se quiera jugar otra vez (repetir)
+			} //Fin_Mientras
 		//Fin
-		
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+//numero de partidas
+//condicion del while, cuidado con el dinero
+//revisar el while
 
