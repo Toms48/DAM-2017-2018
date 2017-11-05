@@ -36,11 +36,6 @@
  *			Fin_Mientras
  * 		Fin
  */
- 
-//Inicio
-	//Leer y validar respuesta
-	//Mientras
-//Fin
 
 import java.util.*;
 
