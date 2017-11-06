@@ -24,7 +24,7 @@
 		//Leer y validar dinero inicial
 		//Leer y validar numero de partidas
 		
-		//Para (partidasAcordadas; partidasRealizadas<partidasAcordadas y dinero de los participantes!=0; partidasRealizadas++)
+		//Para partidasRealizadas mientras partidasRealizadas sea menor que partidasAcordadas y dinero de los participantes no sea 0, incrementa partidasRealizadas en 1)
 			//Generar numero elegido por el Pc
 			//Leer numero elegido por el Jugador
 			
@@ -84,6 +84,15 @@ public class DadosApuestaV8347 {
 		
 		//Inicio
 			//Leer y validar respuesta para ejecutar
+			
+			/*-----------------------------------
+				- Nombre: ValidacionRespuesta1
+				- VCB: Centinela
+				- Inicialización VCB: Lectura anticipada por teclado antes de la primera iteración
+				- Actualización VBC: Fisicamente al final del bucle, antes de la siguiente iteración
+				- Condición de salida: respuesta=='s' o respuesta=='n'
+			-----------------------------------*/
+			
 			do{
 				System.out.print("Quiere ejecutar el programa? (s/n): ");
 				
@@ -91,8 +100,25 @@ public class DadosApuestaV8347 {
 			}
 			while(respuesta !='s' && respuesta !='n');
 			
+			/*-----------------------------------
+				- Nombre: BucleEjecutarPrograma
+				- VCB: Centinela
+				- Inicialización VCB: Lectura anticipada por teclado antes de la primera iteración
+				- Actualización VBC: Fisicamente al final del bucle, antes de la siguiente iteración
+				- Condición de salida: dineroJugador==0 o dineroJugadPc==0 o respuesta=='n'
+			-----------------------------------*/
+			
 			while(respuesta=='s'){
 				//Leer y validar dinero inicial
+				
+				/*--------------------------------------
+					- Nombre: ValidacionDineroInicial
+					- VCB: Centinela
+					- Inicialización VCB: Lectura anticipada antes de la primera iteración
+					- Actualización VBC: Fisicamente al final del bucle, antes de la siguiente iteración
+					- Condición de salida: dineroJugador>0
+				--------------------------------------*/
+				
 				do{
 					System.out.print("Introduzca su dinero inicial: ");
 				
@@ -103,12 +129,29 @@ public class DadosApuestaV8347 {
 				while(dineroJugador <= 0);
 				
 				//Leer y validar numero de partidas
+				
+				/*--------------------------------------
+					- Nombre: ValidacionNumeroPartidas
+					- VCB: Centinela
+					- Inicialización VCB: Antes de la primera iteración
+					- Actualización VBC: Fisicamente al final del bucle, antes de la siguiente iteración
+					- Condición de salida: dineroJugador>0
+				--------------------------------------*/
+				
 				do{
 					System.out.print("Introduzca el numero de partidas para jugar: ");
 					
 					partidasTotales = teclado.nextInt();
 				}
 				while(partidasTotales <= 0);
+				
+				/*-----------------------------------
+					- Nombre: BucleContadorPartidas
+					- VCB: Contador
+					- Inicialización VCB: Antes de la primera iteración
+					- Actualización VBC: Al final del bucle, antes de la siguiente iteración
+					- Condición de salida: apuestaJugador<=dineroJugador
+				-----------------------------------*/
 				
 				for(partidasRealizadas=0; partidasRealizadas < partidasTotales && dineroJugador !=0 && dineroPc != 0; partidasRealizadas++){
 					
@@ -125,9 +168,18 @@ public class DadosApuestaV8347 {
 					apuestaPc = random.nextInt(dineroPc) +1;
 				
 					System.out.println();
-					System.out.println("La puesta del Pc es: " +apuestaPc);
+					System.out.println("La apuesta del Pc es: " +apuestaPc);
 				
 					//Leer y validar apuesta del jugador
+					
+					/*--------------------------------------
+						- Nombre: ValidacionApuestaJugador
+						- VCB: Centinela
+						- Inicialización VCB: Lectura anticipada por teclado antes de la primera iteración
+						- Actualización VBC: Fisicamente al final del bucle, antes de la siguiente iteración
+						- Condición de salida: apuestaJugador<=dineroJugador
+					--------------------------------------*/
+					
 					do{
 						System.out.print("Introduzca su apuesta: ");
 					
@@ -228,6 +280,15 @@ public class DadosApuestaV8347 {
 				}//Fin_Para
 		
 				//Leer y validar respuesta para repetir
+				
+				/*-----------------------------------
+					- Nombre: ValidacionRespuesta2
+					- VCB: Centinela
+					- Inicialización VCB: Lectura anticipada por teclado antes de la primera iteración
+					- Actualización VBC: Fisicamente al final del bucle, antes de la siguiente iteración
+					- Condición de salida: respuesta=='s' o respuesta=='n'
+				-----------------------------------*/
+				
 				do{
 					System.out.println();
 					System.out.print("Quiere volver a jugan otra partida? (s/n): ");
