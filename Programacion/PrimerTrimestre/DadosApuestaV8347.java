@@ -9,7 +9,7 @@
  * 				un numero para la apuesta del jugador y un numero por el que se apuesta
  * 		-Salida: pinta por pantalla
  * 		-Requisitos: La respuesta tiene que ser 's' o 'n'
- * 					 El dinero inicial no puede ser mayor o igual que cero
+ * 					 El dinero inicial tiene que ser mayor que cero
  * 					 El numero de partidas tiene que ser mayor que cero
  * 					 La apuesta del Jugador no puede ser menor o igual que cero ni mayor que el dinero que tenga
  * 
@@ -51,7 +51,6 @@ public class DadosApuestaV8347 {
 	
 	public static void main (String[] args) {
 		
-		//Declaraciones
 		char respuesta = ' ';
 		
 		int dineroJugador = 0;
@@ -77,7 +76,6 @@ public class DadosApuestaV8347 {
 		int restaPc = 0;
 		int restaJugador = 0;
 		
-		//Inicializaciones
 		Scanner teclado = new Scanner (System.in);
 
 		Random random = new Random ();
@@ -105,7 +103,7 @@ public class DadosApuestaV8347 {
 				- VCB: Centinela
 				- Inicialización VCB: Lectura anticipada por teclado antes de la primera iteración
 				- Actualización VBC: Fisicamente al final del bucle, antes de la siguiente iteración
-				- Condición de salida: dineroJugador==0 o dineroJugadPc==0 o respuesta=='n'
+				- Condición de salida: respuesta=='n'
 			-----------------------------------*/
 			
 			while(respuesta=='s'){
@@ -150,10 +148,10 @@ public class DadosApuestaV8347 {
 					- VCB: Contador
 					- Inicialización VCB: Antes de la primera iteración
 					- Actualización VBC: Al final del bucle, antes de la siguiente iteración
-					- Condición de salida: apuestaJugador<=dineroJugador
+					- Condición de salida: partidasRealizadas >= partidasTotales o dineroJugador==0 o dineroJugadPc==0
 				-----------------------------------*/
 				
-				for(partidasRealizadas=0; partidasRealizadas < partidasTotales && dineroJugador !=0 && dineroPc != 0; partidasRealizadas++){
+				for(partidasRealizadas=0; partidasRealizadas < partidasTotales && dineroJugador !=0 && dineroPc !=0; partidasRealizadas++){
 					
 					//Generar numero elegido por el Pc
 					numeroElegidoPc = random.nextInt(10) +2;
@@ -176,8 +174,8 @@ public class DadosApuestaV8347 {
 						- Nombre: ValidacionApuestaJugador
 						- VCB: Centinela
 						- Inicialización VCB: Lectura anticipada por teclado antes de la primera iteración
-						- Actualización VBC: Fisicamente al final del bucle, antes de la siguiente iteración
-						- Condición de salida: apuestaJugador<=dineroJugador
+						- Actualización VBC: Antes de la siguiente iteración
+						- Condición de salida: apuestaJugador > 0 && apuestaJugador <= dineroJugador
 					--------------------------------------*/
 					
 					do{
