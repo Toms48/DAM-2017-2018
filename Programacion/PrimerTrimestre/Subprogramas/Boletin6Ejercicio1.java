@@ -30,7 +30,28 @@
 import java.util.Scanner;
 
 public class Boletin6Ejercicio1 {
-	
+
+/**************************************************************************	     TERMINAR DE HACER
+MT
+	Nec: No hay
+	Dev: numero
+	Nec/Dev: No hay
+	Restriccion: numero entre
+
+Interfaz
+	Comentario: Subprograma que imprimirá el menu, leerá y validará su opcion 
+	Cabecera: entero numero MMLVO()
+	Precondiciones: No hay
+	Entrada:
+		- numero
+		- caracter
+	Salida: Solo imprime por pantalla. No hay.
+	E/S: No hay
+	Postcondiciones: No hay (porque no tiene salidas).
+**************************************************************************/
+
+
+
 /**************************************************************************	
 MT
 	Nec:
@@ -127,6 +148,60 @@ Interfaz
 		
 	}
 	
+/**************************************************************************	
+MT
+	Nec: caracter
+	Dev: No hay
+	Nec/Dev: No hay
+	Restriccion: No hay
+
+Interfaz
+	Comentario: Subprograma Digito que determine si un carácter es un dígito entre 0 y 9. 
+	Cabecera: bisiestoNoBisiesto(caracter caracter)
+	Precondiciones: No hay
+	Entrada: caracter
+	Salida: No hay. Pinta por pantalla
+	E/S: No hay
+	Postcondiciones: No hay. (Porque no hay salidas)
+**************************************************************************/	
+	
+	public static void digito(char caracterDigito){
+		
+		//System.out.println("Funciona!");
+		
+		if(caracterDigito>=48 && caracterDigito<=57){
+			System.out.println(" ");
+			System.out.println("Su caracter '" +caracterDigito +"' es un digito entre 0 y 9");
+		}
+		else{
+			System.out.println(" ");
+			System.out.println("Su caracter '" +caracterDigito +"' no es un digito entre 0 y 9");
+		}
+		
+	}
+	
+/**************************************************************************	
+MT
+	Nec: caracter
+	Dev: No hay
+	Nec/Dev: No hay
+	Restriccion: No hay
+
+Interfaz
+	Comentario: Subprograma Digito que determine si un carácter es un dígito entre 0 y 9. 
+	Cabecera: bisiestoNoBisiesto(caracter caracter)
+	Precondiciones: No hay
+	Entrada: caracter
+	Salida: No hay. Pinta por pantalla
+	E/S: No hay
+	Postcondiciones: No hay. (Porque no hay salidas)
+**************************************************************************/	
+
+	public static void numeroPerfecto(){
+		System.out.println(" ");
+		System.out.println("En construccion");
+	}
+	
 	public static void main (String[] args) {
 		
 		int opcionMenu = 0;
@@ -138,6 +213,8 @@ Interfaz
 		
 		int anio = 0;
 		
+		char caracterDigito = ' ';
+		
 		Scanner teclado = new Scanner(System.in);
 		
 		//Inicio
@@ -147,8 +224,8 @@ Interfaz
 				System.out.println("1  ---> Linea de caracteres");
 				System.out.println("2  ---> Mayusculas a minusculas");
 				System.out.println("3  ---> Anio bisiesto");
-				System.out.println("4  ---> ");
-				System.out.println("5  ---> ");
+				System.out.println("4  ---> Digito");
+				System.out.println("5  ---> Numero perfecto");
 				System.out.println("6  ---> ");
 				System.out.println("7  ---> ");
 				System.out.println("8  ---> ");
@@ -224,6 +301,23 @@ Interfaz
 						
 					break;
 					
+					case 4:
+						
+						System.out.println("Introduzca un caracter para ver si es un digito entre 0 y 9.");
+						System.out.print("Su caracter es: ");
+						
+						caracterDigito = teclado.next().charAt(0);
+						
+						digito(caracterDigito);
+						
+					break;
+					
+					case 5:
+					
+						numeroPerfecto();
+					
+					break;
+					
 				}//Fin_Segun
 				
 				//Mostrar menu, leer y validar opcion
@@ -232,7 +326,7 @@ Interfaz
 					System.out.println("1  ---> Linea de caracteres");
 					System.out.println("2  ---> Mayusculas a minusculas");
 					System.out.println("3  ---> Anio bisiesto");
-					System.out.println("4  ---> ");
+					System.out.println("4  ---> Digito");
 					System.out.println("5  ---> ");
 					System.out.println("6  ---> ");
 					System.out.println("7  ---> ");
