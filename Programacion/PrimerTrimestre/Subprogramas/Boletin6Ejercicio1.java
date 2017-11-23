@@ -31,26 +31,42 @@ import java.util.Scanner;
 
 public class Boletin6Ejercicio1 {
 
-/**************************************************************************	     TERMINAR DE HACER
+/**************************************************************************
 MT
 	Nec: No hay
-	Dev: numero
+	Dev: No hay
 	Nec/Dev: No hay
-	Restriccion: numero entre
+	Restriccion: No hay
 
 Interfaz
-	Comentario: Subprograma que imprimirá el menu, leerá y validará su opcion 
-	Cabecera: entero numero MMLVO()
+	Comentario: Subprograma que imprimirá el menu
+	Cabecera: mostrarMenu()
 	Precondiciones: No hay
-	Entrada:
-		- numero
-		- caracter
+	Entrada: No hay
 	Salida: Solo imprime por pantalla. No hay.
 	E/S: No hay
 	Postcondiciones: No hay (porque no tiene salidas).
 **************************************************************************/
 
-
+	public static void mostrarMenu(){
+			System.out.println(" ");
+			System.out.println("1  ---> Linea de caracteres");
+			System.out.println("2  ---> Mayusculas a minusculas");
+			System.out.println("3  ---> Anio bisiesto");
+			System.out.println("4  ---> Digito");
+			System.out.println("5  ---> Numero perfecto");
+			System.out.println("6  ---> ");
+			System.out.println("7  ---> ");
+			System.out.println("8  ---> ");
+			System.out.println("9  ---> ");
+			System.out.println("10 ---> ");
+			System.out.println("11 ---> ");
+			System.out.println("12 ---> ");
+			System.out.println("13 ---> ");
+			System.out.println("0  ---> Salir");
+			System.out.println(" ");
+			System.out.print  ("Su opcion es: ");
+	}
 
 /**************************************************************************	
 MT
@@ -103,16 +119,16 @@ Interfaz
 	Postcondiciones: el caracter estará en minuscula
 **************************************************************************/	
 
-	public static void /*TENGO QUE CAMBIAR EL VOID*/ mayusculaAMinuscula(char letraMayusculaAMinuscula){
+	public static char mayusculaAMinuscula(char letraMayusculaAMinuscula){
 		
-		Scanner teclado = new Scanner(System.in);
+		char resultado = ' ';
 		
-		System.out.println(" ");
-		System.out.println("En construccion");
+		//System.out.println(" ");
+		//System.out.println("En construccion");
 		
-		/*letraMayusculaAMinuscula = Character.toLowerCase(letraMayusculaAMinuscula);
+		resultado = Character.toLowerCase(letraMayusculaAMinuscula);
 		
-		return letraMayusculaAMinuscula;*/
+		return resultado;
 	}
 	
 /**************************************************************************	
@@ -210,6 +226,7 @@ Interfaz
 		int longitudLinea = 0;
 		
 		char letraMayusculaAMinuscula = ' ';
+		char letraCambiada = ' ';
 		
 		int anio = 0;
 		
@@ -220,23 +237,7 @@ Interfaz
 		//Inicio
 			//Mostrar menu, leer y validar opcion
 			do{
-				System.out.println(" ");
-				System.out.println("1  ---> Linea de caracteres");
-				System.out.println("2  ---> Mayusculas a minusculas");
-				System.out.println("3  ---> Anio bisiesto");
-				System.out.println("4  ---> Digito");
-				System.out.println("5  ---> Numero perfecto");
-				System.out.println("6  ---> ");
-				System.out.println("7  ---> ");
-				System.out.println("8  ---> ");
-				System.out.println("9  ---> ");
-				System.out.println("10 ---> ");
-				System.out.println("11 ---> ");
-				System.out.println("12 ---> ");
-				System.out.println("13 ---> ");
-				System.out.println("0  ---> Salir");
-				System.out.println(" ");
-				System.out.print  ("Su opcion es: ");
+				mostrarMenu();
 				
 				opcionMenu = teclado.nextInt();
 			}
@@ -274,7 +275,11 @@ Interfaz
 						}
 						while(letraMayusculaAMinuscula<65 || letraMayusculaAMinuscula>90);
 						
-						mayusculaAMinuscula(letraMayusculaAMinuscula);
+						letraCambiada = mayusculaAMinuscula(letraMayusculaAMinuscula);
+						
+						System.out.println(" ");
+						System.out.println("Su letra mayuscula es: " +letraMayusculaAMinuscula);
+						System.out.println("Su letra en minuscula es: " +letraCambiada);
 						
 					break;
 					
@@ -322,23 +327,7 @@ Interfaz
 				
 				//Mostrar menu, leer y validar opcion
 				do{
-					System.out.println(" ");
-					System.out.println("1  ---> Linea de caracteres");
-					System.out.println("2  ---> Mayusculas a minusculas");
-					System.out.println("3  ---> Anio bisiesto");
-					System.out.println("4  ---> Digito");
-					System.out.println("5  ---> ");
-					System.out.println("6  ---> ");
-					System.out.println("7  ---> ");
-					System.out.println("8  ---> ");
-					System.out.println("9  ---> ");
-					System.out.println("10 ---> ");
-					System.out.println("11 ---> ");
-					System.out.println("12 ---> ");
-					System.out.println("13 ---> ");
-					System.out.println("0  ---> Salir");
-					System.out.println(" ");
-					System.out.print  ("Su opcion es: ");
+					mostrarMenu();
 					
 					opcionMenu = teclado.nextInt();
 					
