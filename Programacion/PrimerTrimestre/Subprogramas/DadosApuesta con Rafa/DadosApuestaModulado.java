@@ -47,7 +47,7 @@
 import java.util.Scanner;
 import java.util.Random;
 
-public class DadosApuestaV8347 {
+public class DadosApuestaModulado {
 	
 	public static void main (String[] args) {
 		
