@@ -25,10 +25,10 @@
 		//Leer y validar numero de partidas
 		
 		//Para partidasRealizadas mientras partidasRealizadas sea menor que partidasAcordadas y dinero de los participantes no sea 0, incrementa partidasRealizadas en 1)
-			//Generar numero elegido por el Pc *
+			//Generar numero elegido por el Pc
 			//Leer numero elegido por el Jugador
 			
-			//Generar apuesta del Pc *
+			//Generar apuesta del Pc
 			//Leer y validar apuesta del jugador
 			
 			//Generar y sumar los dados del Pc *
