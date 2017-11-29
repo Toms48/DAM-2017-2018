@@ -1,12 +1,15 @@
 /*
-Nombre:
+Nombre: Asalto
 
-Comentraio: 
+Comentraio: Simulará un asalto de esgrima
 
 Análisis:
 	- Entrada:
+			- un caracter para respuesta
+			- un numero para 
 	- Salida:
 	- Requisitos:
+			- respuesta tiene que ser s o n
 
 
 
@@ -16,7 +19,7 @@ Inicio
 	Leer y validar respuesta para ejecutar
 	Mientras se quiera ejecutar
 		Mientras la vida del jugador y del Pc no sean 0
-			Leer y validar movimiento del jugador
+			Mostrar movimientos, leer y validar movimiento del jugador
 			Generar movimiento del Pc
 			Mover personajes y actualizar vida
 		Fin_Mientras
@@ -33,11 +36,20 @@ Fin
 import java.util.Scanner;
 import java.util.Random;
 
-public class Batalla {
+public class Asalto {
 	
 	public static void main (String[] args) {
 		
-		char respuesta = ' '; 
+		char respuesta = ' ';
+		
+		int movimientoJ = 0;
+		int movimientoP = 0;
+		
+		int vidaJugador = 0;
+		int vidaPc = 0;
+		
+		Scanner teclado = new Scanner (System.in);
+		Random random = new Random ();
 		
 		//Inicio
 			//Leer y validar respuesta para ejecutar
@@ -51,8 +63,22 @@ public class Batalla {
 			while(respuesta=='s'){
 				
 				while(vidaJugador!=0 && vidaPc!=0){
-					//Leer y validar movimiento del jugador
+					
+					//Mostrar movimientos, leer y validar movimiento del jugador
+					do{
+						System.out.print("1 ---> Marchar  ");
+						System.out.print("2 ---> Romper   ");
+						System.out.print("3 ---> Defender ");
+						System.out.print("4 ---> Atacar   ");
+						System.out.print("Su movimiento es: ");
+						
+						movimientoJ = teclado.nextInt();
+					}
+					while(movimientoJ < 1 || movimientoJ > 4);
+					
 					//Generar movimiento del Pc
+					movimientoP = random.nextInt(4) +1;
+						
 					//Mover personajes y actualizar vida
 				}
 				
