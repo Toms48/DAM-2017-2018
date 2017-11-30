@@ -21,7 +21,7 @@ Interfaz
 	Entrada: No hay
 	Salida: numero
 	E/S: No hay
-	Postcondiciones: El numero debe de estar entre comprendido 2 y 12
+	Postcondiciones: El numero debe de estar comprendido entre 2 y 12
 **************************************************************************/	
 	
 	public static int GenerarSumarDados () {
