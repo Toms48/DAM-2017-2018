@@ -15,7 +15,7 @@ GO
 */
 
 CREATE TABLE DatosRestrictivos(
-	ID SmallInt NOT NULL IDENTITY (1,2)
+	ID SmallInt NOT NULL IDENTITY (1,2)	--El primer número significa que empieza a asignar a partir del numero 1 y el segundo numero indica que incrementa el numero asignado en 2, por lo que solo asigna numeros impares.
 		CONSTRAINT PK_DatosRestrictivos PRIMARY KEY,
 	Nombre char(15) NOT NULL
 		CONSTRAINT UQ_Nombre_DatosRestrictivos UNIQUE
@@ -23,7 +23,7 @@ CREATE TABLE DatosRestrictivos(
 	NumPelos int NULL
 		CONSTRAINT CK_NumPelos_DatosRestrictivos CHECK (NumPelos BETWEEN 0 AND 145000),
 	TipoRopa char(1)  NULL
-		CONSTRAINT CK_TipoRopa_DatosRestictivos CHECK (TipoRopa IN ('C', 'F', 'E', 'P', 'B', 'N')),
+		CONSTRAINT CK_TipoRopa_DatosRestictivos CHECK (TipoRopa IN ('C', 'F', 'E', 'P', 'B', 'N')),	--IN sirve para solo poder escribir una de las opciones (en este caso todas esas letras)
 	NumSuerte tinyint NULL
 		CONSTRAINT CK_NumSuerte_DatosRestrictivos CHECK (NumSuerte%3 = 0),  --Como en Java, se pone un % para el resto de la división
 	Minutos tinyint NULL
