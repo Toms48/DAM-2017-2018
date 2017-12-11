@@ -45,7 +45,7 @@ CREATE TABLE cafesPropiedades(
 	ID_Propiedades int NOT NULL
 		CONSTRAINT FK_cafesPropiedades_propiedades Foreign Key
 		REFERENCES propiedades(ID),
-	CONSTRAINT PK_cafesPropiedades Primary Key (Nombre_Cafes, ID_Propiedades)
+	CONSTRAINT PK_cafesPropiedades Primary Key (Nombre_Cafes, ID_Propiedades)	--Las clave primaria compuesta se tiene que escribir al final de la tabla
 )
 
 --Creamos la tabla cafesMezclas
@@ -70,7 +70,7 @@ CREATE TABLE mezclasClientes(
 	DNI_Clientes varchar(10) NOT NULL
 		CONSTRAINT FK_mezclasCliente_clientes Foreign Key
 		REFERENCES clientes(DNI),
-	CONSTRAINT PK_mezclasClientes Primary Key (DNI_clientes, Codigo_Mezclas)
+	CONSTRAINT PK_mezclasClientes Primary Key (DNI_clientes, Codigo_Mezclas)	--Las clave primaria compuesta se tiene que escribir al final de la tabla
 )
 
 /*
