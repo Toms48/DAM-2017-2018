@@ -33,5 +33,10 @@ SELECT CustomerID, COUNT(OrderID) AS [Número de pedidos] FROM Orders
 	ORDER BY COUNT(OrderID) DESC
 
 /*9. Número de pedidos enviados a cada ciudad, incluyendo el nombre de la ciudad.*/
+SELECT COUNT(ShipCity) AS [Número de pedidos], ShipCity FROM Orders
+	GROUP BY ShipCity
+	ORDER BY ShipCity
 
 /*10. Número de productos de cada categoría.*/
+SELECT CategoryID, COUNT(CategoryID) AS [Número de productos] FROM Products
+	GROUP BY CategoryID
