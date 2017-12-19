@@ -39,3 +39,20 @@ SELECT * FROM employee
 SELECT emp_id,job_lvl, fname, lname FROM employee
 	WHERE job_lvl < 100
 	ORDER BY fname, lname
+
+
+
+
+/*1. Inserta un nuevo autor.*/
+INSERT INTO authors	(au_id,au_lname,au_fname,address,city,state,zip,contract)
+	VALUES ('999-99-9999', 'Moore', 'Alan', NULL, 'Northampton', NULL, 99999, 1)
+
+/*2. Inserta dos libros, escritos por el autor que has insertado antes y publicados por la editorial "Ramona publishers”.*/
+
+
+/*3. Modifica la tabla jobs para que el nivel mínimo sea 90.*/
+
+/*4. Crea una nueva editorial (publihers) con ID 9908, nombre Mostachon Books y sede en Utrera.*/
+
+/*5. Cambia el nombre de la editorial con sede en Alemania para que se llame "Machen Wücher" y traslasde su sede a Stuttgart*/
+
