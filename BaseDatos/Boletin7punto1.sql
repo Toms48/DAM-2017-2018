@@ -16,7 +16,7 @@ SELECT ProductName,UnitPrice FROM Products
 
 /*5. Nombre de la compañía y dirección completa de cada proveedor de algún país de América del Norte.*/
 SELECT CompanyName,Address,City,Country FROM Suppliers
-	WHERE Country = 'USA'
+	WHERE Country IN ('USA', 'Canada', 'Mexico')
 
 /*6. Nombre del producto, número de unidades en stock y valor total del stock, de los productos que no sean de la categoría 4.*/
 SELECT ProductName,UnitsInStock,(UnitsInStock*UnitPrice) AS PriceOfStock FROM Products
