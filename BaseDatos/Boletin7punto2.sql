@@ -22,10 +22,20 @@ SELECT pub_name,city FROM publishers
 /*5. Título, precio, ID de los libros que traten sobre psicología o negocios y cuesten entre diez y 20 dólares.*/
 SELECT * FROM titles
 SELECT title, price, title_id FROM titles
-	WHERE type IN ('psychology', '')
+	WHERE type IN ('psychology', 'business') AND price BETWEEN 10 AND 20
 
 /*6. Nombre completo (nombre y apellido) y dirección completa de todos los autores que no viven en California ni en Oregón.*/
+SELECT * FROM authors
+SELECT au_fname, au_lname, [address], city, [state] FROM authors
+	WHERE [state] NOT IN ('CA','OR')
 
 /*7. Nombre completo y dirección completa de todos los autores cuyo apellido empieza por D, G o S.*/
+SELECT * FROM authors
+SELECT au_fname, au_lname, [address], city, [state] FROM authors
+	WHERE au_lname LIKE ('[DGS]%')
 
 /*8. ID, nivel y nombre completo de todos los empleados con un nivel inferior a 100, ordenado alfabéticamente.*/
+SELECT * FROM employee
+SELECT emp_id,job_lvl, fname, lname FROM employee
+	WHERE job_lvl < 100
+	ORDER BY fname, lname
