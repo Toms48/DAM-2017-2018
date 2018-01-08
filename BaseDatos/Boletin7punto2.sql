@@ -48,11 +48,28 @@ INSERT INTO authors	(au_id,au_lname,au_fname,address,city,state,zip,contract)
 	VALUES ('999-99-9999', 'Moore', 'Alan', NULL, 'Northampton', NULL, 99999, 1)
 
 /*2. Inserta dos libros, escritos por el autor que has insertado antes y publicados por la editorial "Ramona publishers”.*/
+SELECT * FROM titles
+INSERT INTO titles (title_id, title, type, pub_id, price, advance, royalty, ytd_sales, notes, pubdate)
+	VALUES ('CO9999', 'V de Vendetta', 'comic', 9999, 19.99, NULL, NULL, NULL, 'Best comic ever.', 1982-01-01)
 
+INSERT INTO titles (title_id, title, type, pub_id, price, advance, royalty, ytd_sales, notes, pubdate)
+	VALUES ('CO9998', 'La liga de los hombres extraordinarios', 'comic', NULL, 9.99, NULL, NULL, NULL, 'V de Vendetta es mejor', 1999-01-01)
 
 /*3. Modifica la tabla jobs para que el nivel mínimo sea 90.*/
+/*SELECT * FROM jobs
+UPDATE jobs
+	SET */
 
 /*4. Crea una nueva editorial (publihers) con ID 9908, nombre Mostachon Books y sede en Utrera.*/
+SELECT * FROM publishers
+
+INSERT INTO publishers (pub_id, pub_name, city, state, country)
+	VALUES (9908, 'Mostachon Books', 'Utrera', NULL, 'España')
 
 /*5. Cambia el nombre de la editorial con sede en Alemania para que se llame "Machen Wücher" y traslasde su sede a Stuttgart*/
+SELECT * FROM publishers
 
+UPDATE publishers
+	SET pub_name = 'Machen Wücher',
+		city = 'Stuttgart'
+	WHERE country = 'Germany'
