@@ -5,7 +5,7 @@ SELECT title,price,notes FROM titles
 	--WHERE type LIKE '%cook%'
 	ORDER BY price DESC
 
-/*2. ID, descripción y nivel máximo y mínimo de los puestos de trabajo (jobs) que pueden tener un nivel 110.*/
+/*2. ID, descripción y nivel máximo y mínimo de los puestos de trabajo (jobs) que pueden tener un nivel 110.*/  /*******/
 SELECT * FROM jobs
 	WHERE min_lvl >= 110
 
