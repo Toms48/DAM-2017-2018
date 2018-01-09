@@ -46,7 +46,12 @@ SELECT Count(OrderID) AS [Numero de pedidos], Month(OrderDate) AS [Mes], Year(Or
 	GROUP BY Month(OrderDate), YEAR(OrderDate)
 
 /*8. Año y tiempo medio transcurrido entre la fecha de cada pedido (OrderDate) y la fecha en la que lo hemos enviado (ShipDate), en días para cada año.*/
+SELECT * FROM Orders
 
+SELECT YEAR(OrderDate) AS [Año del pedido], AVG(DAY(OrderDate - ShippedDate)) AS [Tiempo medio transcurrido (en días)]
+	FROM Orders
+	GROUP BY YEAR(OrderDate)
+	ORDER BY YEAR(OrderDate) ASC
 
 /*9. ID del distribuidor y número de pedidos enviados a través de ese distribuidor.*/
 SELECT * FROM Products
