@@ -5,7 +5,7 @@ SELECT title,price,notes FROM titles
 	--WHERE type LIKE '%cook%'
 	ORDER BY price DESC
 
-/*2. ID, descripción y nivel máximo y mínimo de los puestos de trabajo (jobs) que pueden tener un nivel 110.*/  /*******/
+/*2. ID, descripción y nivel máximo y mínimo de los puestos de trabajo (jobs) que pueden tener un nivel 110.*/
 SELECT * FROM jobs
 	WHERE min_lvl >= 110
 
@@ -44,21 +44,41 @@ SELECT emp_id,job_lvl, fname, lname FROM employee
 
 
 /*1. Inserta un nuevo autor.*/
+SELECT * FROM authors
+
 INSERT INTO authors	(au_id,au_lname,au_fname,address,city,state,zip,contract)
 	VALUES ('999-99-9999', 'Moore', 'Alan', NULL, 'Northampton', NULL, 99999, 1)
 
 /*2. Inserta dos libros, escritos por el autor que has insertado antes y publicados por la editorial "Ramona publishers”.*/
 SELECT * FROM titles
+
 INSERT INTO titles (title_id, title, type, pub_id, price, advance, royalty, ytd_sales, notes, pubdate)
 	VALUES ('CO9999', 'V de Vendetta', 'comic', 9999, 19.99, NULL, NULL, NULL, 'Best comic ever.', 1982-01-01)
 
 INSERT INTO titles (title_id, title, type, pub_id, price, advance, royalty, ytd_sales, notes, pubdate)
 	VALUES ('CO9998', 'La liga de los hombres extraordinarios', 'comic', NULL, 9.99, NULL, NULL, NULL, 'V de Vendetta es mejor', 1999-01-01)
 
+SELECT * FROM titleauthor
+
+INSERT INTO titleauthor (au_id, title_id, au_ord, royaltyper)
+	VALUES ('999-99-9999', 'CO9999', 1, 100)
+
+INSERT INTO titleauthor (au_id, title_id, au_ord, royaltyper)
+	VALUES ('999-99-9999', 'CO9998', 1, 100) 
+
 /*3. Modifica la tabla jobs para que el nivel mínimo sea 90.*/
-/*SELECT * FROM jobs
+SELECT * FROM jobs
+	WHERE min_lvl < 90
+
+BEGIN TRANSACTION
+
 UPDATE jobs
-	SET */
+	SET min_lvl = 90
+	WHERE min_lvl < 90
+
+ROLLBACK 
+
+COMMIT
 
 /*4. Crea una nueva editorial (publihers) con ID 9908, nombre Mostachon Books y sede en Utrera.*/
 SELECT * FROM publishers
@@ -69,7 +89,13 @@ INSERT INTO publishers (pub_id, pub_name, city, state, country)
 /*5. Cambia el nombre de la editorial con sede en Alemania para que se llame "Machen Wücher" y traslasde su sede a Stuttgart*/
 SELECT * FROM publishers
 
+BEGIN TRANSACTION
+
 UPDATE publishers
 	SET pub_name = 'Machen Wücher',
 		city = 'Stuttgart'
 	WHERE country = 'Germany'
+
+ROLLBACK
+
+COMMIT
