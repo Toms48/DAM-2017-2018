@@ -34,16 +34,20 @@ SELECT (ListPrice - StandardCost) AS [Margen de beneficio] FROM Production.Produ
 /*5.Número de productos de cada categoría*/
 SELECT * FROM Production.ProductSubcategory
 
-SELECT COUNT(ProductID) FROM Production.Product
+SELECT ProductCategoryID, COUNT(Name) AS [Número de productos]  FROM Production.ProductSubcategory
+	GROUP BY ProductCategoryID
 
 /*6.Igual a la anterior, pero considerando las categorías generales (categorías de categorías).*/
 
+/* Ni idea :) */
 
 /*7.Número de unidades vendidas de cada producto cada año.*/
 
+/* Ni idea :) */
 
 /*8.Nombre completo, compañía y total facturado a cada cliente*/
-
+SELECT * FROM Sales.Customer
+SELECT * FROM Person.Person
 
 /*9.Número de producto, nombre y precio de todos aquellos en cuya descripción aparezcan las palabras "race”, "competition” o "performance”*/
 
