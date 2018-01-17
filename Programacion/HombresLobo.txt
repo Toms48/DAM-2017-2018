@@ -1,0 +1,30 @@
+Inicio
+	LeerValidarParaEjecutar
+	Mientras se quiera ejecutar
+		EjecutarJuego*
+		LeerValidarParaEjecutar
+	Fin_Mientras
+Fin
+
+
+EjecutarJuego
+Inicio
+	RepartirPersonajes
+	Mientras HL != Camp || HL != 0
+		Noche*
+		Día*
+	Fin_Mientras
+Fin
+
+Noche
+Inicio
+	Hacer 
+		Generar victima aleatoria
+		Confirmar victima
+	Mientras matar no sea s
+Fin
+
+Dia
+Inicio
+	
+Fin
