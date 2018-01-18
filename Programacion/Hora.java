@@ -12,17 +12,6 @@ public class Hora {
 		segundo = 0;
 	}
 	
-	//Constructor con 1 parámetro
-	public Hora(int hora){
-		this.hora = hora;
-	}
-	
-	//Constructor con 2 parámetros
-	public Hora(int hora, int minuto){
-		this.hora = hora;
-		this.minuto = minuto;
-	}
-	
 	//Constructor con 3 parámetros
 	public Hora(int hora, int minuto, int segundo){
 		this.hora = hora;
@@ -61,6 +50,13 @@ public class Hora {
 	
 	public void setSegundo(int segundo){
 		this.segundo = segundo;
+	}
+	
+	//Métodos sobrescritos
+	@Override
+	public String toString(){
+		String s = getHora() +":" +getMinuto() +":" +getSegundo();
+		return s;
 	}
 	
 }

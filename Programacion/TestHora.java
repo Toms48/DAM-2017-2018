@@ -3,10 +3,11 @@ public class TestHora {
 	public static void main (String[] args) {
 		//Test constructores
 		Hora hora0 = new Hora();
+		Hora hora1 = null;
 		
 		//try{
 			
-			Hora hora1 = new Hora(14,30,45);
+			hora1 = new Hora(14,30,45);
 			
 		/*}
 		catch(ExcepcionHora mensaje){
@@ -16,6 +17,19 @@ public class TestHora {
 		}*/
 		
 		Hora horaCopia = new Hora(hora1); 
+		
+		//Test toString
+		System.out.println("toString del constructor por defecto");
+		System.out.println(hora0.toString());
+		System.out.println(" ");
+		
+		System.out.println("toString del constructor con parametros");
+		System.out.println(hora1.toString());
+		System.out.println(" ");
+		
+		System.out.println("toString del constructor copia");
+		System.out.println(horaCopia.toString());
+		System.out.println(" ");
 		
 		//Test GETS
 		System.out.println("Gets del constructor por defecto");
