@@ -26,11 +26,11 @@ SELECT CustomerID, YEAR(OrderDate) AS [Año de pedido], COUNT(CustomerID) AS [Num
 	GROUP BY YEAR(OrderDate), CustomerID
 	ORDER BY CustomerID
 
-/*5. ID del producto, precio unitario y total facturado de ese producto, ordenado por cantidad facturada de mayor a menor.
+/*5. ID del producto, precio unitario y total facturado de ese producto, ordenado por cantidad facturada de mayor a menor.  djfgjxdftjdfjdrtfjhsdrtjsertjhsdfghrtfjh
 Si hay varios precios unitarios para el mismo producto tomaremos el mayor.*/
 SELECT * FROM Products
 
-SELECT ProductID, UnitPrice, UnitPrice*UnitsOnOrder AS [Total facturado] FROM Products
+SELECT ProductID, MAX(UnitPrice), UnitPrice*UnitsOnOrder AS [Total facturado] FROM Products
 	ORDER BY [Total facturado] DESC
 
 /*6. ID del proveedor e importe total del stock acumulado de productos correspondientes a ese proveedor.*/
@@ -44,6 +44,7 @@ SELECT * FROM Orders
 
 SELECT Count(OrderID) AS [Numero de pedidos], Month(OrderDate) AS [Mes], Year(OrderDate) AS [Año] FROM Orders
 	GROUP BY Month(OrderDate), YEAR(OrderDate)
+	ORDER BY Año, Mes
 
 /*8. Año y tiempo medio transcurrido entre la fecha de cada pedido (OrderDate) y la fecha en la que lo hemos enviado (ShipDate), en días para cada año.*/
 SELECT * FROM Orders

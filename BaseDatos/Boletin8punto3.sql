@@ -42,24 +42,34 @@ SELECT ProductCategoryID, COUNT(Name) AS [Número de productos]  FROM Production.
 /* Ni idea :) */
 
 /*7.Número de unidades vendidas de cada producto cada año.*/
+SELECT * FROM Sales.SalesOrderDetail
 
-/* Ni idea :) */
 
 /*8.Nombre completo, compañía y total facturado a cada cliente*/
 SELECT * FROM Sales.Customer
 SELECT * FROM Person.Person
 
 /*9.Número de producto, nombre y precio de todos aquellos en cuya descripción aparezcan las palabras "race”, "competition” o "performance”*/
+SELECT * FROM Production.Product
 
+/*SELECT ProductNumber, Name, ListPrice FROM Production.Product
+	WHERE */
 
 
 				/**Consultas avanzadas**/
 
 /*10.Facturación total en cada país*/
+SELECT * FROM Sales.SalesTerritory
 
+SELECT CountryRegionCode, SUM(SalesYTD) AS [Facturación total] FROM Sales.SalesTerritory
+	GROUP BY CountryRegionCode
 
 /*11.Facturación total en cada Estado*/
+SELECT * FROM Sales.SalesTerritory
 
+SELECT * FROM Person.StateProvince
 
 /*12.Margen medio de beneficios y total facturado en cada país*/
+SELECT * FROM Sales.SalesTerritory
 
+SELECT CountryRegionCode FROM Sales.SalesTerritory
