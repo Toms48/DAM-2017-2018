@@ -13,10 +13,30 @@ public class Hora {
 	}
 	
 	//Constructor con 3 parámetros
-	public Hora(int hora, int minuto, int segundo){
-		this.hora = hora;
-		this.minuto = minuto;
-		this.segundo = segundo;
+	public Hora(int hora, int minuto, int segundo) throws ExcepcionHora{
+		
+		if(hora >= 0 && hora <= 23){
+			
+			if(minuto >= 0 && minuto <= 59){
+				
+				if(segundo >= 0 && segundo <= 59){
+					this.hora = hora;
+					this.minuto = minuto;
+					this.segundo = segundo;
+				}
+				else{
+					throw new ExcepcionHora("Segundos mal introducidos");
+				}
+			}
+			else{
+				throw new ExcepcionHora("Minutos mal introducidos");
+			}
+			
+		}
+		else{
+			throw new ExcepcionHora("Hora mal introducida");
+		}
+		
 	}
 	
 	//Constructor de copia
@@ -40,16 +60,33 @@ public class Hora {
 	}
 	
 	//SETS
-	public void setHora(int hora){
-		this.hora = hora;
+	public void setHora(int hora) throws ExcepcionHora{
+		if(hora >= 0 && hora <= 23){
+			this.hora = hora;
+		}
+		else{
+			throw new ExcepcionHora("Hora mal introducida");
+		}
 	}
 	
-	public void setMinuto(int minuto){
-		this.minuto = minuto;
+	public void setMinuto(int minuto) throws ExcepcionHora{
+		if(minuto >= 0 && minuto <= 59){
+			this.minuto = minuto;
+		}
+		else{
+			throw new ExcepcionHora("Minutos mal introducidos");
+		}
+		
 	}
 	
-	public void setSegundo(int segundo){
-		this.segundo = segundo;
+	public void setSegundo(int segundo) throws ExcepcionHora{
+		if(segundo >= 0 && segundo <= 59){
+			this.segundo = segundo;
+		}
+		else{
+			throw new ExcepcionHora("Segundos mal introducidos");
+		}
+		
 	}
 	
 	//Métodos sobrescritos
@@ -57,6 +94,26 @@ public class Hora {
 	public String toString(){
 		String s = getHora() +":" +getMinuto() +":" +getSegundo();
 		return s;
+	}
+	
+	@Override
+	public int hashCode(){
+		return ((int) (getHora() * 7 + getSegundo() * 33 * 21 * getMinuto() + getMinuto()));
+	}
+	
+	@Override
+	public boolean equals(Object obj){
+		boolean ret = false;
+		
+		if(this == obj){
+			ret = true;
+		}
+		else if(obj != null && obj instanceof Elipse){
+			
+		}
+		
+		return ret;
+
 	}
 	
 }
