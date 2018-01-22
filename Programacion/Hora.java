@@ -1,4 +1,4 @@
-public class Hora {
+public class Hora implements Cloneable, Comparable<Hora>{
 	
 	//Atributos
 	private int hora;
@@ -91,14 +91,14 @@ public class Hora {
 	
 	//Métodos sobrescritos
 	@Override
-	public String toString(){
-		String s = getHora() +":" +getMinuto() +":" +getSegundo();
-		return s;
+	public int hashCode(){
+		return ((int) (getHora() * 7 + getSegundo() * 33 * 21 * getMinuto() + getMinuto()));
 	}
 	
 	@Override
-	public int hashCode(){
-		return ((int) (getHora() * 7 + getSegundo() * 33 * 21 * getMinuto() + getMinuto()));
+	public String toString(){
+		String s = getHora() +":" +getMinuto() +":" +getSegundo();
+		return s;
 	}
 	
 	@Override
@@ -108,12 +108,42 @@ public class Hora {
 		if(this == obj){
 			ret = true;
 		}
-		else if(obj != null && obj instanceof Elipse){
+		else if(obj != null && obj instanceof Hora){
+			Hora other = (Hora)obj;
 			
+			if(this.hora == other.hora &&
+			   this.minuto == other.minuto &&
+			   this.segundo == other.segundo){
+				ret = true;
+			}
 		}
-		
 		return ret;
-
+	}
+	
+	@Override
+	public Hora clone(){
+		Hora copia = null;
+		
+		try{
+			copia = (Hora)super.clone();
+		}
+		catch(CloneNotSupportedException error){
+			System.out.println("No se pudo clonar el objeto, devuelve un null");
+		}
+		return copia;
+	}
+	
+	@Override
+	public int compareTo(Hora other){
+		int ret = 0;
+		
+		if(this != other && this.getHora() > other.getHora()){
+			ret = 1;
+		}
+		else if(this.getHora() < other.getHora()){
+			ret = -1;
+		}
+		return ret;
 	}
 	
 }
