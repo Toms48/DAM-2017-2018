@@ -73,10 +73,6 @@ public class Persona {
 		this.edad = edad;
 	}
 	
-	public void setDNI (String DNI){
-		this.DNI = DNI;
-	}
-	
 	public void setSexo (char sexo){
 		this.sexo = sexo;
 	}
@@ -112,6 +108,19 @@ public class Persona {
 		
 		return tipoIMC;
 	}
+	
+	//Métodos sobrescritos
+	@Override
+	public String toString(){
+		String s = "Nombre: " +getNombre() +"\nEdad: " +getEdad() +"\nDNI: " +getDNI() +"\nSexo: " +getSexo() +"\nPeso: " +getPeso() +"\nAltura: " +getAltura();
+		
+		return s;
+	}
+	
+	/*@Override    //TERMINAR EL HASHCODE
+	public int hashCode(){
+		return ((int) (getHora() * 7 + getSegundo() * 33 * 21 * getMinuto() + getMinuto()));
+	}*/
 	
 }
 
