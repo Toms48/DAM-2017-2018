@@ -1,4 +1,4 @@
-public class Persona {
+public class Persona implements Cloneable, Comparable<Persona> {
 	
 	//Atributos
 	private String nombre = new String();
@@ -65,8 +65,16 @@ public class Persona {
 	
 	
 	//SETS
-	public void setNombre (String nombre){
-		this.nombre = nombre;
+	public void setNombre (String nombre) throws ExcepcionPersona{
+		
+		String s = new String(getNombre());
+		
+		if(s.length() > 20){
+			this.nombre = nombre;
+		}
+		else{
+			throw new ExcepcionPersona("Nombre tiene caracteres no imprimibles");
+		}
 	}
 	
 	public void setEdad (int edad){
@@ -111,16 +119,76 @@ public class Persona {
 	
 	//Métodos sobrescritos
 	@Override
+	public int compareTo(Persona other){
+		
+		int ret = 0;
+		
+		if(this != other && this.getEdad() > other.getEdad()){
+			ret = 1;
+		}
+		else{
+			if(this.getEdad() < other.getEdad()){
+				ret = -1;
+			}
+		}
+		
+		return ret;
+	}
+	
+	@Override
+	public Persona clone(){
+		
+		Persona copia = null;
+		
+		try{
+			copia = (Persona)super.clone();
+		}
+		catch(CloneNotSupportedException error){
+			System.out.println("No se pudo clonar el objeto (devuelve un null)");
+		}
+		
+		return copia;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		
+		boolean ret = false;
+		
+		//1. Comprobamos que obj no es el mismo objeto (obj == this), si lo es, devolveremos true.
+		if(this == obj){
+			ret = true;
+		}
+		else{
+			if(obj != null && obj instanceof Persona){
+				Persona other = (Persona)obj;
+				
+				if(this.nombre == other.nombre &&
+				   this.edad == other.edad &&
+				   this.DNI == other.DNI &&
+				   this.sexo == other.sexo &&
+				   this.peso == other.peso &&
+				   this.altura == other.altura){
+					   
+					ret = true;
+					
+				}
+			}
+		}
+		return ret;
+	}
+	
+	@Override
 	public String toString(){
 		String s = "Nombre: " +getNombre() +"\nEdad: " +getEdad() +"\nDNI: " +getDNI() +"\nSexo: " +getSexo() +"\nPeso: " +getPeso() +"\nAltura: " +getAltura();
 		
 		return s;
 	}
 	
-	/*@Override    //TERMINAR EL HASHCODE
+	@Override
 	public int hashCode(){
-		return ((int) (getHora() * 7 + getSegundo() * 33 * 21 * getMinuto() + getMinuto()));
-	}*/
+		return ((int) ((getDNI().hashCode() + 31) * getPeso() * 7 + getAltura() * 33 * 21 * getEdad() + getAltura() * 100));
+	}
 	
 }
 

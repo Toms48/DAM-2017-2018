@@ -9,6 +9,11 @@ public class TestPersona {
 		System.out.println(porDefecto.toString());
 		
 		System.out.println(" ");
+		
+		//hashCode para el objeto por defecto
+		System.out.println("HashCode: " +porDefecto.hashCode());
+		
+		System.out.println(" ");
 		System.out.println("*--------------------------------------------------------------*");
 		System.out.println(" ");
 		
@@ -19,6 +24,22 @@ public class TestPersona {
 		System.out.println(Tomas.toString());
 		
 		System.out.println(" ");
+		
+		//hashCode para el objeto con parámetros
+		System.out.println("HashCode: " +Tomas.hashCode());
+		
+		System.out.println(" ");
+		
+		//equals para el objeto con parámetros
+		System.out.println("Equals (Tomas y Tomas): " +Tomas.equals(Tomas));
+		System.out.println("Equals (Tomas y porDefecto): " +Tomas.equals(porDefecto));
+		
+		System.out.println(" ");
+		
+		//clone para el objeto con parámetros
+		System.out.println(Tomas.clone());
+		
+		System.out.println(" ");
 		System.out.println("*--------------------------------------------------------------*");
 		System.out.println(" ");
 		
@@ -27,6 +48,10 @@ public class TestPersona {
 		
 		//toString para ver el constructor copia
 		System.out.println(CopiaTomas.toString());
+		
+		System.out.println(" ");
+		
+		System.out.println("HashCode: " +CopiaTomas.hashCode());
 		
 		System.out.println(" ");
 		System.out.println("*--------------------------------------------------------------*");
@@ -50,7 +75,13 @@ public class TestPersona {
 		
 		System.out.println(" ");
 		
+		//toString con datos cambiados
 		System.out.println(Tomas.toString());
+		
+		System.out.println(" ");
+		
+		//hashCode con datos cambiados
+		System.out.println("HashCode: " +Tomas.hashCode());
 		
 	}
 }
