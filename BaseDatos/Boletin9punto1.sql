@@ -72,16 +72,54 @@ SELECT e.EmployeeID, e.FirstName, e.LastName, MONTH(e.BirthDate) AS [Mes de naci
 		WHERE c.Country <> 'France'
 
 --7. Total de ventas en US$ de productos de cada categoría (nombre de la categoría).
+SELECT * FROM Categories
+SELECT * FROM Products
+SELECT * FROM [Order Details]
+
+SELECT c.CategoryName, SUM(od.UnitPrice * od.Quantity) AS [Total de ventas en US$]
+	FROM Categories AS c
+	INNER JOIN Products AS p
+	ON c.CategoryID = p.CategoryID
+	INNER JOIN [Order Details] AS od
+	ON p.ProductID = od.ProductID
+		GROUP BY c.CategoryName
 
 --8. Total de ventas en US$ de cada empleado cada año (nombre, apellidos, dirección).
+SELECT * FROM Employees
+SELECT * FROM Orders
+SELECT * FROM [Order Details]
+
+SELECT e.FirstName, e.LastName, e.[Address], SUM(od.UnitPrice * od.Quantity) AS [Total de ventas en US$], YEAR(o.OrderDate) AS [Año de venta]
+	FROM Employees AS e
+	INNER JOIN Orders AS o
+	ON e.EmployeeID = o.EmployeeID
+	INNER JOIN [Order Details] AS od
+	ON o.OrderID = od.OrderID
+		GROUP BY e.FirstName, e.LastName, e.[Address], YEAR(o.OrderDate)
+		ORDER BY e.FirstName, e.LastName, YEAR(o.OrderDate)
 
 --9. Ventas de cada producto en el año 97. Nombre del producto y unidades.
+SELECT * FROM Products
+SELECT * FROM [Order Details]
+SELECT * FROM Orders
+
+SELECT p.ProductName, SUM(od.Quantity) AS [Cantidad de unidades], YEAR(o.OrderDate) AS [Año de venta]
+	FROM Products AS p
+	INNER JOIN [Order Details] AS od
+	ON p.ProductID = od.ProductID
+	INNER JOIN Orders AS o
+	ON od.OrderID = o.OrderID
+		WHERE YEAR(o.OrderDate) = '1997' 
+		GROUP BY P.ProductName, YEAR(o.OrderDate)
 
 --10. Cuál es el producto del que hemos vendido más unidades en cada país. *
 
+
 --11. Empleados (nombre y apellidos) que trabajan a las órdenes de Andrew Fuller.
 
+
 --12. Número de subordinados que tiene cada empleado, incluyendo los que no tienen ninguno. Nombre, apellidos, ID.
+
 
 
 --* Se necesitan subconsultas
