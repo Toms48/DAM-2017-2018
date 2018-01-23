@@ -67,67 +67,67 @@ public class Persona implements Cloneable, Comparable<Persona> {
 	//SETS
 	public void setNombre (String nombre) throws ExcepcionPersona{
 		
-		String s = new String(getNombre());
+		String n = new String(nombre);
 		
-		if(s.length() > 20){
+		if(n.length() >= 0 && n.length() <= 20){
 			this.nombre = nombre;
 		}
 		else{
-			throw new ExcepcionPersona("Nombre tiene caracteres no imprimibles");
+			throw new ExcepcionPersona("El nombre tiene mas de 20 caracteres");
 		}
 	}
 	
-	public void setEdad (int edad){
-		this.edad = edad;
-	}
-	
-	public void setSexo (char sexo){
-		this.sexo = sexo;
-	}
-	
-	public void setPeso (double peso){
-		this.peso = peso;
-	}
-	
-	public void setAltura (double altura){
-		this.altura = altura;
-	}
-	
-	//Métodos añadidos
-	public int tipoIMC(){
+	public void setEdad (int edad) throws ExcepcionPersona{
 		
-		int tipoIMC = 0;
-		double imc = getPeso() / (getAltura()*getAltura());
-		
-		if (imc < 18.50){
-			
-			tipoIMC = -1;
-			
-			if (imc >= 25.00){
-				
-				tipoIMC = 1;
-				
-				if (imc>18.50 && imc<24.99){
-					
-					tipoIMC = 0;
-				}
-			}
+		if(edad >= 0){
+			this.edad = edad;
 		}
+		else{
+			throw new ExcepcionPersona("La edad es menor que 0");
+		}
+	}
+	
+	public void setSexo (char sexo) throws ExcepcionPersona{
 		
-		return tipoIMC;
+		if(sexo == 'M' || sexo == 'F' || sexo == 'X' || sexo == 'm' || sexo == 'f' || sexo == 'x'){
+			this.sexo = sexo;
+		}
+		else{
+			throw new ExcepcionPersona("El sexo no es M, F o X");
+		}
+	}
+	
+	public void setPeso (double peso) throws ExcepcionPersona{
+		
+		if(peso >= 0){
+			this.peso = peso;
+		}
+		else{
+			throw new ExcepcionPersona("El peso es menor o igual que 0");
+		}
+	}
+	
+	public void setAltura (double altura) throws ExcepcionPersona{
+	
+		if(altura >= 0){
+			this.altura = altura;
+		}
+		else{
+			throw new ExcepcionPersona("La altura es menor o igual que 0");
+		}
 	}
 	
 	//Métodos sobrescritos
 	@Override
-	public int compareTo(Persona other){
+	public int compareTo(Persona persona){
 		
 		int ret = 0;
 		
-		if(this != other && this.getEdad() > other.getEdad()){
+		if(this != persona && this.getEdad() > persona.getEdad()){
 			ret = 1;
 		}
 		else{
-			if(this.getEdad() < other.getEdad()){
+			if(this.getEdad() < persona.getEdad()){
 				ret = -1;
 			}
 		}
@@ -154,8 +154,7 @@ public class Persona implements Cloneable, Comparable<Persona> {
 	public boolean equals(Object obj) {
 		
 		boolean ret = false;
-		
-		//1. Comprobamos que obj no es el mismo objeto (obj == this), si lo es, devolveremos true.
+
 		if(this == obj){
 			ret = true;
 		}

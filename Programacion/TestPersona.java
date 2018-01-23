@@ -18,6 +18,17 @@ public class TestPersona {
 		System.out.println(" ");
 		
 		//Constructor con parámetros
+		Persona Jorge = new Persona("Jorge", 19, "9999999-A", 'M', 68.0, 1.73);
+		
+		//toString
+		System.out.println(Jorge.toString());
+		
+		
+		System.out.println(" ");
+		System.out.println("*--------------------------------------------------------------*");
+		System.out.println(" ");
+		
+		//Constructor con parámetros
 		Persona Tomas = new Persona("Tomas", 19, "77859350-A", 'M', 70.0, 1.72);
 		
 		//toString para ver el constructor con parámetros
@@ -58,19 +69,44 @@ public class TestPersona {
 		System.out.println(" ");
 		
 		//Tests de los SETS y GETS
-		Tomas.setNombre("Tomah");
+		try{
+			Tomas.setNombre("Tomas osdjifgisadfhñogpoweirgpoiurgourhgpieurjgaijghrfgeiurhgighe");
+		}
+		catch(ExcepcionPersona mensaje){
+			System.out.println(mensaje);
+		}
 		System.out.println("Nuevo nombre: " +Tomas.getNombre());
 		
-		Tomas.setEdad(20);
+		try{
+			Tomas.setEdad(-19);
+		}
+		catch(ExcepcionPersona mensaje){
+			System.out.println(mensaje);
+		}
 		System.out.println("Nueva edad: " +Tomas.getEdad());
 		
-		Tomas.setSexo('F');
+		try{
+			Tomas.setSexo('j');
+		}
+		catch(ExcepcionPersona mensaje){
+			System.out.println(mensaje);
+		}
 		System.out.println("Nuevo sexo: " +Tomas.getSexo());
 		
-		Tomas.setPeso(73.0);
+		try{
+			Tomas.setPeso(-73.0);
+		}
+		catch(ExcepcionPersona mensaje){
+			System.out.println(mensaje);
+		}
 		System.out.println("Nuevo peso: " +Tomas.getPeso());
 		
-		Tomas.setAltura(1.73);
+		try{
+			Tomas.setAltura(-1.73);
+		}
+		catch(ExcepcionPersona mensaje){
+			System.out.println(mensaje);
+		}
 		System.out.println("Nueva altura: " +Tomas.getAltura());
 		
 		System.out.println(" ");
@@ -82,6 +118,8 @@ public class TestPersona {
 		
 		//hashCode con datos cambiados
 		System.out.println("HashCode: " +Tomas.hashCode());
+		
+		System.out.println(Jorge.compareTo(Tomas));
 		
 	}
 }
