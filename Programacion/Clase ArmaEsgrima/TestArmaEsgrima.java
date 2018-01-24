@@ -136,6 +136,17 @@ public class TestArmaEsgrima {
 		
 		System.out.println("Florete y Florete: " +florete.equals(florete));
 		
+		//Tests clone
+		System.out.println(" ");
+		System.out.println("*------------------- clone -------------------*");
+		System.out.println(" ");
+		
+		System.out.println(espada.toString());
+		
+		System.out.println(" ");
+		
+		System.out.println(espada.clone());
+		
 	}
 }
 

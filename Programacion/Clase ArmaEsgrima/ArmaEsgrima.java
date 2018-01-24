@@ -29,7 +29,7 @@
  * 		- void setManoBuena(char manoBuena)
  */
 
-public class ArmaEsgrima implements Cloneable, Comparable<ArmaEsgrima> {
+public class ArmaEsgrima implements Cloneable{
 	
 	//Atributos
 	private String marca = new String();
@@ -133,23 +133,6 @@ public class ArmaEsgrima implements Cloneable, Comparable<ArmaEsgrima> {
 		}
 		
 		return copia;
-	}
-	
-	@Override
-	public int compareTo(ArmaEsgrima armaEsgrima){
-		
-		int ret = 0;
-		
-		if(this != persona && this.getEdad() > persona.getEdad()){
-			ret = 1;
-		}
-		else{
-			if(this.getEdad() < persona.getEdad()){
-				ret = -1;
-			}
-		}
-		
-		return ret;
 	}
 	
 }
