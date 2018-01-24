@@ -29,7 +29,7 @@
  * 		- void setManoBuena(char manoBuena)
  */
 
-public class ArmaEsgrima {
+public class ArmaEsgrima implements Cloneable, Comparable<ArmaEsgrima> {
 	
 	//Atributos
 	private String marca = new String();
@@ -47,6 +47,13 @@ public class ArmaEsgrima {
 		this.marca = marca;
 		this.tipo = tipo;
 		this.manoBuena = manoBuena;
+	}
+	
+	//Constructor de copia
+	public ArmaEsgrima(ArmaEsgrima armaCopia){
+		this.marca = armaCopia.getMarca();
+		this.tipo = armaCopia.getTipo();
+		this.manoBuena = armaCopia.getManoBuena();
 	}
 	
 	//GETS
@@ -88,6 +95,61 @@ public class ArmaEsgrima {
 		String s = "Marca: " +getMarca() +"\nTipo: " +getTipo() +"\nMano buena: " +getManoBuena();
 		
 		return s;
+	}
+	
+	@Override
+	public boolean equals(Object obj){
+		
+		boolean ret = false;
+		
+		if(this == obj){
+			ret = true;
+		}
+		else{
+			if(obj != null && obj instanceof ArmaEsgrima){
+				
+				ArmaEsgrima other = (ArmaEsgrima)obj;
+				
+				if(this.marca == other.marca &&
+				   this.tipo == other.tipo &&
+				   this.manoBuena == other.manoBuena){
+					   
+					ret = true;
+				}
+			}
+		}
+		return ret;
+	}
+	
+	@Override
+	public ArmaEsgrima clone(){
+		ArmaEsgrima copia = null;
+		
+		try{
+			copia = (ArmaEsgrima)super.clone();
+		}
+		catch(CloneNotSupportedException error){
+			System.out.println("No se pudo clonar el objeto (devuelve un null)");
+		}
+		
+		return copia;
+	}
+	
+	@Override
+	public int compareTo(ArmaEsgrima armaEsgrima){
+		
+		int ret = 0;
+		
+		if(this != persona && this.getEdad() > persona.getEdad()){
+			ret = 1;
+		}
+		else{
+			if(this.getEdad() < persona.getEdad()){
+				ret = -1;
+			}
+		}
+		
+		return ret;
 	}
 	
 }

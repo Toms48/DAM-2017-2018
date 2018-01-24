@@ -14,6 +14,9 @@ public class TestArmaEsgrima {
 		ArmaEsgrima florete = new ArmaEsgrima("PBT", "Florete", 'Z');
 		ArmaEsgrima sable = new ArmaEsgrima("Insignia", "Sable", 'D');
 		
+		//Constructor copia
+		ArmaEsgrima espadaCopia = new ArmaEsgrima(espada);
+		
 		//Tests Gets
 		System.out.println(" ");
 		System.out.println("*------------------- Gets -------------------*");
@@ -87,6 +90,10 @@ public class TestArmaEsgrima {
 		
 		System.out.println(sable.toString());
 		
+		System.out.println(" ");
+		
+		System.out.println(espadaCopia.toString());
+		
 		//Tests hashCode
 		System.out.println(" ");
 		System.out.println("*------------------- hashCode -------------------*");
@@ -101,6 +108,33 @@ public class TestArmaEsgrima {
 		System.out.println(" ");
 		
 		System.out.println(sable.hashCode());
+		
+		System.out.println(" ");
+		
+		System.out.println(espadaCopia.hashCode());
+		
+		//Tests equals
+		System.out.println(" ");
+		System.out.println("*------------------- equals -------------------*");
+		System.out.println(" ");
+		
+		System.out.println("Espada y EspadaCopia: " +espada.equals(espadaCopia));
+		
+		System.out.println(" ");
+		
+		System.out.println("Espada y Espada: " +espada.equals(espada));
+		
+		System.out.println(" ");
+		
+		System.out.println("Espada y Florete: " +espada.equals(florete));
+		
+		System.out.println(" ");
+		
+		System.out.println("Sable y EspadaCopia: " +sable.equals(espadaCopia));
+		
+		System.out.println(" ");
+		
+		System.out.println("Florete y Florete: " +florete.equals(florete));
 		
 	}
 }
