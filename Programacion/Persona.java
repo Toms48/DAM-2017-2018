@@ -90,7 +90,7 @@ public class Persona implements Cloneable, Comparable<Persona> {
 	
 	public void setSexo (char sexo) throws ExcepcionPersona{
 		
-		if(sexo == 'M' || sexo == 'F' || sexo == 'X' || sexo == 'm' || sexo == 'f' || sexo == 'x'){
+		if(sexo == 'M' || sexo == 'H' || sexo == 'X' || sexo == 'm' || sexo == 'h' || sexo == 'x'){
 			this.sexo = sexo;
 		}
 		else{
@@ -100,7 +100,7 @@ public class Persona implements Cloneable, Comparable<Persona> {
 	
 	public void setPeso (double peso) throws ExcepcionPersona{
 		
-		if(peso >= 0){
+		if(peso > 0.0){
 			this.peso = peso;
 		}
 		else{
@@ -110,7 +110,7 @@ public class Persona implements Cloneable, Comparable<Persona> {
 	
 	public void setAltura (double altura) throws ExcepcionPersona{
 	
-		if(altura >= 0){
+		if(altura > 0.0){
 			this.altura = altura;
 		}
 		else{
@@ -120,6 +120,26 @@ public class Persona implements Cloneable, Comparable<Persona> {
 	
 	
 	//Métodos sobrescritos
+	@Override
+	public Persona clone(){
+		
+		Persona copia = null;
+		
+		try{
+			copia = (Persona)super.clone();
+		}
+		catch(CloneNotSupportedException error){
+			System.out.println("No se pudo clonar el objeto (devuelve un null)");
+		}
+		
+		return copia;
+	}
+	
+	/*Compara por la edad
+	 * 	 0 si tiene la misma edad
+	 * 	 1 si la primera persona tiene más edad
+	 * 	-1 si la primera tiene menos edad que la segunda
+	 */
 	@Override
 	public int compareTo(Persona persona){
 		
@@ -135,22 +155,7 @@ public class Persona implements Cloneable, Comparable<Persona> {
 		}
 		
 		return ret;
-	}
-	
-	@Override
-	public Persona clone(){
-		
-		Persona copia = null;
-		
-		try{
-			copia = (Persona)super.clone();
-		}
-		catch(CloneNotSupportedException error){
-			System.out.println("No se pudo clonar el objeto (devuelve un null)");
-		}
-		
-		return copia;
-	}
+	}	
 	
 	@Override
 	public boolean equals(Object obj) {
