@@ -2,8 +2,52 @@ public class TestPersona {
 	
 	public static void main (String[] args) {
 		
+		//Tests Constructores
+		System.out.println(" ");
+		System.out.println("*------------------- Constructores -------------------*");
+		System.out.println(" ");
+		
 		//Constructor por defecto
 		Persona porDefecto = new Persona();
+		
+		//Constructor con parámetros
+		Persona Jorge = new Persona("Jorge", 19, "48124244-X", 'M', 68.0, 1.73);
+		Persona Tomas = new Persona("Tomas", 19, "77859350-A", 'M', 70.0, 1.72);
+		Persona Rafa = new Persona("Rafa", 21, "47394697-E", 'M', 81.0, 1.82);
+		Persona Yeray = new Persona("Yeray", 20, "47429304-S", 'M', 65.0, 1.56);
+		
+		//Constructor de copia
+		Persona copiaJorge = new Persona(Jorge);
+		Persona copiaTomas = new Persona(Tomas);
+		Persona copiaRafa = new Persona(Rafa);
+		Persona copiaYeray = new Persona(Yeray);
+		
+		//Tests Gets
+		System.out.println(Jorge.getNombre());
+		System.out.println(Jorge.getEdad());
+		System.out.println(Jorge.getDNI());
+		System.out.println(Jorge.getSexo());
+		System.out.println(Jorge.getPeso());
+		System.out.println(Jorge.getAltura());
+		
+		System.out.println(Yeray.getNombre());
+		System.out.println(Yeray.getEdad());
+		System.out.println(Yeray.getDNI());
+		System.out.println(Yeray.getSexo());
+		System.out.println(Yeray.getPeso());
+		System.out.println(Yeray.getAltura());
+		
+		//Tests Sets
+		try{
+			Rafa.setSexo('H');
+		}
+		catch(ExcepcionPersona mensaje){
+			System.out.println(mensaje);
+		}
+		
+		
+		
+		
 		
 		//toString para ver constructor por defecto
 		System.out.println(porDefecto.toString());
@@ -17,8 +61,7 @@ public class TestPersona {
 		System.out.println("*--------------------------------------------------------------*");
 		System.out.println(" ");
 		
-		//Constructor con parámetros
-		Persona Jorge = new Persona("Jorge", 19, "9999999-A", 'M', 68.0, 1.73);
+		
 		
 		//toString
 		System.out.println(Jorge.toString());
@@ -29,7 +72,6 @@ public class TestPersona {
 		System.out.println(" ");
 		
 		//Constructor con parámetros
-		Persona Tomas = new Persona("Tomas", 19, "77859350-A", 'M', 70.0, 1.72);
 		
 		//toString para ver el constructor con parámetros
 		System.out.println(Tomas.toString());

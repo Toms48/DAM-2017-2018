@@ -38,6 +38,7 @@ public class Persona implements Cloneable, Comparable<Persona> {
 		this.altura = PersonaCopia.getAltura();
 	}
 	
+	
 	//GETS
 	public String getNombre(){
 		return nombre;
@@ -116,6 +117,7 @@ public class Persona implements Cloneable, Comparable<Persona> {
 			throw new ExcepcionPersona("La altura es menor o igual que 0");
 		}
 	}
+	
 	
 	//Métodos sobrescritos
 	@Override

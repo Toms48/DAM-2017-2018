@@ -28,19 +28,21 @@ public class TestArmaEsgrima {
 		
 		System.out.println("");
 		
-		System.out.println("");
 		System.out.println("Marca del objeto florete: " +florete.getMarca());
 		System.out.println("Tipo del objeto florete: " +florete.getTipo());
 		System.out.println("Mano buena del objeto florete: " +florete.getManoBuena());
 		
 		System.out.println("");
 		
-		System.out.println("");
 		System.out.println("Marca del objeto sable: " +sable.getMarca());
 		System.out.println("Tipo del objeto sable: " +sable.getTipo());
 		System.out.println("Mano buena del objeto sable: " +sable.getManoBuena());
 		
 		System.out.println(" ");
+		
+		System.out.println("Marca del objeto espadaCopia: " +espada.getMarca());
+		System.out.println("Tipo del objeto espadaCopia: " +espada.getTipo());
+		System.out.println("Mano buena del objeto espadaCopia: " +espada.getManoBuena());
 		
 		//Tests Set
 		System.out.println(" ");
