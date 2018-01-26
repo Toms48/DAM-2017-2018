@@ -2,7 +2,7 @@
 SELECT * FROM Suppliers
 SELECT * FROM Products
 
-SELECT s.ContactName, COUNT(ProductID) AS [Número de productos que vende]
+SELECT s.CompanyName, COUNT(ProductID) AS [Número de productos que vende]
 	FROM Suppliers AS s
 	INNER JOIN Products AS p
 	ON s.SupplierID = p.SupplierID
@@ -61,15 +61,15 @@ SELECT e.EmployeeID, e.FirstName, e.LastName, e.HomePhone, c.CompanyName
 --6. Empleados (ID, nombre, apellidos, mes y día de su cumpleaños) que no han vendido nunca nada a ningún cliente de Francia. *
 SELECT * FROM Employees
 SELECT * FROM Orders
-SELECT * FROM Customers
 
-SELECT e.EmployeeID, e.FirstName, e.LastName, MONTH(e.BirthDate) AS [Mes de nacimiento], DAY(e.BirthDate) AS [Día de nacimiento], c.Country
+SELECT e.EmployeeID, e.FirstName, e.LastName, MONTH(BirthDate) AS [Mes del cumpleaños], DAY(BirthDate) AS [Día del cumpleaños]
 	FROM Employees AS e
 	INNER JOIN Orders AS o
 	ON e.EmployeeID = o.EmployeeID
-	INNER JOIN Customers AS c
-	ON o.CustomerID = c.CustomerID
-		WHERE c.Country <> 'France'
+
+EXCEPT
+SELECT EmployeeID, ShipCountry FROM Orders
+	WHERE ShipCountry = 'France'
 
 --7. Total de ventas en US$ de productos de cada categoría (nombre de la categoría).
 SELECT * FROM Categories
@@ -116,10 +116,23 @@ SELECT p.ProductName, SUM(od.Quantity) AS [Cantidad de unidades], YEAR(o.OrderDa
 
 
 --11. Empleados (nombre y apellidos) que trabajan a las órdenes de Andrew Fuller.
+SELECT * FROM Employees
 
+SELECT EmployeeID FROM Employees
+	WHERE FirstName = 'Andrew' AND LastName = 'Fuller'
+
+SELECT FirstName, LastName, ReportsTo FROM Employees
+	WHERE ReportsTo = (SELECT EmployeeID FROM Employees
+							WHERE FirstName = 'Andrew' AND LastName = 'Fuller')
 
 --12. Número de subordinados que tiene cada empleado, incluyendo los que no tienen ninguno. Nombre, apellidos, ID.
+SELECT * FROM Employees
 
+SELECT FirstName, LastName,EmployeeID, ReportsTo FROM Employees
+
+/*SELECT FirstName, LastName,EmployeeID, COUNT(ReportsTo) FROM Employees
+	GROUP BY FirstName, LastName,EmployeeID
+	WHERE */
 
 
 --* Se necesitan subconsultas
