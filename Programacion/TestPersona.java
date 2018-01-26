@@ -219,6 +219,12 @@ public class TestPersona {
 		System.out.println(Rafa.compareTo(Yeray));
 		System.out.println(copiaTomas.compareTo(Yeray));
 		
+		System.out.println(" ");
+		System.out.println("*------------------- EsMayorEdad -------------------*");
+		System.out.println(" ");
+		
+		System.out.println(Tomas.EsMayorEdad());
+		
 	}
 }
 

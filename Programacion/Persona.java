@@ -94,7 +94,7 @@ public class Persona implements Cloneable, Comparable<Persona> {
 			this.sexo = sexo;
 		}
 		else{
-			throw new ExcepcionPersona("El sexo no es M, F o X");
+			throw new ExcepcionPersona("El sexo no es M, H o X");
 		}
 	}
 	
@@ -195,6 +195,43 @@ public class Persona implements Cloneable, Comparable<Persona> {
 	public int hashCode(){
 		return ((int) ((getDNI().hashCode() + 31) * getPeso() * 7 + getAltura() * 33 * 21 * getEdad() + getAltura() * 100));
 	}
+	
+	//Métodos añadidos
+	
+	/* Nombre: EsMayorEdad
+	 * 
+	 * Comentario: Nos dirá si la persona es mayor de edad o no
+	 * 
+	 * Análisis: 
+	 * 		Precon: No tiene
+	 * 		Entradas: No tiene
+	 * 		Salidas: Un boolean
+	 * 		Postcon:
+	 * 			- false si no es mayor de edad
+	 * 			- true si es mayor de edad
+	 */
+	public boolean EsMayorEdad(){
+		
+		boolean esMayorEdad = false;
+		
+		if(getEdad() >= 18){
+			esMayorEdad = true;
+		}
+		return esMayorEdad;
+	}
+	
+	/* Nombre: EsMayorEdad
+	 * 
+	 * Comentario: Nos dirá si la persona es mayor de edad o no
+	 * 
+	 * Análisis: 
+	 * 		Precon: No tiene
+	 * 		Entradas: No tiene
+	 * 		Salidas: Un boolean
+	 * 		Postcon:
+	 * 			- false si no es mayor de edad
+	 * 			- true si es mayor de edad
+	 */
 	
 }
 
