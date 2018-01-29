@@ -68,7 +68,11 @@ SELECT e.EmployeeID, e.FirstName, e.LastName, MONTH(BirthDate) AS [Mes del cumpl
 	ON e.EmployeeID = o.EmployeeID
 
 EXCEPT
-SELECT EmployeeID, ShipCountry FROM Orders
+
+SELECT e.EmployeeID, e.FirstName, e.LastName, MONTH(BirthDate) AS [Mes del cumpleaños], DAY(BirthDate) AS [Día del cumpleaños]
+	FROM Orders AS o
+	INNER JOIN Employees AS e
+	ON o.EmployeeID = e.EmployeeID
 	WHERE ShipCountry = 'France'
 
 --7. Total de ventas en US$ de productos de cada categoría (nombre de la categoría).
@@ -113,7 +117,33 @@ SELECT p.ProductName, SUM(od.Quantity) AS [Cantidad de unidades], YEAR(o.OrderDa
 		GROUP BY P.ProductName, YEAR(o.OrderDate)
 
 --10. Cuál es el producto del que hemos vendido más unidades en cada país. *
+SELECT * FROM Products
+SELECT * FROM [Order Details]
+SELECT * FROM Orders
 
+SELECT p.ProductName, SUM(od.Quantity) AS [Cantidad vendida], o.ShipCountry
+	FROM Products AS p
+	INNER JOIN [Order Details] AS od
+	ON p.ProductID = od.ProductID
+	INNER JOIN Orders AS o
+	ON od.OrderID = o.OrderID
+	GROUP BY p.ProductName, o.ShipCountry
+
+SELECT MAX([Cantidad vendida]) AS [Cantidad máxima vendida por país], o.ShipCountry, p.ProductName
+	FROM (SELECT SUM(od.Quantity) AS [Cantidad vendida], o.OrderID, p.ProductName
+			FROM Products AS p
+			INNER JOIN [Order Details] AS od
+			ON p.ProductID = od.ProductID
+			INNER JOIN Orders AS o
+			ON od.OrderID = o.OrderID
+			GROUP BY p.ProductName, o.ShipCountry, o.OrderID) AS [Mieo]
+	INNER JOIN Orders AS o
+	ON [Mieo].OrderID = o.OrderID
+	INNER JOIN [Order Details] AS od
+	ON o.OrderID = od.OrderID
+	INNER JOIN Products AS p
+	ON od.ProductID = p.ProductID
+	GROUP BY o.ShipCountry, p.ProductName
 
 --11. Empleados (nombre y apellidos) que trabajan a las órdenes de Andrew Fuller.
 SELECT * FROM Employees
