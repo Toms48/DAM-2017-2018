@@ -27,7 +27,7 @@
  */
 
 
-public class Tirador {
+public class Tirador implements Cloneable{
 	
 	//Atributos
 	private Persona persona = new Persona();
@@ -45,10 +45,11 @@ public class Tirador {
 		this.arma = arma;
 	}
 	
-	/*//Constructor de copia
+	//Constructor de copia
 	public Tirador(Tirador tirador){
-		
-	}*/
+		this.persona = tirador.getPersona();
+		this.arma = tirador.getArma();
+	}
 	
 	//GETS
 	public Persona getPersona(){
@@ -58,6 +59,67 @@ public class Tirador {
 	public ArmaEsgrima getArma(){
 		return arma;
 	}
+	
+	//SETS
+	public void setPersona(Persona persona){
+		this.persona = persona;
+	}
+	
+	public void setArma(ArmaEsgrima arma){
+		this.arma = arma;
+	}
+	
+	//Métodos sobrescritos
+	@Override
+	public Tirador clone(){
+		
+		Tirador copia = null;
+		
+		try{
+			copia = (Tirador)super.clone();
+		}
+		catch(CloneNotSupportedException error){
+			System.out.println("No se pudo clonar el objeto (devuelve un null)");
+		}
+		
+		return copia;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		
+		boolean ret = false;
+
+		if(this == obj){
+			ret = true;
+		}
+		else{
+			if(obj != null && obj instanceof Tirador){
+				Tirador other = (Tirador)obj;
+				
+				if(this.persona == other.getPersona() &&
+				   this.arma == other.getArma()){
+					   
+					ret = true;
+					
+				}
+			}
+		}
+		return ret;
+	}
+	
+	@Override
+	public String toString(){
+		String s = "*----- Persona -----*" +"\n" +getPersona() +"\n\n*----- Arma -----*" +"\n" +getArma();
+		
+		return s;
+	}
+	
+	/*@Override
+	public int hashCode(){
+		return ((int) ());
+	}*/
+	
 	
 }
 
