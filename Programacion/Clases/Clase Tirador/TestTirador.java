@@ -102,8 +102,14 @@ public class TestTirador {
 		System.out.println("TiradorPorDefecto y Tirador2: " +tiradorPorDefecto.equals(tirador2));
 		
 		System.out.println(" ");
-		System.out.println("*------------------------- hashCode (terminar) -------------------------*");
+		System.out.println("*------------------------- hashCode -------------------------*");
 		System.out.println(" ");
+		
+		System.out.println("hashCode tirador1: " +tirador1.hashCode());
+		
+		System.out.println(" ");
+		
+		System.out.println("hashCode tirador2: " +tirador2.hashCode());
 		
 	}
 }

@@ -52,12 +52,42 @@ public class Tirador implements Cloneable{
 	}
 	
 	//GETS
-	public Persona getPersona(){
-		return persona;
+	public String getNombre(){
+		return persona.getNombre();
 	}
 	
-	public ArmaEsgrima getArma(){
-		return arma;
+	public int getEdad(){
+		return persona.getEdad();
+	}
+	
+	public String getDNI(){
+		return persona.getDNI();
+	}
+	
+	public char getSexo(){
+		return persona.getSexo();
+	}
+	
+	public double getPeso(){
+		return persona.getPeso();
+	}
+	
+	public double getAltura(){
+		return persona.getAltura();
+	}
+	
+	
+	
+	public String getMarca(){
+		return arma.getMarca();
+	}
+	
+	public String getTipo(){
+		return arma.getTipo();
+	}
+	
+	public char getManoBuena(){
+		return arma.getManoBuena();
 	}
 	
 	//SETS
@@ -115,10 +145,10 @@ public class Tirador implements Cloneable{
 		return s;
 	}
 	
-	/*@Override
+	@Override
 	public int hashCode(){
-		return ((int) ());
-	}*/
+		return ((int) ((persona.hashCode() * 7) + (arma.hashCode() + persona.hashCode() ) ));
+	}
 	
 	
 }
