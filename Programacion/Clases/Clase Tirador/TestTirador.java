@@ -111,6 +111,21 @@ public class TestTirador {
 		
 		System.out.println("hashCode tirador2: " +tirador2.hashCode());
 		
+		System.out.println(" ");
+		System.out.println("*------------------------- Array -------------------------*");
+		System.out.println(" ");
+		
+		Tirador [] arrayTiradores = new Tirador [2];
+		
+		arrayTiradores [0] = tirador1;
+		arrayTiradores [1] = tirador2;
+		
+		System.out.println(arrayTiradores [0]);
+		
+		System.out.println(" ");
+		
+		System.out.println(arrayTiradores [1]);
+		
 	}
 }
 

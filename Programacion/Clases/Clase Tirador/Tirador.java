@@ -52,6 +52,10 @@ public class Tirador implements Cloneable{
 	}
 	
 	//GETS
+	public Persona getPersona(){
+		return persona;
+	}
+	
 	public String getNombre(){
 		return persona.getNombre();
 	}
@@ -77,6 +81,9 @@ public class Tirador implements Cloneable{
 	}
 	
 	
+	public ArmaEsgrima getArma(){
+		return arma;
+	}
 	
 	public String getMarca(){
 		return arma.getMarca();
