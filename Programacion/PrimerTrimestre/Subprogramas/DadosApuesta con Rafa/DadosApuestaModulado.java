@@ -73,8 +73,8 @@ public class DadosApuestaModulado {
 		int aleatorioJugador1 = 0;
 		int aleatorioJugador2 = 0;
 		
-		int restaPc = 0;
-		int restaJugador = 0;
+		int diferenciaPc = 0;
+		int diferenciaJugador = 0;
 		
 		Scanner teclado = new Scanner (System.in);
 
@@ -154,6 +154,7 @@ public class DadosApuestaModulado {
 				for(partidasRealizadas=0; partidasRealizadas < partidasTotales && dineroJugador !=0 && dineroPc !=0; partidasRealizadas++){
 					
 					//Generar numero elegido por el Pc
+					numeroElegidoPc = random.nextInt(10) +2;
 					
 					//Leer numero elegido por el Jugador
 					System.out.println();
@@ -162,7 +163,8 @@ public class DadosApuestaModulado {
 					numeroElegidoJugador = teclado.nextInt();
 			
 					//Generar apuesta del Pc
-				
+					apuestaPc = random.nextInt(dineroPc) +1;
+					
 					//Leer y validar apuesta del jugador
 					
 					/*--------------------------------------
@@ -183,12 +185,22 @@ public class DadosApuestaModulado {
 					while(apuestaJugador <= 0 || apuestaJugador > dineroJugador);
 								
 					//Generar y sumar los dados del Pc
-				
+					sumaDadosPc = fDadosApuestaModulado.GenerarSumarDados();
+					System.out.println("Suma de los dados del Pc es: " +sumaDadosPc);
+					
 					//Generar y sumar los dados del Jugador
+					sumaDadosJugador = fDadosApuestaModulado.GenerarSumarDados();
+					System.out.println("Suma de los dados del Jugador es: " +sumaDadosJugador);
+					System.out.println();
 					
 					//Calcular diferencia con la apuesta Pc
-				
+					diferenciaPc = fDadosApuestaModulado.CalcularDiferenciaApuesta(numeroElegidoPc, sumaDadosPc);
+					System.out.println("El Pc ha apostado por el " +numeroElegidoPc +" y la suma de sus dados es " +sumaDadosPc +", la diferencia es de " +diferenciaPc);
+					
 					//Calcular diferencia con la apuesta Jugador
+					diferenciaJugador = fDadosApuestaModulado.CalcularDiferenciaApuesta(numeroElegidoJugador, sumaDadosJugador);
+					System.out.println("El Jugador ha apostado por el " +numeroElegidoJugador +" y la suma de sus dados es " +sumaDadosJugador +", la diferencia es de " +diferenciaJugador);
+					System.out.println();
 					
 					//Mostrar ganador y actualizar dinero
 				
