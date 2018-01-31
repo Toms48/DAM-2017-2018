@@ -9,7 +9,7 @@ public class Persona implements Cloneable, Comparable<Persona> {
 	private double altura;
 	
 	//Constructor por defecto
-	public Persona (){
+	public Persona(){
 		nombre = "Persona PorDefecto";
 		edad = 0;
 		DNI = "00000000[A-Z]";

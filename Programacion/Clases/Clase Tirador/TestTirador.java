@@ -120,11 +120,21 @@ public class TestTirador {
 		arrayTiradores [0] = tirador1;
 		arrayTiradores [1] = tirador2;
 		
-		System.out.println(arrayTiradores [0]);
+		/*System.out.println(arrayTiradores [0]);
 		
 		System.out.println(" ");
 		
 		System.out.println(arrayTiradores [1]);
+		
+		System.out.println(" ");
+		System.out.println(" ");*/
+		
+		for(int i=0; i < arrayTiradores.length; i++){
+			
+			System.out.println(arrayTiradores [i]);
+			System.out.println(" ");
+			
+		}
 		
 	}
 }
