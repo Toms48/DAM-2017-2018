@@ -12,7 +12,7 @@ public class fHombresLobo {
 Interfaz
 	Comentario: Subprograma que simulará el juego de los hombres lobos
 	Cabecera: void JugarHombresLobo()
-	Precondiciones: cantidadHL es mayor que cantidadCamp
+	Precondiciones: No tiene
 	Entrada: No hay
 	Salida: No hay
 	E/S: No hay
@@ -26,9 +26,10 @@ Interfaz
 		
 		int aleatorio = 0;
 		
-		ArrayList array6Cartas = new ArrayList(6);
-		ArrayList array6CartasCopia = new ArrayList(6);
-		Carta [] arrayTablero = new Carta [6];
+		boolean salirArray = false;
+		
+		ArrayList <Carta> array6Cartas = new ArrayList <Carta> (6);			//<Carta> para que no te de un warning, se le tiene que especificar el tipo de los objetos que vas a usar
+		ArrayList <Carta> arrayTablero = new ArrayList <Carta> (6);
 		
 		Carta espada1 = new Carta(2,1);
 		
@@ -39,28 +40,66 @@ Interfaz
 		Carta bastos5 = new Carta(4,5);
 		
 		array6Cartas.add(0,espada1);
-		
 		array6Cartas.add(1,bastos1);
 		array6Cartas.add(2,bastos2);
 		array6Cartas.add(3,bastos3);
 		array6Cartas.add(4,bastos4);
 		array6Cartas.add(5,bastos5);
 		
-		array6CartasCopia = array6Cartas.clone();
-		
 		Random random = new Random();
 		
 		//Inicio
 			//RepartirPersonajes
+			do{
+				if(array6Cartas.size() > 1){
+					
+					aleatorio = random.nextInt(array6Cartas.size()-1);
+				
+					arrayTablero.add(array6Cartas.get(aleatorio));
+				
+					array6Cartas.remove(aleatorio);
+					
+				}
+				else{
+				
+					arrayTablero.add(array6Cartas.get(0));
+					
+					salirArray = true;
+				}
+				
+				System.out.println(array6Cartas.size());	//Para comprobar que el tamaño del array va reduciendose
+			}
+			while(salirArray == false);
 			
+			//ImprimirCartaJugador
+			System.out.println(arrayTablero.get(0).toString());
+			//System.out.println(arrayTablero.get(0).equals(espada1));		//Para ver si el equals es true cuando al jugador le sale la carta de espada
 			
 			while(cantidadHL > cantidadCamp){
-				//Noche*
+				if(arrayTablero.get(0).equals(espada1) == true){
+					//Noche*
+				}
+				else{
+					
+				}
+				
 				//Día*
 			}//Fin_Mientras
 		//Fin
 		
 		return 1;
 	}
+	
+	public static int Noche(){
+		
+		//Inicio
+			//Hacer 
+				//Generar victima aleatoria
+				//Confirmar victima
+			//Mientras matar no sea s
+		//Fin
+		return 1;
+	}
+	
 }
 

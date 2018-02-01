@@ -41,7 +41,7 @@ public class mHombresLobo {
 		//Inicio
 			//LeerValidarParaEjecutar
 			do{
-				System.out.print("Quiere ejecutar el programa? (S/N): ");
+				System.out.print("Quiere ejecutar el programa? (s/n): ");
 				
 				respuesta = Character.toLowerCase(teclado.next().charAt(0));
 			}
@@ -53,7 +53,7 @@ public class mHombresLobo {
 				rHombresLobo.JugarHombresLobo();
 				//LeerValidarParaEjecutar
 				do{
-					System.out.print("Quiere ejecutar el programa de nuevo? (S/N): ");
+					System.out.print("Quiere ejecutar el programa de nuevo? (s/n): ");
 					
 					respuesta = Character.toLowerCase(teclado.next().charAt(0));
 				}
