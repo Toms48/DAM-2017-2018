@@ -1,7 +1,7 @@
 /*	Nombre: Carta
  * 
  * 	Básicas:
- * 		- palo => int => Consultable y no modificable (1 para Oro, 2 para Espada, 3 para Copa y 4 para Bastos)
+ * 		- palo => char => Consultable y no modificable (o para Oro, e para Espada, c para Copa y b para Bastos)
  * 		- numero => int => Consultable y no modificable
  * 
  * 	Derivadas: No tiene
@@ -9,13 +9,13 @@
  * 	Compartidas: No tiene
  * 
  * 	Restricciones:
- * 		- palo será un número entre 1 y 4 (incluidos)
+ * 		- palo será una letra: o, e, c o b
  * 		- numero será un numero entre 1 y 12 (incluidos)
  * 
  * 	Métodos añadidos: No tiene
  * 
- * 	int palo
- * 		- int getPalo()
+ * 	char palo
+ * 		- char getPalo()
  * 	
  * int numero
  * 		- int getNumero()
@@ -26,17 +26,17 @@
 public class Carta implements Comparable<Carta>{
 	
 	//Atributos
-	private int palo;
+	private char palo;
 	private int numero;
 	
 	//Constructor por defecto
 	public Carta(){
-		palo = 0;
+		palo = ' ';
 		numero = 0;
 	}
 	
 	//Constructor con parámetros
-	public Carta(int palo, int numero){
+	public Carta(char palo, int numero){
 		this.palo = palo;
 		this.numero = numero;
 	}
@@ -48,7 +48,7 @@ public class Carta implements Comparable<Carta>{
 	}
 	
 	//Gets
-	public int getPalo(){
+	public char getPalo(){
 		return palo;
 	}
 	
@@ -136,7 +136,7 @@ public class Carta implements Comparable<Carta>{
 	
 	@Override
 	public int hashCode(){
-		return ((int) (getPalo() * 31 + getNumero() * 182417) );
+		return ((int) (182417 + getNumero() * 31) );
 	}
 	
 }

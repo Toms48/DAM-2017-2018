@@ -3,10 +3,13 @@
  * 
  */
 
+import java.util.Scanner;
 import java.util.Random;
 import java.util.ArrayList;
 
 public class fHombresLobo {
+	
+	
 	
 /**************************************************************************	
 Interfaz
@@ -19,26 +22,27 @@ Interfaz
 	Postcondiciones: No tiene
 **************************************************************************/	
 	
-	public static int JugarHombresLobo(){
+	public static void JugarHombresLobo(){
 		
 		int cantidadHL = 1;
 		int cantidadCamp = 5;
 		
 		int aleatorio = 0;
+		int victimaAleatorio = 0;
 		
 		boolean salirArray = false;
 		
 		ArrayList <Carta> array6Cartas = new ArrayList <Carta> (6);			//<Carta> para que no te de un warning, se le tiene que especificar el tipo de los objetos que vas a usar
 		ArrayList <Carta> arrayTablero = new ArrayList <Carta> (6);
-		
-		Carta espada1 = new Carta(2,1);
-		
-		Carta bastos1 = new Carta(4,1);
-		Carta bastos2 = new Carta(4,2);
-		Carta bastos3 = new Carta(4,3);
-		Carta bastos4 = new Carta(4,4);
-		Carta bastos5 = new Carta(4,5);
-		
+
+		Carta espada1 = new Carta('e',1);
+
+		Carta bastos1 = new Carta('b',1);
+		Carta bastos2 = new Carta('b',2);
+		Carta bastos3 = new Carta('b',3);
+		Carta bastos4 = new Carta('b',4);
+		Carta bastos5 = new Carta('b',5);
+
 		array6Cartas.add(0,espada1);
 		array6Cartas.add(1,bastos1);
 		array6Cartas.add(2,bastos2);
@@ -75,30 +79,67 @@ Interfaz
 			System.out.println(arrayTablero.get(0).toString());
 			//System.out.println(arrayTablero.get(0).equals(espada1));		//Para ver si el equals es true cuando al jugador le sale la carta de espada
 			
-			while(cantidadHL > cantidadCamp){
-				if(arrayTablero.get(0).equals(espada1) == true){
-					//Noche*
+			if(arrayTablero.get(0).equals(espada1) == true){
+				while(cantidadHL < cantidadCamp && cantidadHL != 0){
+					Noche(arrayTablero);
 				}
-				else{
+			}
+			else{
+				while(cantidadHL < cantidadCamp && cantidadHL != 0){
+					
+					/*for(){
+						//ESTO ES UN FOR EXTENDIDO
+					}*/
+					
+					victimaAleatorio = random.nextInt(arrayTablero.size()-1);
+					
 					
 				}
-				
-				//Día*
-			}//Fin_Mientras
+			}
+			
+			//Día*
 		//Fin
-		
-		return 1;
 	}
 	
-	public static int Noche(){
+/**************************************************************************	
+Interfaz
+	Comentario: Simulará la noche cuando el jugador sea el lobo (espada1)
+	Cabecera: ArrayList<Carta> Noche(ArrayList <Carta> array)
+	Precondiciones: en su primera iteracion el tamaño del array será 5, cada siguiente iteración será el tamaño del array - 1
+	Entrada: No tiene
+	Salida: No tiene
+	E/S: Un ArrayList<Carta>
+	Postcondiciones: el array tendrá el tamaño de entrada - 1
+**************************************************************************/	
+	
+	public static ArrayList<Carta> Noche(ArrayList<Carta> arrayTablero){
+		
+		int victima = 0; 
+		
+		Scanner teclado = new Scanner(System.in);
 		
 		//Inicio
-			//Hacer 
-				//Generar victima aleatoria
-				//Confirmar victima
-			//Mientras matar no sea s
+			//PreguntarLeerValidarVictima
+			do{
+				for(int i=0; i < arrayTablero.size(); i++){
+					System.out.println(arrayTablero.get(i).toString());
+				}
+				
+				System.out.println(" ");
+				
+				System.out.println("Que victima quiere ejecutar?");
+				System.out.println("Victima numero: ");
+				
+				victima = teclado.nextInt();
+			}
+			while(victima < 0 || victima > arrayTablero.size() - 1);
+			
+			//Matar victima
+			arrayTablero.remove(victima);
+			
 		//Fin
-		return 1;
+		
+		return arrayTablero;
 	}
 	
 }

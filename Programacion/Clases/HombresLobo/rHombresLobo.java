@@ -18,6 +18,25 @@ Interfaz
 **************************************************************************/	
 	
 	public static int JugarHombresLobo(){
+		
+		System.out.println("En resguardo");
+		
+		return 1;
+	}
+	
+/**************************************************************************	
+Interfaz
+	Comentario: Simulará la noche cuando el jugador sea el lobo (espada1)
+	Cabecera: int Noche()
+	Precondiciones: No tiene
+	Entrada: No tiene
+	Salida: Un número
+	E/S: No tiene
+	Postcondiciones: se devolverá un 1 cuando la clase funcione correctamente
+**************************************************************************/	
+	
+	public static int Noche(){
+		
 		System.out.println("En resguardo");
 		
 		return 1;

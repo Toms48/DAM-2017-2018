@@ -18,15 +18,6 @@
 				//LeerValidarParaEjecutar
 			//Fin_Mientras
 		//Fin
-		
-	//PG JugarHombresLobo:
-		//Inicio
-			//RepartirPersonajes
-			//Mientras cantidadHL > cantidadCamp
-				//Noche*
-				//Día*
-			//Fin_Mientras
-		//Fin
 
 import java.util.Scanner;
 
