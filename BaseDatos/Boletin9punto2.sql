@@ -88,11 +88,50 @@ SELECT SUM(od.Quantity) AS [Número de unidades vendidas], c.CategoryName
 		
 
 /*7. Total de ventas (US$) de cada categoría en el año 97.*/
+SELECT * FROM Categories
+SELECT * FROM Products
+SELECT * FROM [Order Details]
+SELECT * FROM Orders
+
+SELECT CategoryName, SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)) AS [Total de ventas]
+	FROM Categories AS c
+	INNER JOIN Products AS p
+	ON c.CategoryID = p.CategoryID
+	INNER JOIN [Order Details] AS od
+	ON p.ProductID = od.ProductID
+	INNER JOIN Orders AS o
+	ON od.OrderID = o.OrderID
+		WHERE YEAR(o.OrderDate) = '1997'
+		GROUP BY c.CategoryName
 
 /*8. Productos que han comprado más de un cliente del mismo país, indicando
 el nombre del producto, el país y el número de clientes distintos de ese país que lo han comprado.*/
+SELECT * FROM Products
+SELECT * FROM [Order Details]
+SELECT * FROM Orders
+SELECT * FROM Customers
+
+SELECT p.ProductName, o.ShipCountry, COUNT(c.CustomerID) AS [Número de clientes]
+	FROM Products AS p
+	INNER JOIN [Order Details] AS od
+	ON p.ProductID = od.ProductID
+	INNER JOIN Orders AS o
+	ON od.OrderID = o.OrderID
+	INNER JOIN Customers AS c
+	ON o.CustomerID = c.CustomerID
+		GROUP BY p.ProductName, o.ShipCountry
+		HAVING COUNT(c.CustomerID) > 1
 
 /*9. Total de ventas (US$) en cada país cada año.*/
+SELECT * FROM [Order Details]
+SELECT * FROM Orders
+
+SELECT SUM(od.Quantity * od.UnitPrice * (1- od.Discount)) AS [Total de ventas], o.ShipCountry, YEAR(o.OrderDate) AS [Año de venta]
+	FROM [Order Details] AS od
+	INNER JOIN Orders AS o
+	ON od.OrderID = o.OrderID
+		GROUP BY o.ShipCountry, YEAR(o.OrderDate)
+		ORDER BY o.ShipCountry, YEAR(o.OrderDate) ASC
 
 /*10. Producto superventas de cada año, indicando año, nombre del producto, categoría y cifra total de ventas.*/
 
