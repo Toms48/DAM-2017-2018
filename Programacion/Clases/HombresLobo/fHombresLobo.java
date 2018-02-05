@@ -27,6 +27,8 @@ Interfaz
 		int cantidadHL = 1;
 		int cantidadCamp = 5;
 		
+		int posicionLobo = 0;
+		
 		int aleatorio = 0;
 		int victimaAleatorio = 0;
 		
@@ -85,11 +87,12 @@ Interfaz
 				}
 			}
 			else{
+				
 				while(cantidadHL < cantidadCamp && cantidadHL != 0){
 					
-					/*for(){
-						//ESTO ES UN FOR EXTENDIDO
-					}*/
+					for(int i=0; arrayTablero.get(i).equals(espada1) != true; i++){
+						posicionLobo = i;
+					}
 					
 					victimaAleatorio = random.nextInt(arrayTablero.size()-1);
 					
