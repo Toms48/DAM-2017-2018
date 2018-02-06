@@ -139,6 +139,16 @@ SELECT * FROM Products
 SELECT * FROM [Order Details]
 SELECT * FROM Orders
 
+SELECT p.ProductName, od.Quantity AS [Cantidad vendida], YEAR(o.OrderDate) AS [Año]
+	FROM Categories AS c
+		INNER JOIN Products AS p
+		ON c.CategoryID = p.CategoryID
+		INNER JOIN [Order Details] AS od
+		ON p.ProductID = od.ProductID
+		INNER JOIN Orders AS o
+		ON od.OrderID = o.OrderID
+		GROUP BY p.ProductName, YEAR(o.OrderDate)
+
 SELECT MAX(a.[Cantidad vendida]) AS [Cantidad máxima vendida], a.Año
 	FROM (SELECT p.ProductName, SUM(od.Quantity) AS [Cantidad vendida], YEAR(o.OrderDate) AS [Año], c.CategoryName
 			FROM Categories AS c
@@ -151,31 +161,74 @@ SELECT MAX(a.[Cantidad vendida]) AS [Cantidad máxima vendida], a.Año
 				GROUP BY p.ProductName, YEAR(o.OrderDate), c.CategoryName) AS a
 	GROUP BY a.Año
 
+SELECT paraPorfavor.Año, odioLasSubconsultas.ProductName, odioLasSubconsultas.CategoryName, paraPorfavor.[Cantidad máxima vendida]
+	FROM (SELECT MAX(a.[Cantidad vendida]) AS [Cantidad máxima vendida], a.Año
+		FROM (SELECT p.ProductName, SUM(od.Quantity) AS [Cantidad vendida], YEAR(o.OrderDate) AS [Año], c.CategoryName
+				FROM Categories AS c
+				INNER JOIN Products AS p
+				ON c.CategoryID = p.CategoryID
+				INNER JOIN [Order Details] AS od
+				ON p.ProductID = od.ProductID
+				INNER JOIN Orders AS o
+				ON od.OrderID = o.OrderID
+					GROUP BY p.ProductName, YEAR(o.OrderDate), c.CategoryName) AS a
+			GROUP BY a.Año) AS [paraPorfavor]
 
+	INNER JOIN (SELECT p.ProductName, SUM(od.Quantity) AS [Cantidad vendida], YEAR(o.OrderDate) AS [Año], c.CategoryName
+					FROM Categories AS c
+					INNER JOIN Products AS p
+					ON c.CategoryID = p.CategoryID
+					INNER JOIN [Order Details] AS od
+					ON p.ProductID = od.ProductID
+					INNER JOIN Orders AS o
+					ON od.OrderID = o.OrderID
+						GROUP BY p.ProductName, YEAR(o.OrderDate), c.CategoryName) AS [odioLasSubconsultas]
 
+	ON paraPorfavor.[Cantidad máxima vendida] = odioLasSubconsultas.[Cantidad vendida]
 
+/*11. Cifra de ventas de cada producto en el año 97 y su aumento o disminución respecto al año anterior en US $ y en %.*/
+SELECT * FROM Products
+SELECT * FROM [Order Details]
+SELECT * FROM Orders
 
-SELECT p.ProductName, od.Quantity AS [Cantidad vendida], YEAR(o.OrderDate) AS [Año]
-	FROM Categories AS c
-		INNER JOIN Products AS p
-		ON c.CategoryID = p.CategoryID
-		INNER JOIN [Order Details] AS od
-		ON p.ProductID = od.ProductID
-		INNER JOIN Orders AS o
-		ON od.OrderID = o.OrderID
-		GROUP BY p.ProductName, YEAR(o.OrderDate)
+SELECT ([año97].Cantidad - [año96].Cantidad) AS [Aumento/Decrecimiento]
+	FROM (SELECT SUM(od.Quantity * od.) AS [Cantidad], p.ProductName, YEAR(o.OrderDate) AS [Año]
+			FROM Products AS p
+			INNER JOIN[Order Details] AS od
+			ON p.ProductID = od.ProductID
+			INNER JOIN Orders AS o
+			ON od.OrderID = o.OrderID
+				WHERE YEAR(o.OrderDate) = '1996'
+				GROUP BY p.ProductName, YEAR(o.OrderDate)) AS [año96]
 
-SELECT c.CategoryName, p.ProductName, MAX(od.Quantity) AS [Cantidad vendida], YEAR(o.OrderDate) AS [Año]
-	FROM Categories AS c
-	INNER JOIN Products AS p
-	ON c.CategoryID = p.CategoryID
-	INNER JOIN [Order Details] AS od
+	INNER JOIN (SELECT SUM(od.Quantity) AS [Cantidad], p.ProductName, YEAR(o.OrderDate) AS [Año]
+					FROM Products AS p
+					INNER JOIN[Order Details] AS od
+					ON p.ProductID = od.ProductID
+					INNER JOIN Orders AS o
+					ON od.OrderID = o.OrderID
+						WHERE YEAR(o.OrderDate) = '1997'
+						GROUP BY p.ProductName, YEAR(o.OrderDate)) AS [año97]
+
+	ON [año96].ProductName = [año97].ProductName
+
+SELECT SUM(od.Quantity) AS [Cantidad], p.ProductName, YEAR(o.OrderDate) AS [Año]
+	FROM Products AS p
+	INNER JOIN[Order Details] AS od
 	ON p.ProductID = od.ProductID
 	INNER JOIN Orders AS o
 	ON od.OrderID = o.OrderID
-		GROUP BY p.ProductName, c.CategoryName, YEAR(o.OrderDate)
+		WHERE YEAR(o.OrderDate) = '1996'
+		GROUP BY p.ProductName, YEAR(o.OrderDate)
 
-/*11. Cifra de ventas de cada producto en el año 97 y su aumento o disminución respecto al año anterior en US $ y en %.*/
+SELECT SUM(od.Quantity) AS [Cantidad], p.ProductName, YEAR(o.OrderDate) AS [Año]
+	FROM Products AS p
+	INNER JOIN[Order Details] AS od
+	ON p.ProductID = od.ProductID
+	INNER JOIN Orders AS o
+	ON od.OrderID = o.OrderID
+		WHERE YEAR(o.OrderDate) = '1997'
+		GROUP BY p.ProductName, YEAR(o.OrderDate)
 
 /*12. Mejor cliente (el que más nos compra) de cada país.*/
 
