@@ -27,6 +27,9 @@ Interfaz
 		int cantidadHL = 1;
 		int cantidadCamp = 5;
 		
+		int contadorHL = 0;
+		int contadorCamp = 0;
+		
 		int posicionLobo = 0;
 		
 		int aleatorio = 0;
@@ -96,6 +99,22 @@ Interfaz
 					
 					victimaAleatorio = random.nextInt(arrayTablero.size()-1);
 					
+					if(victimaAleatorio < posicionLobo){
+						arrayTablero.remove(victimaAleatorio);
+					}
+					else{
+						arrayTablero.remove(victimaAleatorio + 1);
+					}
+					
+					for(Carta elemento : arrayTablero){
+						
+						if(elemento.getPalo() == 'b'){
+							contadorCamp++;
+						}
+						else{
+							contadorHL++;
+						}
+					}
 					
 				}
 			}

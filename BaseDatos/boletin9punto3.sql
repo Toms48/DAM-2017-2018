@@ -220,10 +220,10 @@ SELECT * FROM employee
 SELECT * FROM publishers
 SELECT * FROM titles
 
-/*SELECT e.fname, e.lname
+SELECT e.fname, e.lname
 	FROM employee AS e
 	INNER JOIN publishers AS p
 	ON e.pub_id = p.pub_id
 	INNER JOIN titles AS t
 	ON p.pub_id = t.pub_id
-		WHERE t.notes IN ('%and%')*/
+		WHERE (t.notes LIKE '%and%')

@@ -191,8 +191,8 @@ SELECT * FROM Products
 SELECT * FROM [Order Details]
 SELECT * FROM Orders
 
-SELECT ([año97].Cantidad - [año96].Cantidad) AS [Aumento/Decrecimiento]
-	FROM (SELECT SUM(od.Quantity * od.) AS [Cantidad], p.ProductName, YEAR(o.OrderDate) AS [Año]
+SELECT [año97].Cantidad97, ([año97].[Dinero97] - [año96].[Dinero96]) AS [Aumento/Decrecimiento]
+	FROM (SELECT SUM(od.Quantity) AS [Cantidad96], SUM((od.Quantity * od.UnitPrice) * (1 - od.Discount)) AS [Dinero96], p.ProductName, YEAR(o.OrderDate) AS [Año]
 			FROM Products AS p
 			INNER JOIN[Order Details] AS od
 			ON p.ProductID = od.ProductID
@@ -201,7 +201,7 @@ SELECT ([año97].Cantidad - [año96].Cantidad) AS [Aumento/Decrecimiento]
 				WHERE YEAR(o.OrderDate) = '1996'
 				GROUP BY p.ProductName, YEAR(o.OrderDate)) AS [año96]
 
-	INNER JOIN (SELECT SUM(od.Quantity) AS [Cantidad], p.ProductName, YEAR(o.OrderDate) AS [Año]
+	INNER JOIN (SELECT SUM(od.Quantity) AS [Cantidad97], SUM((od.Quantity * od.UnitPrice) * (1 - od.Discount)) AS [Dinero97], p.ProductName, YEAR(o.OrderDate) AS [Año]
 					FROM Products AS p
 					INNER JOIN[Order Details] AS od
 					ON p.ProductID = od.ProductID
@@ -231,6 +231,39 @@ SELECT SUM(od.Quantity) AS [Cantidad], p.ProductName, YEAR(o.OrderDate) AS [Año]
 		GROUP BY p.ProductName, YEAR(o.OrderDate)
 
 /*12. Mejor cliente (el que más nos compra) de cada país.*/
+SELECT * FROM Customers
+SELECT * FROM Orders
+SELECT * FROM [Order Details]
+
+GO
+CREATE VIEW ClientesCantidadPais AS
+SELECT SUM(od.Quantity) AS [Cantidad comprada], c.CompanyName, o.ShipCountry
+	FROM Customers AS c
+	INNER JOIN Orders AS o
+	ON c.CustomerID = o.CustomerID
+	INNER JOIN [Order Details] AS od
+	ON o.OrderID = od.OrderID
+		GROUP BY c.CompanyName, o.ShipCountry
+GO
+
+SELECT MAX(ccp.[Cantidad comprada]) AS [Máxima cantidad comprada], ccp.ShipCountry
+	FROM ClientesCantidadPais AS ccp
+		GROUP BY ccp.ShipCountry
+
+SELECT MAX(ccp.[Cantidad comprada]) AS [Máxima cantidad comprada], ccp.CompanyName, ccp.ShipCountry
+	FROM ClientesCantidadPais AS ccp
+		GROUP BY ccp.CompanyName, ccp.ShipCountry
+
+SELECT A.[Máxima cantidad comprada], A.ShipCountry, B.CompanyName
+FROM (SELECT MAX(ccp.[Cantidad comprada]) AS [Máxima cantidad comprada], ccp.ShipCountry
+		FROM ClientesCantidadPais AS ccp
+			GROUP BY ccp.ShipCountry) AS [A]
+
+INNER JOIN (SELECT MAX(ccp.[Cantidad comprada]) AS [Máxima cantidad comprada], ccp.CompanyName, ccp.ShipCountry
+				FROM ClientesCantidadPais AS ccp
+					GROUP BY ccp.CompanyName, ccp.ShipCountry) AS [B]
+
+ON A.[Máxima cantidad comprada] = B.[Máxima cantidad comprada] AND A.ShipCountry = B.ShipCountry
 
 /*13. Número de productos diferentes que nos compra cada cliente.*/
 
