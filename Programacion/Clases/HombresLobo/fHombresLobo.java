@@ -80,16 +80,23 @@ Interfaz
 			}
 			while(salirArray == false);
 			
-			//ImprimirCartaJugador
+			//MostrarCartaJugador
 			System.out.println(arrayTablero.get(0).toString());
-			//System.out.println(arrayTablero.get(0).equals(espada1));		//Para ver si el equals es true cuando al jugador le sale la carta de espada
+			System.out.println(arrayTablero.get(0).equals(espada1));	//Para ver si el equals es true cuando al jugador le sale la carta de espada
 			
 			if(arrayTablero.get(0).equals(espada1) == true){
-				while(cantidadHL < cantidadCamp && cantidadHL != 0){
-					Noche(arrayTablero);
+				
+				arrayTablero.remove(0);
+				
+				while(arrayTablero.size() != 1){
+					//NocheJugador*
+					NocheJugador(arrayTablero);
+					
+					//DiaJugador*
 				}
 			}
-			else{
+			
+			/*else{
 				
 				while(cantidadHL < cantidadCamp && cantidadHL != 0){
 					
@@ -117,16 +124,14 @@ Interfaz
 					}
 					
 				}
-			}
-			
-			//Día*
+			}*/
 		//Fin
 	}
 	
 /**************************************************************************	
 Interfaz
 	Comentario: Simulará la noche cuando el jugador sea el lobo (espada1)
-	Cabecera: ArrayList<Carta> Noche(ArrayList <Carta> array)
+	Cabecera: ArrayList<Carta> NocheJugador(ArrayList <Carta> array)
 	Precondiciones: en su primera iteracion el tamaño del array será 5, cada siguiente iteración será el tamaño del array - 1
 	Entrada: No tiene
 	Salida: No tiene
@@ -134,9 +139,9 @@ Interfaz
 	Postcondiciones: el array tendrá el tamaño de entrada - 1
 **************************************************************************/	
 	
-	public static ArrayList<Carta> Noche(ArrayList<Carta> arrayTablero){
+	public static ArrayList<Carta> NocheJugador(ArrayList<Carta> arrayTablero){
 		
-		int victima = 0; 
+		int victima = 0;
 		
 		Scanner teclado = new Scanner(System.in);
 		
@@ -144,15 +149,17 @@ Interfaz
 			//PreguntarLeerValidarVictima
 			do{
 				for(int i=0; i < arrayTablero.size(); i++){
-					System.out.println(arrayTablero.get(i).toString());
+					//System.out.println(arrayTablero.get(i).toString());
+					System.out.println("Victima " +(i+1) +" " +arrayTablero.get(i).getPalo() +arrayTablero.get(i).getNumero());
+					
 				}
 				
 				System.out.println(" ");
 				
 				System.out.println("Que victima quiere ejecutar?");
-				System.out.println("Victima numero: ");
+				System.out.print("Victima numero: ");
 				
-				victima = teclado.nextInt();
+				victima = teclado.nextInt() - 1;
 			}
 			while(victima < 0 || victima > arrayTablero.size() - 1);
 			
@@ -162,6 +169,25 @@ Interfaz
 		//Fin
 		
 		return arrayTablero;
+	}
+	
+/**************************************************************************	
+Interfaz
+	Comentario: Simulará el día cuando el jugador sea el lobo (espada1)
+	Cabecera: ArrayList<Carta> DiaJL(ArrayList <Carta> array)
+	Precondiciones: ?
+	Entrada: No tiene
+	Salida: No tiene
+	E/S: Un ArrayList<Carta>
+	Postcondiciones: el array tendrá el tamaño de entrada - 1
+**************************************************************************/
+
+	public static void DiaJL(ArrayList <Carta> array){
+		
+		//Inicio
+			//
+		//Fin
+		
 	}
 	
 }
