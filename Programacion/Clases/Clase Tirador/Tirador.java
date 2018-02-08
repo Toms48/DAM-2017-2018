@@ -30,25 +30,28 @@
 public class Tirador implements Cloneable{
 	
 	//Atributos
-	private Persona persona = new Persona();
-	private ArmaEsgrima arma = new ArmaEsgrima();
+	private Persona persona/* = new Persona()*/;
+	private ArmaEsgrima arma/* = new ArmaEsgrima()*/;
 	
 	//Constructor por defecto
 	public Tirador(){
-		persona = null;
-		arma = null;
+		persona = new Persona();
+		arma = new ArmaEsgrima();
 	}
 	
 	//Constructor con parámetros
-	public Tirador(Persona persona, ArmaEsgrima arma){
-		this.persona = persona;
-		this.arma = arma;
+	public Tirador(
+		String nombre, int edad, String DNI, char sexo, double peso, double altura,
+		String marca, String tipo, char manoBuena){
+			
+		this.persona = new Persona(nombre, edad, DNI, sexo, peso, altura);
+		this.arma = new ArmaEsgrima(marca, tipo, manoBuena);
 	}
 	
 	//Constructor de copia
-	public Tirador(Tirador tirador){
-		this.persona = tirador.getPersona();
-		this.arma = tirador.getArma();
+	public Tirador(Tirador tiradorCopia){
+		this.persona = new Persona(tiradorCopia.persona);
+		this.arma = new ArmaEsgrima(tiradorCopia.arma);
 	}
 	
 	//GETS
@@ -97,14 +100,45 @@ public class Tirador implements Cloneable{
 		return arma.getManoBuena();
 	}
 	
+	
 	//SETS
-	public void setPersona(Persona persona){
-		this.persona = persona;
+	public void setNombre(){
+		this.persona.getNombre();
 	}
 	
-	public void setArma(ArmaEsgrima arma){
-		this.arma = arma;
+	public void setEdad(){
+		this.persona.getEdad()
 	}
+	
+	public void setDNI(){
+		this.persona
+	}
+	
+	public void setSexo(){
+		this.persona
+	}
+	
+	public void setPeso(){
+		this.persona
+	}
+	
+	public void setAltura(){
+		this.persona
+	}
+
+	
+	public void setMarca(){
+		this.arma
+	}
+	
+	public void setTipo(){
+		this.arma
+	}
+	
+	public void setManoBuena(){
+		this.arma
+	}
+	
 	
 	//Métodos sobrescritos
 	@Override
