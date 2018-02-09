@@ -38,7 +38,12 @@ SELECT * FROM titles
 SELECT * FROM titleauthor
 SELECT * FROM authors
 
-/*SELECT COUNT(t.title), a.au_fname, a.au_lname
+--SELECT au_fname, au_lname FROM authors
+
+GO
+
+CREATE VIEW AutoresPorLibros AS 
+SELECT COUNT(t.title) AS [Número de libros escritos], a.au_fname, a.au_lname
 	FROM titles AS t
 	INNER JOIN titleauthor AS ta
 	ON t.title_id = ta.title_id
@@ -46,18 +51,12 @@ SELECT * FROM authors
 	ON ta.au_id = a.au_id
 		GROUP BY a.au_fname, a.au_lname
 
-SELECT au_fname, au_lname FROM authors*/
+GO
 
-SELECT Autores.au_fname, Autores.au_lname, Libros.[Número de libros escritos]
+SELECT Autores.au_fname, Autores.au_lname, AxL.[Número de libros escritos]
 	FROM (SELECT au_fname, au_lname FROM authors) AS [Autores]
-	LEFT JOIN (SELECT COUNT(t.title) AS [Número de libros escritos], a.au_fname, a.au_lname
-					FROM titles AS t
-					INNER JOIN titleauthor AS ta
-					ON t.title_id = ta.title_id
-					INNER JOIN authors AS a
-					ON ta.au_id = a.au_id
-						GROUP BY a.au_fname, a.au_lname) AS [Libros]
-	ON Autores.au_fname = Libros.au_fname AND Autores.au_lname = Libros.au_lname
+	LEFT JOIN AutoresPorLibros AS AxL
+	ON Autores.au_fname = AxL.au_fname AND Autores.au_lname = AxL.au_lname
 
 --4. Número de libros que ha publicado cada editorial, incluidas las que no han publicado ninguno.
 SELECT * FROM publishers

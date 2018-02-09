@@ -61,6 +61,7 @@ SELECT Count(m.Codigo) AS [Número de mascotas], m.Especie
 		GROUP BY m.Especie
 
 /*6.Número de mascotas de cada especie que han sufrido cada enfermedad incluyendo las enfermedades que no ha sufrido ninguna mascota de alguna especie.*/
+--MIRAR BIEN LA PARTE DE ESPECIES
 SELECT * FROM BI_Enfermedades
 SELECT * FROM BI_Mascotas_Enfermedades
 SELECT * FROM BI_Mascotas
@@ -76,14 +77,36 @@ SELECT NumeroMascotas.[Número de mascotas], NumeroMascotas.Especie, Enfermedades
 						GROUP BY m.Especie, e.Nombre) AS [NumeroMascotas]
 	ON Enfermedades.Nombre = NumeroMascotas.Nombre
 
-/*7.Queremos saber cuál es la enfermedad más común en cada especie. Incluye cuantos casos se han producido*/
+/*7.Queremos saber cuál es la enfermedad más común en cada especie. Incluye cuantos casos se han producido*/  --PREGUNTAR
 SELECT * FROM BI_Enfermedades
 SELECT * FROM BI_Mascotas_Enfermedades
 SELECT * FROM BI_Mascotas
 
+GO
+CREATE VIEW EnfermedadesPorEspecie AS
+SELECT COUNT(e.Nombre) AS [Cantidad de cada enfermedad], e.Nombre, m.Especie
+	FROM BI_Enfermedades AS e
+	INNER JOIN BI_Mascotas_Enfermedades AS me
+	ON e.ID = me.IDEnfermedad
+	INNER JOIN BI_Mascotas AS m
+	ON me.Mascota = m.Codigo
+		GROUP BY m.Especie, e.Nombre
+GO
+
+GO
+CREATE VIEW SuperEnfermedad AS 
+SELECT MAX(EnfermedadesPorEspecie.[Cantidad de cada enfermedad]) AS [Enfermedad más común]
+	FROM EnfermedadesPorEspecie
+GO
+
+SELECT se.[Enfermedad más común], exe.Nombre, exe.Especie
+	FROM EnfermedadesPorEspecie AS exe
+	INNER JOIN SuperEnfermedad AS se
+	ON exe.[Cantidad de cada enfermedad] = se.[Enfermedad más común]
 
 /*8.Duración media, en días, de cada enfermedad, desde que se detecta hasta que se cura. Incluye solo los casos en que el animal se haya curado.
 Se entiende que una mascota se ha curado si tiene fecha de curación y está viva o su fecha de fallecimiento es posterior a la fecha de curación.*/
+  --PREGUNTAR
 SELECT * FROM BI_Mascotas
 SELECT * FROM BI_Mascotas_Enfermedades
 
@@ -105,19 +128,29 @@ SELECT c.Nombre, COUNT(v.IDVisita) AS [Número de visitas]
 SELECT * FROM BI_Mascotas
 SELECT * FROM BI_Visitas
 
-SELECT COUNT(v.IDVisita), m.Alias, v.Fecha
+GO
+CREATE VIEW VisitasPorMascota AS 
+SELECT COUNT(v.IDVisita) AS [Número de visitas], m.Alias
 	FROM BI_Mascotas AS m
 	INNER JOIN BI_Visitas AS v
 	ON m.Codigo = v.Mascota
-		GROUP BY m.Alias, v.Fecha
-		ORDER BY v.Fecha
+		GROUP BY m.Alias
+GO
 
-SELECT m.Alias, v.Fecha
+GO
+CREATE VIEW PrimeraUltimaVisita AS
+SELECT m.Alias, MIN(v.Fecha) AS [Primera visita], MAX(v.Fecha) AS [Última visita]
 	FROM BI_Mascotas AS m
 	INNER JOIN BI_Visitas AS v
 	ON m.Codigo = v.Mascota
-		GROUP BY m.Alias, v.Fecha
-		ORDER BY m.Alias, v.Fecha
+		GROUP BY m.Alias
+GO
+
+SELECT vxm.Alias, vxm.[Número de visitas], puv.[Primera visita], puv.[Última visita]
+	FROM VisitasPorMascota AS [vxm]
+	INNER JOIN PrimeraUltimaVisita AS [puv]
+	ON vxm.Alias = puv.Alias
+
 
 /*11.Incremento (o disminución) de peso que ha experimentado cada mascota entre cada dos consultas sucesivas.
 Incluye nombre de la mascota, especie, fecha de las dos consultas sucesivas e incremento o disminución de peso.*/
