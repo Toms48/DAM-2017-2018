@@ -83,18 +83,42 @@ SELECT * FROM BI_Mascotas_Enfermedades
 SELECT * FROM BI_Mascotas
 
 GO
-CREATE VIEW EnfermedadesPorEspecie AS
+CREATE VIEW CantidadEnfermedadesEspecies AS
+SELECT COUNT(e.Nombre) AS [CantidadEnfermedadesEspecies], m.Especie
+	FROM BI_Enfermedades AS e
+	RIGHT JOIN BI_Mascotas_Enfermedades AS me
+	ON e.ID = me.IDEnfermedad
+	RIGHT JOIN BI_Mascotas AS m
+	ON me.Mascota = m.Codigo
+		GROUP BY m.Especie, e.ID
+GO
+
+GO
+CREATE VIEW SuperEnfermedad AS
+SELECT MAX(a.CantidadEnfermedadesEspecies) AS , a.Especie
+FROM (SELECT COUNT(e.Nombre) AS [CantidadEnfermedadesEspecies], m.Especie
+		FROM BI_Enfermedades AS e
+		RIGHT JOIN BI_Mascotas_Enfermedades AS me
+		ON e.ID = me.IDEnfermedad
+		RIGHT JOIN BI_Mascotas AS m
+		ON me.Mascota = m.Codigo
+			GROUP BY m.Especie, e.ID) AS a
+	GROUP BY a.Especie
+GO
+
+GO
+ALTER VIEW EnfermedadesPorEspecie AS
 SELECT COUNT(e.Nombre) AS [Cantidad de cada enfermedad], e.Nombre, m.Especie
 	FROM BI_Enfermedades AS e
-	INNER JOIN BI_Mascotas_Enfermedades AS me
+	LEFT JOIN BI_Mascotas_Enfermedades AS me
 	ON e.ID = me.IDEnfermedad
-	INNER JOIN BI_Mascotas AS m
+	LEFT JOIN BI_Mascotas AS m
 	ON me.Mascota = m.Codigo
 		GROUP BY m.Especie, e.Nombre
 GO
 
 GO
-CREATE VIEW SuperEnfermedad AS 
+ALTER VIEW SuperEnfermedad AS 
 SELECT MAX(EnfermedadesPorEspecie.[Cantidad de cada enfermedad]) AS [Enfermedad más común]
 	FROM EnfermedadesPorEspecie
 GO
@@ -129,7 +153,7 @@ SELECT * FROM BI_Mascotas
 SELECT * FROM BI_Visitas
 
 GO
-CREATE VIEW VisitasPorMascota AS 
+ALTER VIEW VisitasPorMascota AS 
 SELECT COUNT(v.IDVisita) AS [Número de visitas], m.Alias
 	FROM BI_Mascotas AS m
 	INNER JOIN BI_Visitas AS v
@@ -138,7 +162,7 @@ SELECT COUNT(v.IDVisita) AS [Número de visitas], m.Alias
 GO
 
 GO
-CREATE VIEW PrimeraUltimaVisita AS
+ALTER VIEW PrimeraUltimaVisita AS
 SELECT m.Alias, MIN(v.Fecha) AS [Primera visita], MAX(v.Fecha) AS [Última visita]
 	FROM BI_Mascotas AS m
 	INNER JOIN BI_Visitas AS v

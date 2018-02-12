@@ -12,11 +12,16 @@ SELECT title, [type], [state]
 		WHERE [state] IN ('CA')
 
 --2. Título y tipo de todos los libros en los que ninguno de los autores vive en California (CA).
+
+/*1) Buscamos cuales son todos los que viven en California.
+  2) Hacemos esa misma consulta pero sin WHERE (para verlos todos vamoh)
+  3) Hacemos un EXCEPT entre la colsulta donde salen todos (paso 2) y la consulta donde solo salen los que viven en California (paso 1)*/
+
 SELECT * FROM titles
 SELECT * FROM titleauthor
 SELECT * FROM authors
 
-SELECT title, [type], [state]
+SELECT title, [type], [state] --SELECT para saber todos los autores sin tener en cuenta la condición de California (que van a salir todos los autores vamoh)
 	FROM titles AS t
 	INNER JOIN titleauthor AS ta
 	ON t.title_id = ta.title_id
@@ -25,7 +30,7 @@ SELECT title, [type], [state]
 
 EXCEPT
 
-SELECT title, [type], [state]
+SELECT title, [type], [state]  --SELECT para saber todos los que viven en california
 	FROM titles AS t
 	INNER JOIN titleauthor AS ta
 	ON t.title_id = ta.title_id
@@ -41,8 +46,7 @@ SELECT * FROM authors
 --SELECT au_fname, au_lname FROM authors
 
 GO
-
-CREATE VIEW AutoresPorLibros AS 
+ALTER VIEW AutoresPorLibros AS 
 SELECT COUNT(t.title) AS [Número de libros escritos], a.au_fname, a.au_lname
 	FROM titles AS t
 	INNER JOIN titleauthor AS ta
@@ -50,7 +54,6 @@ SELECT COUNT(t.title) AS [Número de libros escritos], a.au_fname, a.au_lname
 	INNER JOIN authors AS a
 	ON ta.au_id = a.au_id
 		GROUP BY a.au_fname, a.au_lname
-
 GO
 
 SELECT Autores.au_fname, Autores.au_lname, AxL.[Número de libros escritos]
