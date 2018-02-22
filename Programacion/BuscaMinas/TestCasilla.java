@@ -36,7 +36,48 @@ public class TestCasilla {
 		System.out.println("*----------- Sets -----------*");
 		System.out.println(" ");
 		
-		//casilla1.set
+		try{
+			casilla1.setNumero(1);
+			System.out.println("Nuevo numero de casilla1: " +casilla1.getNumero());
+		}
+		catch(ExcepcionCasilla mensaje){
+			System.out.println(mensaje);
+		}
+		
+		System.out.println(" ");
+		
+		try{
+			casillaPorDefecto.setNumero(-1);
+			System.out.println("Nuevo numero de casilla1: " +casilla1.getNumero());
+		}
+		catch(ExcepcionCasilla mensaje){
+			System.out.println(mensaje);
+		}
+		
+		//Tests toString
+		System.out.println(" ");
+		System.out.println("*----------- toString -----------*");
+		System.out.println(" ");
+		
+		System.out.println(casillaPorDefecto.toString());
+		System.out.println(" ");
+		System.out.println(casilla1.toString());
+		System.out.println(" ");
+		System.out.println(casilla1Copia.toString());
+		
+		//Tests Clone
+		System.out.println(" ");
+		System.out.println("*----------- Clone -----------*");
+		System.out.println(" ");
+		
+		System.out.println(casilla1.clone());
+		
+		//Tests Equals
+		System.out.println(" ");
+		System.out.println("*----------- Equals -----------*");
+		System.out.println(" ");
+		
+		System.out.println(casilla1.equals(casilla1Copia));
 		
 	}
 }

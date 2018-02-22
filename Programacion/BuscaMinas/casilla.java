@@ -79,6 +79,53 @@ public class casilla {
 			this.numero = numero;
 		}
 	}
+	
+	//Métodos sobrescritos
+	@Override
+	public casilla clone(){
+		
+		casilla copia = null;
+		
+		try{
+			copia = (casilla)super.clone();
+		}
+		catch(CloneNotSupportedException error){
+			System.out.println("No se pudo clonar el objeto (devuelve un null)");
+		}
+		
+		return copia;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		
+		boolean ret = false;
+
+		if(this == obj){
+			ret = true;
+		}
+		else{
+			if(obj != null && obj instanceof casilla){
+				casilla other = (casilla)obj;
+				
+				if(this.mina == other.mina &&
+				   this.bandera == other.bandera &&
+				   this.numero == other.numero){
+					   
+					ret = true;
+					
+				}
+			}
+		}
+		return ret;
+	}
+	
+	@Override
+	public String toString(){
+		String s = "Mina: " +getMina() +", " +"Bandera: " +getBandera() +", " +"Numero: " +getNumero();
+		
+		return s;
+	}
 		
 }
 
