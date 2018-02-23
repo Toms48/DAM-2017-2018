@@ -93,8 +93,8 @@ BEGIN TRANSACTION
 ROLLBACK
 COMMIT
 
-/*3. Ante la bajada de ventas producida por la crisis, hemos de adaptar nuestros precios según las siguientes reglas:
-1) Los productos de la categoría de bebidas (Beverages) que cuesten más de $10 reducen su precio en un dólar.*/
+/*3. Ante la bajada de ventas producida por la crisis, hemos de adaptar nuestros precios según las siguientes reglas:*/
+/*1) Los productos de la categoría de bebidas (Beverages) que cuesten más de $10 reducen su precio en un dólar.*/
 SELECT * FROM Products
 SELECT * FROM Categories
 
@@ -116,9 +116,66 @@ ROLLBACK
 COMMIT
 
 /*2) Los productos de la categoría Lácteos que cuesten más de $5 reducen su precio en un 10%.*/
+SELECT * FROM Products
+SELECT * FROM Categories
+
+SELECT p.ProductName, p.UnitPrice, c.CategoryName
+	FROM Products AS p
+	INNER JOIN Categories AS c
+	ON p.CategoryID = c.CategoryID
+		WHERE c.CategoryName = 'Dairy Products' AND P.UnitPrice > 5
+
+BEGIN TRANSACTION
+	UPDATE Products
+	SET UnitPrice = UnitPrice - ((10*UnitPrice)/100)
+	WHERE ProductName IN (SELECT p.ProductName
+							FROM Products AS p
+							INNER JOIN Categories AS c
+							ON p.CategoryID = c.CategoryID
+								WHERE c.CategoryName = 'Dairy Products' AND P.UnitPrice > 5)
+ROLLBACK
+COMMIT
+
 /*3) Los productos de los que se hayan vendido menos de 200 unidades en el último año, reducen su precio en un 5%.*/
+SELECT * FROM Products
+SELECT * FROM [Order Details]
+SELECT * FROM Orders
+
+SELECT p.ProductName, SUM(od.Quantity) AS [Cantidad], YEAR(o.OrderDate) AS [Año], p.UnitPrice
+	FROM Products AS p
+	INNER JOIN [Order Details] AS od
+	ON p.ProductID = od.ProductID
+	INNER JOIN Orders AS o
+	ON od.OrderID = o.OrderID
+		WHERE YEAR(o.OrderDate) = 1998
+		GROUP BY p.ProductName, YEAR(o.OrderDate), p.UnitPrice
+		HAVING SUM(od.Quantity) < 200
+
+BEGIN TRANSACTION
+	UPDATE Products
+	SET UnitPrice = UnitPrice - ((5*UnitPrice)/100)
+	WHERE ProductName IN (SELECT p.ProductName
+							FROM Products AS p
+							INNER JOIN [Order Details] AS od
+							ON p.ProductID = od.ProductID
+							INNER JOIN Orders AS o
+							ON od.OrderID = o.OrderID
+								WHERE YEAR(o.OrderDate) = 1998
+								GROUP BY p.ProductName, YEAR(o.OrderDate)
+								HAVING SUM(od.Quantity) < 200)
+
+ROLLBACK
+COMMIT
+	
 
 /*4. Inserta un nuevo vendedor llamado Michael Trump. Asígnale los territorios de Louisville, Phoenix, Santa Cruz y Atlanta.*/
+SELECT * FROM Suppliers
+
+BEGIN TRANSACTION
+	INSERT INTO Suppliers(CompanyName, ContactName, ContactTitle, [Address], City, Region, PostalCode, Country, Phone, Fax, HomePage)
+		VALUES()
+ROLLBACK
+COMMIT
 
 /*5. Haz que las ventas del año 97 de Robert King que haya hecho a clientes de los estados de California y Texas se le asignen al nuevo empleado.*/
 
