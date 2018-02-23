@@ -30,7 +30,7 @@
  */
 
 
-public class casilla {
+public class casilla implements Cloneable {
 	
 	//Atributos
 	private boolean mina;

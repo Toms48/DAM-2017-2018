@@ -49,25 +49,4 @@ public class Util {
         return arrayaleatorio;
     }
 
-/***********************************************************
-*  Nombre: crearTablero
-*
-* Comentario: creará un array bidimensional cuadrado con el número que se le indique
-*
-* Cabecera: int[][] crearTablero(int tamanio)
-*
-* Precondiciones: Un número mayor que 1
-* Entradas: Un número
-* Salidas: un array bidimensional
-* E/S: No tiene
-* Postcondiciones: El array tendrá las mismas filas que columnas
-***********************************************************/
-
-    public int[][] crearTablero(int tamanio){
-
-        int tablero[][] = new int [tamanio][tamanio];
-
-        return tablero;
-    }
-
 }
