@@ -179,27 +179,40 @@ BEGIN TRANSACTION
 ROLLBACK
 COMMIT
 
-SELECT TerritoryID FROM Territories
-		WHERE TerritoryDescription IN ('Louisville', 'Phoenix', 'Santa Cruz', 'Atlanta')
+SELECT EmployeeID FROM Employees
+	WHERE FirstName = 'Michael' AND LastName = 'Trump'
 
-SELECT * FROM Employees
-	WHERE FirstName = ''
+SELECT (SELECT EmployeeID FROM Employees
+			WHERE FirstName = 'Michael' AND LastName = 'Trump'), TerritoryID FROM Territories
+	WHERE TerritoryDescription IN ('Louisville', 'Phoenix', 'Santa Cruz', 'Atlanta')
 
-SELECT * FROM ()
 
 BEGIN TRANSACTION 
 	INSERT INTO EmployeeTerritories(EmployeeID, TerritoryID)
-		SELECT e.EmployeeID, t.TerritoryID
+		SELECT (SELECT EmployeeID FROM Employees WHERE FirstName = 'Michael' AND LastName = 'Trump'), TerritoryID FROM Territories
+				WHERE TerritoryDescription IN ('Louisville', 'Phoenix', 'Santa Cruz', 'Atlanta')
+		/*SELECT e.EmployeeID, t.TerritoryID
 			FROM Territories AS t
 			INNER JOIN EmployeeTerritories AS et
 			ON t.TerritoryID = et.TerritoryID
 			INNER JOIN Employees AS e
 			ON et.EmployeeID = e.EmployeeID
-				WHERE TerritoryDescription IN ('Louisville', 'Phoenix', 'Santa Cruz', 'Atlanta')
+				WHERE TerritoryDescription IN ('Louisville', 'Phoenix', 'Santa Cruz', 'Atlanta')*/
 ROLLBACK
 COMMIT
 
+SELECT et.EmployeeID, t.TerritoryID, t.TerritoryDescription
+	FROM EmployeeTerritories AS et
+	INNER JOIN Territories AS t
+	ON et.TerritoryID = t.TerritoryID
+		ORDER BY EmployeeID
+
 /*5. Haz que las ventas del año 97 de Robert King que haya hecho a clientes de los estados de California y Texas se le asignen al nuevo empleado.*/
+SELECT * FROM [Order Details]
+SELECT * FROM Orders
+SELECT * FROM Employees
+
+
 
 /*6. Inserta un nuevo producto con los siguientes datos:
 	ProductID: 90
@@ -212,6 +225,14 @@ COMMIT
 	UnitsOnOrder: 0
 	ReorderLevel: 0
 	Discontinued: 0*/
+SELECT * FROM Products
+
+
+BEGIN TRANSACTION
+	INSERT INTO Products(ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice, UnitsInStock, UnitsOnOrder, ReorderLevel, Discontinued)
+		VALUES('Nesquick Power Max', 12, 3, '10 x 300g', 2.40, 38, 0, 0, 0)
+ROLLBACK
+COMMIT
 
 /*7. Inserta un nuevo producto con los siguientes datos:
 	ProductID: 91
@@ -224,8 +245,22 @@ COMMIT
 	UnitsOnOrder: 0
 	ReorderLevel: 0
 	Discontinued: 0*/
+SELECT * FROM Products
+
+
+BEGIN TRANSACTION
+	INSERT INTO Products(ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice, UnitsInStock, UnitsOnOrder, ReorderLevel, Discontinued)
+		VALUES('Mecca Cola', 1, 1, '6 x 75 cl', 7.35, 14, 0, 0, 0)
+ROLLBACK
+COMMIT
 
 /*8. Todos los que han comprado "Outback Lager" han comprado cinco años después la misma cantidad de Mecca Cola al mismo vendedor.*/
+SELECT * FROM Customers
+SELECT * FROM Orders
+SELECT * FROM [Order Details]
+SELECT * FROM Products
+
+
 
 /*9. El pasado 20 de enero, Margaret Peacock consiguió vender una caja de Nesquick Power Max a todos los clientes que le habían comprado algo anteriormente.
 Los datos de envío (dirección, transportista, etc) son los mismos de alguna de sus ventas anteriores a ese cliente).*/
