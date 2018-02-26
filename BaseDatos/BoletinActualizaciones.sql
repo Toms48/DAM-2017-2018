@@ -169,11 +169,33 @@ COMMIT
 	
 
 /*4. Inserta un nuevo vendedor llamado Michael Trump. Asígnale los territorios de Louisville, Phoenix, Santa Cruz y Atlanta.*/
-SELECT * FROM Suppliers
+SELECT * FROM Employees
+SELECT * FROM EmployeeTerritories
+SELECT * FROM Territories
 
 BEGIN TRANSACTION
-	INSERT INTO Suppliers(CompanyName, ContactName, ContactTitle, [Address], City, Region, PostalCode, Country, Phone, Fax, HomePage)
-		VALUES()
+	INSERT INTO Employees(LastName, FirstName, Title, TitleOfCourtesy, BirthDate, HireDate, [Address], City, PostalCode, Country, HomePhone, Extension, Notes, ReportsTo)
+		VALUES('Trump', 'Michael', 'Sales Representative', 'Mr.', '1948-05-08 00:00:00.000', '1992-05-01 00:00:00.000', 'Calle de María de Molina 16', 'Madrid', 28006, 'Spain', 954261443, 467, 'Es gracioso.', 5)
+ROLLBACK
+COMMIT
+
+SELECT TerritoryID FROM Territories
+		WHERE TerritoryDescription IN ('Louisville', 'Phoenix', 'Santa Cruz', 'Atlanta')
+
+SELECT * FROM Employees
+	WHERE FirstName = ''
+
+SELECT * FROM ()
+
+BEGIN TRANSACTION 
+	INSERT INTO EmployeeTerritories(EmployeeID, TerritoryID)
+		SELECT e.EmployeeID, t.TerritoryID
+			FROM Territories AS t
+			INNER JOIN EmployeeTerritories AS et
+			ON t.TerritoryID = et.TerritoryID
+			INNER JOIN Employees AS e
+			ON et.EmployeeID = e.EmployeeID
+				WHERE TerritoryDescription IN ('Louisville', 'Phoenix', 'Santa Cruz', 'Atlanta')
 ROLLBACK
 COMMIT
 
