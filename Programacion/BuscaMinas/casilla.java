@@ -1,9 +1,10 @@
 /* Nombre: casilla
  * 
  * Básicas:
- * 		- mina => boolean => Consultable y no Modificable
- * 		- bandera => boolean => Consultable y no Modificable
- * 		- numero => int => Consultable y Modificable
+ * 		- mina        => boolean => Consultable
+ * 		- bandera     => boolean => Consultable
+ * 		- numero      => int     => Consultable y Modificable
+ * 		- descubierto => boolean => Consultable y Modificable
  * 
  * Derivadas: No tiene
  * 
@@ -27,6 +28,10 @@
  * int numero
  * 		- int getNumero();
  * 		- void setNumero(int numero);
+ * 
+ * boolean descubierto
+ * 		- boolean getDescubierto();
+ * 		- void setDescubierto(boolean descubierto);
  */
 
 
@@ -36,24 +41,28 @@ public class casilla implements Cloneable {
 	private boolean mina;
 	private boolean bandera;
 	private int numero;
+	private boolean descubierto;
 	
 	//Constructor por defecto
 	public casilla(){
 		mina = false;
 		bandera = false;
+		descubierto = true;
 		numero = 0;
 	}
 	
 	//Constructor con parámetros
-	public casilla(boolean mina, boolean bandera, int numero){
+	public casilla(boolean mina, boolean bandera, boolean descubierto, int numero){
 		this.mina = mina;
 		this.bandera = bandera;
+		this.descubierto = descubierto;
 		this.numero = numero;
 	}
 	
 	public casilla(casilla casillaCopia){
 		this.mina = casillaCopia.getMina();
 		this.bandera = casillaCopia.getBandera();
+		this.descubierto = casillaCopia.getDescubierto();
 		this.numero = casillaCopia.getNumero();
 	}
 	
@@ -64,6 +73,10 @@ public class casilla implements Cloneable {
 	
 	public boolean getBandera(){
 		return bandera;
+	}
+	
+	public boolean getDescubierto(){
+		return descubierto;
 	}
 	
 	public int getNumero(){
@@ -78,6 +91,10 @@ public class casilla implements Cloneable {
 		else{
 			this.numero = numero;
 		}
+	}
+	
+	public void setDescubierto(boolean descubierto){
+		this.descubierto = descubierto;
 	}
 	
 	//Métodos sobrescritos
@@ -110,6 +127,7 @@ public class casilla implements Cloneable {
 				
 				if(this.mina == other.mina &&
 				   this.bandera == other.bandera &&
+				   this.descubierto == other.descubierto &&
 				   this.numero == other.numero){
 					   
 					ret = true;
@@ -122,7 +140,7 @@ public class casilla implements Cloneable {
 	
 	@Override
 	public String toString(){
-		String s = "Mina: " +getMina() +", " +"Bandera: " +getBandera() +", " +"Numero: " +getNumero();
+		String s = "Mina: " +getMina() +", " +"Bandera: " +getBandera() +", " +"Descubierto: " +getDescubierto() +", " +"Numero: " +getNumero();
 		
 		return s;
 	}
