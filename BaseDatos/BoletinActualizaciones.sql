@@ -191,6 +191,7 @@ BEGIN TRANSACTION
 	INSERT INTO EmployeeTerritories(EmployeeID, TerritoryID)
 		SELECT (SELECT EmployeeID FROM Employees WHERE FirstName = 'Michael' AND LastName = 'Trump'), TerritoryID FROM Territories
 				WHERE TerritoryDescription IN ('Louisville', 'Phoenix', 'Santa Cruz', 'Atlanta')
+
 		/*SELECT e.EmployeeID, t.TerritoryID
 			FROM Territories AS t
 			INNER JOIN EmployeeTerritories AS et
@@ -198,6 +199,7 @@ BEGIN TRANSACTION
 			INNER JOIN Employees AS e
 			ON et.EmployeeID = e.EmployeeID
 				WHERE TerritoryDescription IN ('Louisville', 'Phoenix', 'Santa Cruz', 'Atlanta')*/
+
 ROLLBACK
 COMMIT
 
@@ -212,7 +214,17 @@ SELECT * FROM [Order Details]
 SELECT * FROM Orders
 SELECT * FROM Employees
 
-
+SELECT a.ProductSales
+	FROM [Product Sales for 1997] AS a
+	INNER JOIN Products AS p
+	ON a.ProductName = p.ProductName
+	INNER JOIN [Order Details] AS od
+	ON p.ProductID = od.ProductID
+	INNER JOIN Orders AS o
+	ON od.OrderID = o.OrderID
+	INNER JOIN Employees AS e
+	ON o.EmployeeID = e.EmployeeID
+		WHERE e.FirstName = 'Robert' AND e.LastName = 'King'
 
 /*6. Inserta un nuevo producto con los siguientes datos:
 	ProductID: 90
@@ -260,7 +272,24 @@ SELECT * FROM Orders
 SELECT * FROM [Order Details]
 SELECT * FROM Products
 
+GO
+CREATE VIEW CantidadOutbackLagerComprada AS
+SELECT c.CompanyName, SUM(od.Quantity) AS [Cantidad], O.EmployeeID, p.ProductName
+	FROM Customers AS c
+	INNER JOIN Orders AS o
+	ON c.CustomerID = o.CustomerID
+	INNER JOIN [Order Details] AS od
+	ON o.OrderID = od.OrderID
+	INNER JOIN Products AS p
+	ON od.ProductID = p.ProductID
+		WHERE p.ProductName = 'Outback Lager'
+		GROUP BY c.CompanyName, O.EmployeeID, p.ProductName
+GO
 
+BEGIN TRANSACTION
+
+ROLLBACK
+COMMIT
 
 /*9. El pasado 20 de enero, Margaret Peacock consiguió vender una caja de Nesquick Power Max a todos los clientes que le habían comprado algo anteriormente.
 Los datos de envío (dirección, transportista, etc) son los mismos de alguna de sus ventas anteriores a ese cliente).*/
