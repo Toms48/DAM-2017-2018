@@ -110,9 +110,9 @@ public class casilla implements Cloneable {
 		this.descubierto = descubierto;
 	}
 	
-	public void setDibujo(char dibujo){
-		if(dibujo!='*' && dibujo!='P' && dibujo!=' '){
-			
+	public void setDibujo(char dibujo) throws ExcepcionCasilla{
+		if(dibujo!='*' && dibujo!='P' && dibujo!=' ' && dibujo!='■'){
+			throw new ExcepcionCasilla("Solo valen los simbolos: *, P,  , ■");
 		}
 		else{
 			this.dibujo = dibujo;
