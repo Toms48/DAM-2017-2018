@@ -21,9 +21,11 @@
  * 
  * boolean mina
  * 		- boolean getMina();
+ * 		- void setMina(boolean mina);
  * 
  * boolean bandera
  * 		- boolean getBandera();
+ * 		- void setBandera(boolean bandera);
  * 
  * int numero
  * 		- int getNumero();
@@ -52,7 +54,7 @@ public class casilla implements Cloneable {
 	public casilla(){
 		mina = false;
 		bandera = false;
-		descubierto = true;
+		descubierto = false;
 		numero = 0;
 		dibujo = ' ';
 	}
@@ -104,6 +106,14 @@ public class casilla implements Cloneable {
 		else{
 			this.numero = numero;
 		}
+	}
+
+	public void setMina(boolean mina){
+		this.mina = mina;
+	}
+
+	public void setbandera(boolean bandera){
+		this.bandera = bandera;
 	}
 	
 	public void setDescubierto(boolean descubierto){

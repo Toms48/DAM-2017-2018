@@ -12,6 +12,7 @@
  * 
  * Métodos añadidos:
  * 		- PintarTablero
+ * 		- CargarMinas
  * 
  * GETTERS y SETTERS
  * 
@@ -19,6 +20,7 @@
  * 		- casilla[][] getTablero();
  */
 
+import java.util.Random;
 
 public class TableroBuscaMinas {
 	
@@ -54,22 +56,6 @@ public class TableroBuscaMinas {
 	}
 	
 	//Métodos sobrescritos
-	
-	//Métodos añadidos
-	public void PintarTablero(){
-		
-		for(int i=0; i<getTablero().length; i++){
-			
-			if(i != 0){
-				System.out.print("\n");
-			}
-			
-			for(int j=0; j<getTablero().length; j++){
-				System.out.print("[ ]");
-			}
-		}
-		
-	}
 	
 }
 

@@ -16,15 +16,5 @@ public class TestUtil {
 
         System.out.println(" ");
 
-        //Test crearTablero
-        int tablero[][] = util.crearTablero(8);
-
-        for(int i=0; i < tablero.length; i++){
-            for(int j=0; j < tablero.length; j++){
-                System.out.print(tablero[i][j]);
-            }
-            System.out.println(" ");
-        }
-
     }
 }
