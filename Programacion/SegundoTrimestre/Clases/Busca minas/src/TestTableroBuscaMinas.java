@@ -1,7 +1,7 @@
 public class TestTableroBuscaMinas {
 	
 	public static void main (String[] args) {
-		
+
 		/*//Constructores
 		System.out.println(" ");
 		System.out.println("*---------- Constructores ----------*");
@@ -33,12 +33,15 @@ public class TestTableroBuscaMinas {
 
 		casilla [][] tablero = gestoraBuscaMinas.CrearTablero();
 
-		for(int i=0; i<tablero.length; i++){
-			System.out.print("Hola");
-			for(int j=0; j<tablero.length; j++){
-				System.out.println("[" +tablero[i][j].getDibujo() +"]");
-			}
-		}
+		gestoraBuscaMinas.PintarTablero(tablero);
+
+		System.out.println("\n+----------------------+");
+
+		gestoraBuscaMinas.PintarTableroDescubierto(tablero);
+
+		System.out.println("\n+----------------------+");
+
+		System.out.println("Cantidad minas: " +gestoraBuscaMinas.ContadorMinas(tablero, 1,1));
 
 	}
 }
