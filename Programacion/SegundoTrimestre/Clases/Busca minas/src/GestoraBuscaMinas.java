@@ -86,13 +86,17 @@ public class GestoraBuscaMinas {
 
         int cm = 0;
 
-                for(int ii=i-- ; ii<ii+3; ii++){
-                    for(int jj=j--; jj<jj+3; jj++){
-                        if(tablero[ii][jj].getMina()==true){
+            for(int ii=i-1 ; ii<((i-1)+3); ii++){
+                for(int jj=j-1; jj<((j-1)+3); jj++){
+
+                    if((ii>=0 && ii<=7) && (jj>=0 && jj<=7)) {
+                        if (tablero[ii][jj].getMina() == true) {
                             cm++;
                         }
                     }
+
                 }
+            }
 
         return cm;
     }

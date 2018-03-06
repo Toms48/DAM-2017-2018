@@ -41,7 +41,29 @@ public class TestTableroBuscaMinas {
 
 		System.out.println("\n+----------------------+");
 
-		System.out.println("Cantidad minas: " +gestoraBuscaMinas.ContadorMinas(tablero, 1,1));
+		/*System.out.println("Cantidad minas: " +gestoraBuscaMinas.ContadorMinas(tablero, 0,0));*/
+
+		for(int i=0; i<tablero.length; i++){
+			for(int j=0; j<tablero.length; j++){
+				try{
+					tablero[i][j].setNumero(gestoraBuscaMinas.ContadorMinas(tablero, i,j));
+				}
+				catch(ExcepcionCasilla mensaje){
+					System.out.println(mensaje);
+				}
+			}
+		}
+
+		/*try{
+			tablero[0][0].setNumero(gestoraBuscaMinas.ContadorMinas(tablero, 0,0));
+		}
+		catch(ExcepcionCasilla mensaje){
+			System.out.println(mensaje);
+		}*/
+
+		System.out.println("\n+----------------------+");
+
+		gestoraBuscaMinas.PintarTableroDescubierto(tablero);
 
 	}
 }
