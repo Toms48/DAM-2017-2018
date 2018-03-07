@@ -54,7 +54,13 @@ public class GestoraBuscaMinas {
                         System.out.print("[" +tablero[i][j].getDibujo() +"]");
                     }
                     else{
-                        System.out.print("[" +tablero[i][j].getNumero() +"]");
+                        if(tablero[i][j].getNumero() == 0){
+                            System.out.print("[" +tablero[i][j].getDibujo() +"]");
+                        }
+                        else{
+                            System.out.print("[" +tablero[i][j].getNumero() +"]");
+                        }
+
                     }
                 }
                 else{
@@ -70,13 +76,37 @@ public class GestoraBuscaMinas {
                 System.out.print("\n");
             }
             for(int j=0; j<tablero.length; j++){
+
+                if(tablero[i][j].getMina()==true){
+                    System.out.print("[" +tablero[i][j].getDibujo() +"]");
+                }
+                else{
+                    if(tablero[i][j].getNumero() == 0){
+                        System.out.print("[" +tablero[i][j].getDibujo() +"]");
+                    }
+                    else{
+                        System.out.print("[" +tablero[i][j].getNumero() +"]");
+                    }
+
+                }
+
+            }
+        }
+    }
+
+    public void PintarTableroAdmin(casilla [][] tablero){
+        for(int i=0; i<tablero.length; i++){
+            if(i!=0) {
+                System.out.print("\n");
+            }
+            for(int j=0; j<tablero.length; j++){
+
                 if(tablero[i][j].getMina()==true){
                     System.out.print("[" +tablero[i][j].getDibujo() +"]");
                 }
                 else{
                     System.out.print("[" +tablero[i][j].getNumero() +"]");
                 }
-
 
             }
         }
@@ -99,6 +129,44 @@ public class GestoraBuscaMinas {
             }
 
         return cm;
+    }
+
+    public int DescubrirCasilla(casilla [][] tablero, int i, int j){
+
+        int ret;
+
+        boolean hayMina = tablero[i][j].getMina();
+        int hayNumero = tablero[i][j].getNumero();
+
+        if(hayMina == false){
+            if(hayNumero == 0){
+                ret = 0; //0 porque no hay numero ni mina
+
+                tablero[i][j].setDescubierto(true);
+
+                try{
+                    tablero[i][j].setDibujo(' ');
+                }
+                catch(ExcepcionCasilla mensaje){
+                    System.out.println(mensaje);
+                }
+
+                PintarTablero(tablero);
+
+            }
+            else{
+                ret = 1; //1 porque hay un numero pero no una mina
+
+                tablero[i][j].setDescubierto(true);
+
+                PintarTablero(tablero);
+            }
+        }else{
+            ret = -1; //-1 porque hay una mina
+
+            tablero[i][j].setDescubierto(true);
+        }
+        return ret;
     }
 
 }

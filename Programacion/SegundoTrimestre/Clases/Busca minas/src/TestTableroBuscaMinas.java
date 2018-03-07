@@ -33,11 +33,11 @@ public class TestTableroBuscaMinas {
 
 		casilla [][] tablero = gestoraBuscaMinas.CrearTablero();
 
-		gestoraBuscaMinas.PintarTablero(tablero);
+		//gestoraBuscaMinas.PintarTablero(tablero);
 
 		System.out.println("\n+----------------------+");
 
-		gestoraBuscaMinas.PintarTableroDescubierto(tablero);
+		//gestoraBuscaMinas.PintarTableroAdmin(tablero);
 
 		System.out.println("\n+----------------------+");
 
@@ -63,7 +63,15 @@ public class TestTableroBuscaMinas {
 
 		System.out.println("\n+----------------------+");
 
-		gestoraBuscaMinas.PintarTableroDescubierto(tablero);
+		gestoraBuscaMinas.PintarTableroAdmin(tablero);
+
+		System.out.println("\n+----------------------+");
+
+		//gestoraBuscaMinas.PintarTableroDescubierto(tablero);
+
+		System.out.println("\n+----------------------+");
+
+		gestoraBuscaMinas.DescubrirCasilla(tablero,1,1);
 
 	}
 }
