@@ -73,6 +73,13 @@ public class TestTableroBuscaMinas {
 
 		gestoraBuscaMinas.DescubrirCasilla(tablero,1,1);
 
+		if(gestoraBuscaMinas.DescubrirCasilla(tablero,1,1) == -1){
+			gestoraBuscaMinas.PintarTableroDescubierto(tablero);
+		}
+		else {
+			gestoraBuscaMinas.PintarTablero(tablero);
+		}
+
 	}
 }
 

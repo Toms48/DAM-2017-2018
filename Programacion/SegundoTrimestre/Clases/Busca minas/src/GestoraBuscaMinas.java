@@ -55,6 +55,14 @@ public class GestoraBuscaMinas {
                     }
                     else{
                         if(tablero[i][j].getNumero() == 0){
+
+                            try{
+                                tablero[i][j].setDibujo(' ');
+                            }
+                            catch(ExcepcionCasilla mensaje){
+                                System.out.println(mensaje);
+                            }
+
                             System.out.print("[" +tablero[i][j].getDibujo() +"]");
                         }
                         else{
@@ -140,31 +148,42 @@ public class GestoraBuscaMinas {
 
         if(hayMina == false){
             if(hayNumero == 0){
-                ret = 0; //0 porque no hay numero ni mina
+                ret = 0;//0 porque no hay numero ni mina
 
-                tablero[i][j].setDescubierto(true);
+                for(int ii=i-1 ; ii<((i-1)+3); ii++){
+                    for(int jj=j-1; jj<((j-1)+3); jj++){
 
-                try{
-                    tablero[i][j].setDibujo(' ');
+                        if((ii>=0 && ii<=7) && (jj>=0 && jj<=7)) {
+                            if (ii != i || jj != j) {
+
+                                if(tablero[ii][jj].getDescubierto() == false){
+                                    tablero[ii][jj].setDescubierto(true);
+
+                                    DescubrirCasilla(tablero,ii,jj);
+                                }
+
+                            }
+                            else{
+                                tablero[ii][jj].setDescubierto(true);
+                            }
+                        }
+
+                    }
                 }
-                catch(ExcepcionCasilla mensaje){
-                    System.out.println(mensaje);
-                }
-
-                PintarTablero(tablero);
-
             }
             else{
-                ret = 1; //1 porque hay un numero pero no una mina
+                ret = 1;//1 porque hay un numero pero no una mina
 
                 tablero[i][j].setDescubierto(true);
 
-                PintarTablero(tablero);
+                //PintarTablero(tablero);
             }
         }else{
-            ret = -1; //-1 porque hay una mina
+            ret = -1;//-1 porque hay una mina
 
             tablero[i][j].setDescubierto(true);
+
+            //PintarTableroDescubierto(tablero);
         }
         return ret;
     }
