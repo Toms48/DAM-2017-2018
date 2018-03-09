@@ -1,33 +1,6 @@
-public class TestTableroBuscaMinas {
+public class TestGestoraBuscaMinas {
 	
 	public static void main (String[] args) {
-
-		/*//Constructores
-		System.out.println(" ");
-		System.out.println("*---------- Constructores ----------*");
-		System.out.println(" ");
-		
-		//Constructor por defecto
-		TableroBuscaMinas tableroPorDefecto = new TableroBuscaMinas();
-		
-		//Constructor con parámetros
-		casilla casillaBlanco = new casilla();
-		TableroBuscaMinas tablero1 = new TableroBuscaMinas(casillaBlanco);
-		
-		//Constructor copia
-		TableroBuscaMinas tableroCopia = new TableroBuscaMinas(tablero1);
-		
-		//Gets
-		System.out.println(" ");
-		System.out.println("*---------- Gets ----------*");
-		System.out.println(" ");
-		
-		System.out.println(tablero1.getTablero());
-		
-		//Métodos añadidos
-		System.out.println(" ");
-		System.out.println("*---------- Metodos aniadidos ----------*");
-		System.out.println(" ");*/
 
 		GestoraBuscaMinas gestoraBuscaMinas = new GestoraBuscaMinas();
 
@@ -53,13 +26,6 @@ public class TestTableroBuscaMinas {
 				}
 			}
 		}
-
-		/*try{
-			tablero[0][0].setNumero(gestoraBuscaMinas.ContadorMinas(tablero, 0,0));
-		}
-		catch(ExcepcionCasilla mensaje){
-			System.out.println(mensaje);
-		}*/
 
 		System.out.println("\n+----------------------+");
 
