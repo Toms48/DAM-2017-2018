@@ -76,7 +76,7 @@ public class MainBuscaMinas {
                 if(opcionMenu!=0){
                     //Segun la opcion del menu
                     switch(){
-                        
+
                     }
                         //Caso 0: Salir
                         //Caso 1: Nivel Facil*
