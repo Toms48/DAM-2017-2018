@@ -12,82 +12,44 @@ public class TestGestoraBuscaMinas {
 		GestoraBuscaMinas gestoraBuscaMinas = new GestoraBuscaMinas(); //Como los métodos de la gestora no son static tenemos que crear un objeto gestora
 
 		//Tests CrearTablero
-		System.out.println(" ");
+		System.out.println("\n");
 		System.out.println("*----------- Test CrearTablero -----------*");
-		System.out.println(" ");
 
 		Casilla [][] tablero = gestoraBuscaMinas.CrearTablero();
 
-		//Tests
-		System.out.println(" ");
-		System.out.println("*----------- Test PintarTablero -----------*");
-		System.out.println(" ");
-
 		//Tests PintarTableroJugador
-		System.out.println(" ");
+		System.out.println("\n");
 		System.out.println("*----------- Test PintarTableroJugador -----------*");
-		System.out.println(" ");
 
 		gestoraBuscaMinas.PintarTableroJugador(tablero);
 
 		//Tests PintarTableroPerdedor
-		System.out.println(" ");
+		System.out.println("\n");
 		System.out.println("*----------- Test PintarTableroPerdedor -----------*");
-		System.out.println(" ");
 
 		gestoraBuscaMinas.PintarTableroPerdedor(tablero);
 
-		//Tests PintarTablero
-		System.out.println(" ");
-		System.out.println("*----------- Test PintarTablero -----------*");
-		System.out.println(" ");
+		//Tests PintarTableroAdmin
+		System.out.println("\n");
+		System.out.println("*----------- Test PintarTableroAdmin -----------*");
 
 		gestoraBuscaMinas.PintarTableroAdmin(tablero);
 
-		/*//Tests PintarTablero
-		System.out.println(" ");
+		//Tests ContadorMinas
+		System.out.println("\n");
+		System.out.println("*----------- Test ContadorMinas -----------*");
+
+		System.out.print("Cantidad de minas al rededor de (1,1): " +gestoraBuscaMinas.ContadorMinas(tablero,1,1));
+
+		//Tests PintarTablero y DescubrirCasilla (aquí también estoy probando DescubrirCasilla por lo que no le hago test por separado)
+		System.out.println("\n");
 		System.out.println("*----------- Test PintarTablero -----------*");
-		System.out.println(" ");
 
-		//gestoraBuscaMinas.PintarTablero(tablero);*/
+		gestoraBuscaMinas.PintarTablero(tablero,1,1);
 
-		/*System.out.println("\n+----------------------+");
+		System.out.println("\n");
 
-		//gestoraBuscaMinas.PintarTableroAdmin(tablero);
-
-		System.out.println("\n+----------------------+");
-
-		System.out.println("Cantidad minas: " +gestoraBuscaMinas.ContadorMinas(tablero, 0,0));
-
-		for(int i=0; i<tablero.length; i++){
-			for(int j=0; j<tablero.length; j++){
-				try{
-					tablero[i][j].setNumero(gestoraBuscaMinas.ContadorMinas(tablero, i,j));
-				}
-				catch(ExcepcionCasilla mensaje){
-					System.out.println(mensaje);
-				}
-			}
-		}
-
-		System.out.println("\n+----------------------+");
-
-		gestoraBuscaMinas.PintarTableroAdmin(tablero);
-
-		System.out.println("\n+----------------------+");
-
-		//gestoraBuscaMinas.PintarTableroDescubierto(tablero);
-
-		System.out.println("\n+----------------------+");
-
-		gestoraBuscaMinas.DescubrirCasilla(tablero,1,1);
-
-		if(gestoraBuscaMinas.DescubrirCasilla(tablero,1,1) == -1){
-			gestoraBuscaMinas.PintarTableroDescubierto(tablero);
-		}
-		else {
-			gestoraBuscaMinas.PintarTablero(tablero);
-		}*/
+		gestoraBuscaMinas.PintarTablero(tablero,6,6);
 
 	}
 }

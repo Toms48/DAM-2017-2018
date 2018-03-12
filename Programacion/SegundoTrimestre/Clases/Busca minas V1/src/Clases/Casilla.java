@@ -15,7 +15,7 @@ package Clases;
  * 
  * Restricciones:
  * 		- numero será un número mayor o igual que 0
- * 		- dibujo solo puede ser uno de los siguientes carácteres: *, P,  , ■
+ * 		- dibujo solo puede ser uno de los siguientes carácteres: *,  ,  P
  * 
  * GETTERS y SETTERS
  * 
@@ -127,8 +127,8 @@ public class Casilla implements Cloneable {
 	}
 	
 	public void setDibujo(char dibujo) throws ExcepcionCasilla{
-		if(dibujo!='*' && dibujo!='P' && dibujo!=' ' && dibujo!='■'){
-			throw new ExcepcionCasilla("Solo valen los simbolos: *, P,  , ■");
+		if(dibujo!='*' && dibujo!='P' && dibujo!=' '){
+			throw new ExcepcionCasilla("Solo valen los simbolos: *,  ,  P");
 		}
 		else{
 			this.dibujo = dibujo;

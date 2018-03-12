@@ -32,7 +32,7 @@ public class GestoraBuscaMinas {
         for(int i=0; i<tablero.length; i++){
             for(int j=0; j<tablero.length; j++){
                 //tablero[i][j] = casillaVacia;   [...]e introducirlo cada vez en todas las casillas, al cambiarlo se cambian todos.
-                tablero[i][j] = new Casilla(false, false, false, 0, '■');
+                tablero[i][j] = new Casilla(false, false, false, 0, ' ');
             }
         }
 
@@ -56,7 +56,16 @@ public class GestoraBuscaMinas {
             }
         }
 
-
+        for(int i=0; i<tablero.length; i++){
+            for(int j=0; j<tablero.length; j++){
+                try{
+                    tablero[i][j].setNumero(ContadorMinas(tablero, i,j));
+                }
+                catch(ExcepcionCasilla mensaje){
+                    System.out.println(mensaje);
+                }
+            }
+        }
 
         return tablero;
     }
@@ -128,13 +137,18 @@ public class GestoraBuscaMinas {
                     System.out.print("[" +tablero[i][j].getDibujo() +"]");
                 }
                 else{
-                    if(tablero[i][j].getNumero() == 0){
-                        System.out.print("[" +tablero[i][j].getDibujo() +"]");
+                    if(tablero[i][j].getDescubierto()==false){
+                        System.out.print("[■]");
                     }
                     else{
-                        System.out.print("[" +tablero[i][j].getNumero() +"]");
-                    }
+                        if(tablero[i][j].getNumero()==0){
+                            System.out.print("[" +tablero[i][j].getDibujo() +"]");
+                        }
+                        else{
+                            System.out.print("[" +tablero[i][j].getNumero() +"]");
+                        }
 
+                    }
                 }
 
             }
@@ -146,13 +160,16 @@ public class GestoraBuscaMinas {
  Comentario: Pintará el tablero
  Cabecera: void PintarTablero(Casilla[][] tablero)
  Precondiciones: No tiene
- Entrada: Un array bidimensional de casillas
+ Entrada:
+    - Un array bidimensional de casillas
+    - Un int para la posicion de la i
+    - Un int para la posicion de la j
  Salida: No hay
  E/S: No hay
  Postcondiciones: No tiene
  **************************************************************************/
-    public void PintarTablero(Casilla[][] tablero){
-        if(DescubrirCasilla(tablero,1,1) == -1){
+    public void PintarTablero(Casilla[][] tablero, int i, int j){
+        if(DescubrirCasilla(tablero,i,j) == -1){
             PintarTableroPerdedor(tablero);
         }
         else {
