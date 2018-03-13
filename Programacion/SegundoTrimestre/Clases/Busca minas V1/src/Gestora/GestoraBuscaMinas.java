@@ -5,6 +5,7 @@ import Clases.Casilla;
 import Excepciones.ExcepcionCasilla;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class GestoraBuscaMinas {
 
@@ -302,6 +303,41 @@ public class GestoraBuscaMinas {
             //PintarTableroDescubierto(tablero);
         }
         return ret;
+    }
+
+/**************************************************************************
+Interfaz
+    Comentario: Ejecutará el juego en modo facil, dimensiones 8x8 y 10 minas
+    Cabecera: void NivelFacil()
+    Precondiciones: No tiene
+    Entrada: No hay
+    Salida: No hay
+    E/S: No hay
+    Postcondiciones: No tiene
+**************************************************************************/
+    public void NivelFacil(){
+
+        Casilla[][] tableroFacil;
+        int i;
+        int j;
+
+        Scanner teclado = new Scanner(System.in);
+        tableroFacil = CrearTablero();
+
+        PintarTableroJugador(tableroFacil);
+
+        do{
+            System.out.println("Introduzca la fila: ");
+            i = teclado.nextInt();
+            System.out.println("Introduzca la columna: ");
+            j = teclado.nextInt();
+
+            PintarTablero(tableroFacil, i-1, j-1);
+        }
+        while(DescubrirCasilla(tableroFacil, i-1, j-1) != -1);
+
+        System.out.println("Pa tu casa.");
+
     }
 
 }
