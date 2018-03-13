@@ -327,9 +327,9 @@ Interfaz
         PintarTableroJugador(tableroFacil);
 
         do{
-            System.out.println("Introduzca la fila: ");
+            System.out.print("Introduzca la fila: ");
             i = teclado.nextInt();
-            System.out.println("Introduzca la columna: ");
+            System.out.print("Introduzca la columna: ");
             j = teclado.nextInt();
 
             PintarTablero(tableroFacil, i-1, j-1);
