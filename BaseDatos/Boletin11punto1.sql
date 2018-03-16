@@ -1,9 +1,40 @@
+BEGIN TRANSACTION
+GO
+	--Creamos 
+	CREATE PROCEDURE Existe
+		--Declaramos las variables de entrada
+		@NombreProducto nvarchar(40)
+	AS
+		BEGIN
+			IF EXISTS (SELECT * FROM Products WHERE ProductName = @NombreProducto)
+				BEGIN
+					Print 'Ya existe'
+				END
+			ELSE
+				BEGIN
+					Print 'Que va, no existe'
+				END
+		END
+ROLLBACK
+COMMIT
+GO
+
 /*1. Deseamos incluir un producto en la tabla Products llamado "Cruzcampo lata” pero no estamos seguros si se ha insertado o no.
 El precio son 4,40, el proveedor es el 16, la categoría 1 y la cantidad por unidad es "Pack 6 latas” "Discontinued” toma el valor 0 y el resto a NULL.
 Escribe un script que compruebe si existe un producto con ese nombre.
 En caso afirmativo, actualizará el precio y en caso negativo insertarlo.*/
-SELECT * FROM Products
-	WHERE ProductName = 'Cruzcampo lata'
+IF EXISTS (SELECT * FROM Products WHERE ProductName = 'Cruzcampo lata')
+	BEGIN
+		Print 'Ya existe'
+	END
+ELSE
+	BEGIN
+		Print 'Que va, no existe'
+	END
+
+DECLARE @NombreProducto nvarchar(40)
+SET @NombreProducto = 'Cruzcampo lata'
+EXECUTE Existe @NombreProducto
 
 BEGIN TRANSACTION
 	INSERT INTO Products(ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice, Discontinued)
