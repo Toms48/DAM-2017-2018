@@ -12,14 +12,14 @@ public class GestoraBuscaMinas {
 /**************************************************************************
  Interfaz
  Comentario: Creará un tablero de 8 por 8 con objetos casillas
- Cabecera: Casilla[][] CrearTablero()
+ Cabecera: Casilla[][] CrearTableroFacil()
  Precondiciones: No tiene
  Entrada: No hay
  Salida: Un array bidimensional 8x8
  E/S: No hay
- Postcondiciones: El array tendrá un tamaño de 8x8 con diez minas (cargadas aleatoriamente)
+ Postcondiciones: El array tendrá un tamaño de 8x8 con 10 minas (cargadas aleatoriamente)
  **************************************************************************/
-    public Casilla[][] CrearTablero(){
+    public Casilla[][] CrearTableroFacil(){
 
         Casilla[][] tablero = new Casilla[8][8];
 
@@ -60,7 +60,193 @@ public class GestoraBuscaMinas {
         for(int i=0; i<tablero.length; i++){
             for(int j=0; j<tablero.length; j++){
                 try{
-                    tablero[i][j].setNumero(ContadorMinas(tablero, i,j));
+                    tablero[i][j].setNumero(ContadorMinas(tablero, i,j, 7));
+                }
+                catch(ExcepcionCasilla mensaje){
+                    System.out.println(mensaje);
+                }
+            }
+        }
+
+        return tablero;
+    }
+
+/**************************************************************************
+ Interfaz
+ Comentario: Creará un tablero de 16 por 16 con objetos casillas
+ Cabecera: Casilla[][] CrearTableroMedio()
+ Precondiciones: No tiene
+ Entrada: No hay
+ Salida: Un array bidimensional 16x16
+ E/S: No hay
+ Postcondiciones: El array tendrá un tamaño de 16x16 con 40 minas (cargadas aleatoriamente)
+ **************************************************************************/
+    public Casilla[][] CrearTableroMedio(){
+
+        Casilla[][] tablero = new Casilla[16][16];
+
+        //Casilla casillaVacia = new Casilla();   Al crear un solo objeto[...]
+
+        Random random = new Random();
+
+        int aleatorioI;
+        int aleatorioJ;
+
+        for(int i=0; i<tablero.length; i++){
+            for(int j=0; j<tablero.length; j++){
+                //tablero[i][j] = casillaVacia;   [...]e introducirlo cada vez en todas las casillas, al cambiarlo se cambian todos.
+                tablero[i][j] = new Casilla(false, false, false, 0, ' ');
+            }
+        }
+
+        for(int contadorMinas=0; contadorMinas!=40; contadorMinas++){
+
+            aleatorioI = random.nextInt(16);
+            aleatorioJ = random.nextInt(16);
+
+            if(tablero[aleatorioI][aleatorioJ].getMina() == false){
+                tablero[aleatorioI][aleatorioJ].setMina(true);
+                try{
+                    tablero[aleatorioI][aleatorioJ].setDibujo('*');
+                }
+                catch(ExcepcionCasilla mensaje){
+                    System.out.println(mensaje);
+                }
+
+            }
+            else{
+                contadorMinas--;
+            }
+        }
+
+        for(int i=0; i<tablero.length; i++){
+            for(int j=0; j<tablero.length; j++){
+                try{
+                    tablero[i][j].setNumero(ContadorMinas(tablero, i,j, 15));
+                }
+                catch(ExcepcionCasilla mensaje){
+                    System.out.println(mensaje);
+                }
+            }
+        }
+
+        return tablero;
+    }
+
+/**************************************************************************
+ Interfaz
+ Comentario: Creará un tablero de 30 por 30 con objetos casillas
+ Cabecera: Casilla[][] CrearTableroDificil()
+ Precondiciones: No tiene
+ Entrada: No hay
+ Salida: Un array bidimensional 30x30
+ E/S: No hay
+ Postcondiciones: El array tendrá un tamaño de 16x16 con 40 minas (cargadas aleatoriamente)
+ **************************************************************************/
+    public Casilla[][] CrearTableroDificil(){
+
+        Casilla[][] tablero = new Casilla[30][30];
+
+        //Casilla casillaVacia = new Casilla();   Al crear un solo objeto[...]
+
+        Random random = new Random();
+
+        int aleatorioI;
+        int aleatorioJ;
+
+        for(int i=0; i<tablero.length; i++){
+            for(int j=0; j<tablero.length; j++){
+                //tablero[i][j] = casillaVacia;   [...]e introducirlo cada vez en todas las casillas, al cambiarlo se cambian todos.
+                tablero[i][j] = new Casilla(false, false, false, 0, ' ');
+            }
+        }
+
+        for(int contadorMinas=0; contadorMinas!=99; contadorMinas++){
+
+            aleatorioI = random.nextInt(30);
+            aleatorioJ = random.nextInt(30);
+
+            if(tablero[aleatorioI][aleatorioJ].getMina() == false){
+                tablero[aleatorioI][aleatorioJ].setMina(true);
+                try{
+                    tablero[aleatorioI][aleatorioJ].setDibujo('*');
+                }
+                catch(ExcepcionCasilla mensaje){
+                    System.out.println(mensaje);
+                }
+
+            }
+            else{
+                contadorMinas--;
+            }
+        }
+
+        for(int i=0; i<tablero.length; i++){
+            for(int j=0; j<tablero.length; j++){
+                try{
+                    tablero[i][j].setNumero(ContadorMinas(tablero, i,j, 29));
+                }
+                catch(ExcepcionCasilla mensaje){
+                    System.out.println(mensaje);
+                }
+            }
+        }
+
+        return tablero;
+    }
+
+/**************************************************************************
+ Interfaz
+ Comentario: Creará un tablero de 32 por 32 con objetos casillas
+ Cabecera: Casilla[][] CrearTableroImposible()
+ Precondiciones: No tiene
+ Entrada: No hay
+ Salida: Un array bidimensional 32x32
+ E/S: No hay
+ Postcondiciones: El array tendrá un tamaño de 32x32 con 666 minas (cargadas aleatoriamente)
+ **************************************************************************/
+    public Casilla[][] CrearTableroImposible(){
+
+        Casilla[][] tablero = new Casilla[32][32];
+
+        //Casilla casillaVacia = new Casilla();   Al crear un solo objeto[...]
+
+        Random random = new Random();
+
+        int aleatorioI;
+        int aleatorioJ;
+
+        for(int i=0; i<tablero.length; i++){
+            for(int j=0; j<tablero.length; j++){
+                //tablero[i][j] = casillaVacia;   [...]e introducirlo cada vez en todas las casillas, al cambiarlo se cambian todos.
+                tablero[i][j] = new Casilla(false, false, false, 0, ' ');
+            }
+        }
+
+        for(int contadorMinas=0; contadorMinas!=1; contadorMinas++){
+
+            aleatorioI = random.nextInt(32);
+            aleatorioJ = random.nextInt(32);
+
+            if(tablero[aleatorioI][aleatorioJ].getMina() == false){
+                tablero[aleatorioI][aleatorioJ].setMina(true);
+                try{
+                    tablero[aleatorioI][aleatorioJ].setDibujo('*');
+                }
+                catch(ExcepcionCasilla mensaje){
+                    System.out.println(mensaje);
+                }
+
+            }
+            else{
+                contadorMinas--;
+            }
+        }
+
+        for(int i=0; i<tablero.length; i++){
+            for(int j=0; j<tablero.length; j++){
+                try{
+                    tablero[i][j].setNumero(ContadorMinas(tablero, i,j, 31));
                 }
                 catch(ExcepcionCasilla mensaje){
                     System.out.println(mensaje);
@@ -82,10 +268,13 @@ public class GestoraBuscaMinas {
  Postcondiciones: No tiene
  **************************************************************************/
     public void PintarTableroJugador(Casilla[][] tablero){
+
         for(int i=0; i<tablero.length; i++){
             if(i!=0) {
                 System.out.print("\n");
+                //System.out.println(" " +i+1);
             }
+
             for(int j=0; j<tablero.length; j++){
 
                 if(tablero[i][j].getDescubierto()==true){
@@ -114,6 +303,7 @@ public class GestoraBuscaMinas {
                     System.out.print("[■]");
                 }
             }
+            System.out.print(" " +(i+1));
         }
     }
 
@@ -128,10 +318,12 @@ public class GestoraBuscaMinas {
  Postcondiciones: No tiene
  **************************************************************************/
     public void PintarTableroPerdedor(Casilla[][] tablero){
+
         for(int i=0; i<tablero.length; i++){
             if(i!=0) {
                 System.out.print("\n");
             }
+
             for(int j=0; j<tablero.length; j++){
 
                 if(tablero[i][j].getMina()==true){
@@ -153,6 +345,7 @@ public class GestoraBuscaMinas {
                 }
 
             }
+            System.out.print(" " +(i+1));
         }
     }
 
@@ -165,12 +358,13 @@ public class GestoraBuscaMinas {
     - Un array bidimensional de casillas
     - Un int para la posicion de la i
     - Un int para la posicion de la j
+    - Un int para el nivel de dificultad
  Salida: No hay
  E/S: No hay
  Postcondiciones: No tiene
  **************************************************************************/
-    public void PintarTablero(Casilla[][] tablero, int i, int j){
-        if(DescubrirCasilla(tablero,i,j) == -1){
+    public void PintarTablero(Casilla[][] tablero, int i, int j, int nivel){
+        if(DescubrirCasilla(tablero,i,j,nivel) == -1){
             PintarTableroPerdedor(tablero);
         }
         else {
@@ -219,14 +413,14 @@ public class GestoraBuscaMinas {
  E/S: No hay
  Postcondiciones: Será 0 o mayor
  **************************************************************************/
-    public int ContadorMinas(Casilla[][] tablero, int i, int j){
+    public int ContadorMinas(Casilla[][] tablero, int i, int j, int nivel){
 
         int cm = 0;
 
             for(int ii=i-1 ; ii<((i-1)+3); ii++){
                 for(int jj=j-1; jj<((j-1)+3); jj++){
 
-                    if((ii>=0 && ii<=7) && (jj>=0 && jj<=7)) {
+                    if((ii>=0 && ii<=nivel) && (jj>=0 && jj<=nivel)) {
                         if (tablero[ii][jj].getMina() == true) {
                             cm++;
                         }
@@ -240,6 +434,32 @@ public class GestoraBuscaMinas {
 
 /**************************************************************************
  Interfaz
+ Comentario: Según una posicion del tablero contará cuantas minas tiene a su alrededor
+ Cabecera: int ContadorNoDescubierto(Casilla[][] tablero)
+ Precondiciones: No tiene
+ Entrada:
+ - Un array bidimensional de casillas
+ Salida: Un int
+ E/S: No hay
+ Postcondiciones: Será mayor que 0
+ **************************************************************************/
+    public int ContadorNoDescubierto(Casilla[][] tablero){
+
+        int cd = 0;
+
+        for(int i=0 ; i<tablero.length; i++){
+            for(int j=0; j<tablero.length; j++){
+
+                if(tablero[i][j].getDescubierto()==true){
+                    cd++;
+                }
+            }
+        }
+        return cd;
+    }
+
+/**************************************************************************
+ Interfaz
  Comentario: Descubrirá la casilla que se le indique
  Cabecera: int DescubrirCasilla(Casilla[][] tablero, int i, int j)
  Precondiciones:
@@ -248,6 +468,7 @@ public class GestoraBuscaMinas {
      - Un array bidimensional de casillas
      - Un int, indica la fila del tablero
      - Un int, indica la columna del tablero
+     - Un int para saber el nivel de dificultad
  Salida: Un int
  E/S: No hay
  Postcondiciones:
@@ -255,7 +476,7 @@ public class GestoraBuscaMinas {
     -   1 cuadno el numero es mayor que cero y no hay mina
     -  -1 cuando hay una mina
  **************************************************************************/
-    public int DescubrirCasilla(Casilla[][] tablero, int i, int j){
+    public int DescubrirCasilla(Casilla[][] tablero, int i, int j, int nivel){
 
 
         boolean hayMina = tablero[i][j].getMina();
@@ -270,13 +491,13 @@ public class GestoraBuscaMinas {
                 for(int ii=i-1 ; ii<((i-1)+3); ii++){
                     for(int jj=j-1; jj<((j-1)+3); jj++){
 
-                        if((ii>=0 && ii<=7) && (jj>=0 && jj<=7)) {
+                        if((ii>=0 && ii<=nivel) && (jj>=0 && jj<=nivel)) {
                             if (ii != i || jj != j) {
 
                                 if(tablero[ii][jj].getDescubierto() == false){
                                     tablero[ii][jj].setDescubierto(true);
 
-                                    DescubrirCasilla(tablero,ii,jj); //Llamada recursiva
+                                    DescubrirCasilla(tablero,ii,jj, nivel); //Llamada recursiva
                                 }
 
                             }
@@ -322,22 +543,157 @@ Interfaz
         int j;
 
         Scanner teclado = new Scanner(System.in);
-        tableroFacil = CrearTablero();
+        tableroFacil = CrearTableroFacil();
 
         PintarTableroJugador(tableroFacil);
 
         do{
-            System.out.print("Introduzca la fila: ");
-            i = teclado.nextInt();
-            System.out.print("Introduzca la columna: ");
-            j = teclado.nextInt();
+            do{
+                System.out.print("\n\nIntroduzca la fila: ");
+                i = teclado.nextInt();
+                System.out.print("Introduzca la columna: ");
+                j = teclado.nextInt();
+            }
+            while((i<0 || i>8) || (j<0 || j>8));
 
-            PintarTablero(tableroFacil, i-1, j-1);
+            PintarTablero(tableroFacil, i-1, j-1, 7);
+
+            if(ContadorNoDescubierto(tableroFacil) == 10){
+                System.out.println("Mieo, has ganao");
+            }
         }
-        while(DescubrirCasilla(tableroFacil, i-1, j-1) != -1);
+        while(DescubrirCasilla(tableroFacil, i-1, j-1, 7) != -1);
 
-        System.out.println("Pa tu casa.");
+        if(DescubrirCasilla(tableroFacil, i-1, j-1, 7) != -1){
+            System.out.println("\nPa tu casa.");
+            System.out.println(" ");
+        }
+    }
 
+/**************************************************************************
+ Interfaz
+ Comentario: Ejecutará el juego en modo medio, dimensiones 16x16 y 40 minas
+ Cabecera: void NivelMedio()
+ Precondiciones: No tiene
+ Entrada: No hay
+ Salida: No hay
+ E/S: No hay
+ Postcondiciones: No tiene
+ **************************************************************************/
+    public void NivelMedio(){
+
+        Casilla[][] tableroMedio;
+        int i;
+        int j;
+
+        Scanner teclado = new Scanner(System.in);
+        tableroMedio = CrearTableroMedio();
+
+        PintarTableroJugador(tableroMedio);
+
+        do{
+            do{
+                System.out.print("\n\nIntroduzca la fila: ");
+                i = teclado.nextInt();
+                System.out.print("Introduzca la columna: ");
+                j = teclado.nextInt();
+            }
+            while((i<0 || i>16) || (j<0 || j>16));
+
+            PintarTablero(tableroMedio, i-1, j-1, 15);
+
+            if(ContadorNoDescubierto(tableroFacil) == 10){
+                System.out.println("Mieo, has ganao");
+            }
+        }
+        while(DescubrirCasilla(tableroMedio, i-1, j-1, 15) != -1);
+
+        if(DescubrirCasilla(tableroFacil, i-1, j-1, 7) != -1){
+            System.out.println("\nPa tu casa.");
+            System.out.println(" ");
+        }
+    }
+
+/**************************************************************************
+ Interfaz
+ Comentario: Ejecutará el juego en modo dificil, dimensiones 30x30 y 99 minas
+ Cabecera: void NivelDificil()
+ Precondiciones: No tiene
+ Entrada: No hay
+ Salida: No hay
+ E/S: No hay
+ Postcondiciones: No tiene
+ **************************************************************************/
+    public void NivelDificil(){
+
+        Casilla[][] tableroDificil;
+        int i;
+        int j;
+
+        Scanner teclado = new Scanner(System.in);
+        tableroDificil = CrearTableroDificil();
+
+        PintarTableroJugador(tableroDificil);
+
+        do{
+            do{
+                System.out.print("\n\nIntroduzca la fila: ");
+                i = teclado.nextInt();
+                System.out.print("Introduzca la columna: ");
+                j = teclado.nextInt();
+            }
+            while((i<0 || i>30) || (j<0 || j>30));
+
+            PintarTablero(tableroDificil, i-1, j-1, 29);
+
+            if(ContadorNoDescubierto(tableroFacil) == 10){
+                System.out.println("Mieo, has ganao");
+            }
+        }
+        while(DescubrirCasilla(tableroDificil, i-1, j-1, 29) != -1);
+
+        if(DescubrirCasilla(tableroFacil, i-1, j-1, 7) != -1){
+            System.out.println("\nPa tu casa.");
+            System.out.println(" ");
+        }
+    }
+
+/**************************************************************************
+ Interfaz
+ Comentario: Ejecutará el juego en modo dificil, dimensiones 30x30 y 99 minas
+ Cabecera: void NivelDificil()
+ Precondiciones: No tiene
+ Entrada: No hay
+ Salida: No hay
+ E/S: No hay
+ Postcondiciones: No tiene
+ **************************************************************************/
+    public void NivelImposible(){
+
+        Casilla[][] tableroImposible;
+        int i;
+        int j;
+
+        Scanner teclado = new Scanner(System.in);
+        tableroImposible = CrearTableroImposible();
+
+        PintarTableroJugador(tableroImposible);
+
+        do{
+            do{
+                System.out.print("\n\nIntroduzca la fila: ");
+                i = teclado.nextInt();
+                System.out.print("Introduzca la columna: ");
+                j = teclado.nextInt();
+            }
+            while((i<0 || i>32) || (j<0 || j>32));
+
+            PintarTablero(tableroImposible, i-1, j-1, 31);
+        }
+        while(DescubrirCasilla(tableroImposible, i-1, j-1, 31) != -1);
+
+        System.out.println("\nPa tu casa.");
+        System.out.println(" ");
     }
 
 }

@@ -51,6 +51,7 @@ Interfaz
     Postcondiciones: No tiene
  **************************************************************************/
     public static void MostrarMenu(){
+        System.out.println("\n");
         System.out.println("1 ---> Nivel Facil");
         System.out.println("2 ---> Nivel Medio");
         System.out.println("3 ---> Nivel Dificil");
@@ -81,7 +82,7 @@ Interfaz
                 do{
                     MostrarMenu();
 
-                    System.out.println(" ");
+                    //System.out.println(" ");
                     System.out.print("Su opcion es: ");
                     opcionMenu = teclado.nextInt();
                 }
@@ -96,15 +97,19 @@ Interfaz
                         break;
 
                         case 2: //Caso 2: Nivel Medio*
-                            resguardo.NivelMedio();
+                            //resguardo.NivelMedio();
+                            gestora.NivelMedio();
                         break;
 
                         case 3: //Caso 3: Nivel Dificil*
-                            resguardo.NivelDificil();
+                            //resguardo.NivelDificil();
+                            gestora.NivelDificil();
                         break;
 
                         case 666: //Caso 666: Nivel Imposible*
-                            resguardo.NivelImposible();
+                            //resguardo.NivelImposible();
+                            gestora.NivelImposible();
+
                         break;
                     }//Fin_Segun
                 }//Fin_Si
