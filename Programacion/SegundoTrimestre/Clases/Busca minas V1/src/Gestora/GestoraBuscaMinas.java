@@ -223,7 +223,7 @@ public class GestoraBuscaMinas {
             }
         }
 
-        for(int contadorMinas=0; contadorMinas!=1; contadorMinas++){
+        for(int contadorMinas=0; contadorMinas!=666; contadorMinas++){
 
             aleatorioI = random.nextInt(32);
             aleatorioJ = random.nextInt(32);
@@ -268,6 +268,16 @@ public class GestoraBuscaMinas {
  Postcondiciones: No tiene
  **************************************************************************/
     public void PintarTableroJugador(Casilla[][] tablero){
+
+        for(int i=0; i<tablero.length; i++){
+            if(i>=10){
+                System.out.print(i+1 +" ");
+            }
+            else{
+                System.out.print(" " +(i+1) +" ");
+            }
+        }
+        System.out.print("\n");
 
         for(int i=0; i<tablero.length; i++){
             if(i!=0) {
@@ -320,6 +330,16 @@ public class GestoraBuscaMinas {
     public void PintarTableroPerdedor(Casilla[][] tablero){
 
         for(int i=0; i<tablero.length; i++){
+            if(i>=10){
+                System.out.print(i+1 +" ");
+            }
+            else{
+                System.out.print(" " +(i+1) +" ");
+            }
+        }
+        System.out.print("\n");
+
+        for(int i=0; i<tablero.length; i++){
             if(i!=0) {
                 System.out.print("\n");
             }
@@ -351,29 +371,6 @@ public class GestoraBuscaMinas {
 
 /**************************************************************************
  Interfaz
- Comentario: Pintará el tablero
- Cabecera: void PintarTablero(Casilla[][] tablero)
- Precondiciones: No tiene
- Entrada:
-    - Un array bidimensional de casillas
-    - Un int para la posicion de la i
-    - Un int para la posicion de la j
-    - Un int para el nivel de dificultad
- Salida: No hay
- E/S: No hay
- Postcondiciones: No tiene
- **************************************************************************/
-    public void PintarTablero(Casilla[][] tablero, int i, int j, int nivel){
-        if(DescubrirCasilla(tablero,i,j,nivel) == -1){
-            PintarTableroPerdedor(tablero);
-        }
-        else {
-            PintarTableroJugador(tablero);
-        }
-    }
-
-/**************************************************************************
- Interfaz
  Comentario: Pintará el tablero entrto descubierto y donde no hay dibujo nos imprime su número de minas
  Cabecera: void PintarTableroAdmin(Casilla[][] tablero)
  Precondiciones: No tiene
@@ -397,6 +394,29 @@ public class GestoraBuscaMinas {
                 }
 
             }
+        }
+    }
+
+/**************************************************************************
+ Interfaz
+ Comentario: Pintará el tablero
+ Cabecera: void PintarTablero(Casilla[][] tablero)
+ Precondiciones: No tiene
+ Entrada:
+    - Un array bidimensional de casillas
+    - Un int para la posicion de la i
+    - Un int para la posicion de la j
+    - Un int para el nivel de dificultad
+ Salida: No hay
+ E/S: No hay
+ Postcondiciones: No tiene
+ **************************************************************************/
+    public void PintarTablero(Casilla[][] tablero, int i, int j, int nivel){
+        if(DescubrirCasilla(tablero,i,j,nivel) == -1){
+            PintarTableroPerdedor(tablero);
+        }
+        else {
+            PintarTableroJugador(tablero);
         }
     }
 
@@ -450,7 +470,7 @@ public class GestoraBuscaMinas {
         for(int i=0 ; i<tablero.length; i++){
             for(int j=0; j<tablero.length; j++){
 
-                if(tablero[i][j].getDescubierto()==true){
+                if(tablero[i][j].getDescubierto()==false){
                     cd++;
                 }
             }
@@ -557,16 +577,15 @@ Interfaz
             while((i<0 || i>8) || (j<0 || j>8));
 
             PintarTablero(tableroFacil, i-1, j-1, 7);
-
-            if(ContadorNoDescubierto(tableroFacil) == 10){
-                System.out.println("Mieo, has ganao");
-            }
         }
-        while(DescubrirCasilla(tableroFacil, i-1, j-1, 7) != -1);
+        while((DescubrirCasilla(tableroFacil, i-1, j-1, 7) != -1) && (ContadorNoDescubierto(tableroFacil) != 10));
 
-        if(DescubrirCasilla(tableroFacil, i-1, j-1, 7) != -1){
+        if(DescubrirCasilla(tableroFacil, i-1, j-1, 7) == -1){
             System.out.println("\nPa tu casa.");
-            System.out.println(" ");
+        }
+
+        if(ContadorNoDescubierto(tableroFacil) == 10){
+            System.out.println("\nMieo, has ganao");
         }
     }
 
@@ -601,16 +620,15 @@ Interfaz
             while((i<0 || i>16) || (j<0 || j>16));
 
             PintarTablero(tableroMedio, i-1, j-1, 15);
-
-            if(ContadorNoDescubierto(tableroFacil) == 10){
-                System.out.println("Mieo, has ganao");
-            }
         }
-        while(DescubrirCasilla(tableroMedio, i-1, j-1, 15) != -1);
+        while((DescubrirCasilla(tableroMedio, i-1, j-1, 15) != -1) && (ContadorNoDescubierto(tableroMedio) != 40));
 
-        if(DescubrirCasilla(tableroFacil, i-1, j-1, 7) != -1){
+        if(DescubrirCasilla(tableroMedio, i-1, j-1, 15) == -1){
             System.out.println("\nPa tu casa.");
-            System.out.println(" ");
+        }
+
+        if(ContadorNoDescubierto(tableroMedio) == 40){
+            System.out.println("\nMieo, has ganao");
         }
     }
 
@@ -645,23 +663,23 @@ Interfaz
             while((i<0 || i>30) || (j<0 || j>30));
 
             PintarTablero(tableroDificil, i-1, j-1, 29);
-
-            if(ContadorNoDescubierto(tableroFacil) == 10){
-                System.out.println("Mieo, has ganao");
-            }
         }
-        while(DescubrirCasilla(tableroDificil, i-1, j-1, 29) != -1);
+        while((DescubrirCasilla(tableroDificil, i-1, j-1, 29) != -1)  && (ContadorNoDescubierto(tableroDificil) != 99));
 
-        if(DescubrirCasilla(tableroFacil, i-1, j-1, 7) != -1){
+        if(DescubrirCasilla(tableroDificil, i-1, j-1, 29) == -1){
             System.out.println("\nPa tu casa.");
-            System.out.println(" ");
         }
+
+        if(ContadorNoDescubierto(tableroDificil) == 99){
+            System.out.println("\nMieo, has ganao");
+        }
+
     }
 
 /**************************************************************************
  Interfaz
- Comentario: Ejecutará el juego en modo dificil, dimensiones 30x30 y 99 minas
- Cabecera: void NivelDificil()
+ Comentario: Ejecutará el juego en modo dificil, dimensiones 32x32 y 666 minas
+ Cabecera: void NivelImposible()
  Precondiciones: No tiene
  Entrada: No hay
  Salida: No hay
@@ -690,10 +708,16 @@ Interfaz
 
             PintarTablero(tableroImposible, i-1, j-1, 31);
         }
-        while(DescubrirCasilla(tableroImposible, i-1, j-1, 31) != -1);
+        while((DescubrirCasilla(tableroImposible, i-1, j-1, 31) != -1) && (ContadorNoDescubierto(tableroImposible) != 666));
 
-        System.out.println("\nPa tu casa.");
-        System.out.println(" ");
+        if(DescubrirCasilla(tableroImposible, i-1, j-1, 31) == -1){
+            System.out.println("\nPa tu casa.");
+        }
+
+        if(ContadorNoDescubierto(tableroImposible) == 666){
+            System.out.println("\nMieo, has ganao");
+        }
+
     }
 
 }

@@ -20,10 +20,9 @@ package Main;
     //Inicio
         //Mostrar logo
         //Repetir
-            //Mostrar menu y validar opcion*
+            //Mostrar menu* y validar opcion
             //Si opcion no es 0
                 //Segun la opcion del menu
-                    //Caso 0: Salir
                     //Caso 1: Nivel Facil*
                     //Caso 2: Nivel Medio*
                     //Caso 3: Nivel Dificil*
