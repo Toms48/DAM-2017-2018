@@ -89,6 +89,7 @@ ELSE
 		)
 	END
 
+SELECT * FROM ProductSales
 
 /*3. Comprueba si existe una tabla llamada ShipShip.
 Esta tabla ha de tener de cada Transportista:
@@ -159,3 +160,43 @@ Incrementos de ventas	|	Incrementos de precio
 	Mayor del 50%		|	10% con un máximo de 2,25
 -------------------------------------------------------
 */
+
+SELECT * FROM [Product Sales for 1997]
+SELECT * FROM [Product Sales for 1996]
+
+SELECT COUNT(OrderDate) AS [Cantidad vendida 96], ProductName
+	FROM Products AS p
+	INNER JOIN [Order Details] AS od
+	ON p.ProductID = od.ProductID
+	INNER JOIN Orders AS o
+	ON od.OrderID = o.OrderID
+	WHERE YEAR(OrderDate) = 1996
+		GROUP BY ProductName
+
+SELECT COUNT(OrderDate) AS [Cantidad vendida 97], ProductName
+	FROM Products AS p
+	INNER JOIN [Order Details] AS od
+	ON p.ProductID = od.ProductID
+	INNER JOIN Orders AS o
+	ON od.OrderID = o.OrderID
+	WHERE YEAR(OrderDate) = 1997
+		GROUP BY ProductName
+
+SELECT (Cantidad97.[Cantidad vendida 97] - Cantidad96.[Cantidad vendida 96]) AS [Aumento/Decremento 96-97], Cantidad97.ProductName
+	FROM (SELECT COUNT(OrderDate) AS [Cantidad vendida 96], ProductName
+			FROM Products AS p
+			INNER JOIN [Order Details] AS od
+			ON p.ProductID = od.ProductID
+			INNER JOIN Orders AS o
+			ON od.OrderID = o.OrderID
+			WHERE YEAR(OrderDate) = 1996
+				GROUP BY ProductName) AS [Cantidad96]
+	INNER JOIN (SELECT COUNT(OrderDate) AS [Cantidad vendida 97], ProductName
+					FROM Products AS p
+					INNER JOIN [Order Details] AS od
+					ON p.ProductID = od.ProductID
+					INNER JOIN Orders AS o
+					ON od.OrderID = o.OrderID
+					WHERE YEAR(OrderDate) = 1997
+						GROUP BY ProductName) AS [Cantidad97]
+	ON [Cantidad96].ProductName = [Cantidad97].ProductName
