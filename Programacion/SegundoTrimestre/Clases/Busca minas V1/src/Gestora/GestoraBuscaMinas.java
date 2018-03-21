@@ -574,7 +574,7 @@ Interfaz
                 System.out.print("Introduzca la columna: ");
                 j = teclado.nextInt();
             }
-            while((i<0 || i>8) || (j<0 || j>8));
+            while((i<1 || i>8) || (j<1 || j>8));
 
             PintarTablero(tableroFacil, i-1, j-1, 7);
         }
@@ -617,7 +617,7 @@ Interfaz
                 System.out.print("Introduzca la columna: ");
                 j = teclado.nextInt();
             }
-            while((i<0 || i>16) || (j<0 || j>16));
+            while((i<1 || i>16) || (j<1 || j>16));
 
             PintarTablero(tableroMedio, i-1, j-1, 15);
         }
@@ -660,7 +660,7 @@ Interfaz
                 System.out.print("Introduzca la columna: ");
                 j = teclado.nextInt();
             }
-            while((i<0 || i>30) || (j<0 || j>30));
+            while((i<1 || i>30) || (j<1 || j>30));
 
             PintarTablero(tableroDificil, i-1, j-1, 29);
         }
@@ -704,7 +704,7 @@ Interfaz
                 System.out.print("Introduzca la columna: ");
                 j = teclado.nextInt();
             }
-            while((i<0 || i>32) || (j<0 || j>32));
+            while((i<1 || i>32) || (j<1 || j>32));
 
             PintarTablero(tableroImposible, i-1, j-1, 31);
         }

@@ -40,7 +40,7 @@ public class TestCasilla {
 		System.out.println("Numero de la Casilla 1: " +casilla1.getNumero());
 		System.out.println("Dibujo de la Casilla 1: " +casilla1.getDibujo());
 		
-		//Tests constructores
+		//Tests Sets
 		System.out.println(" ");
 		System.out.println("*----------- Sets -----------*");
 		System.out.println(" ");
