@@ -18,7 +18,7 @@ package Clases;
  * 		- char getTipo()
  * 
  */
-public class CartaPuebloDuerme /*implements Comparable<CartaPuebloDuerme>*/{
+public class CartaPuebloDuerme implements Cloneable /*Comparable<CartaPuebloDuerme>*/{
 	
 	//Atributos
 	private char tipo;
@@ -58,50 +58,6 @@ public class CartaPuebloDuerme /*implements Comparable<CartaPuebloDuerme>*/{
 		
 		return copia;
 	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		
-		boolean ret = false;
-
-		if(this == obj){
-			ret = true;
-		}
-		else{
-			if(obj != null && obj instanceof CartaPuebloDuerme){
-				CartaPuebloDuerme other = (CartaPuebloDuerme)obj;
-				
-				if(this.tipo == other.tipo){
-					   
-					ret = true;
-					
-				}
-			}
-		}
-		return ret;
-	}
-	
-	/*Compara por el número de la carta
-	 * 	 0 si tienen el mismo numero
-	 * 	 1 si la primera carta es mayor que la segunda
-	 * 	-1 si la primera carta es menor que la segunda
-	 */
-	
-	/*public int compareTo(CartaPuebloDuerme1 cartaPuebloDuerme){
-		
-		int ret = 0;
-		
-		if(this != cartaPuebloDuerme && this.getTipo() > cartaPuebloDuerme.getTipo()){
-			ret = 1;
-		}
-		else{
-			if(this.getTipo() < cartaPuebloDuerme.getTipo()){
-				ret = -1;
-			}
-		}
-		
-		return ret;
-	}*/
 	
 	@Override
 	public String toString(){

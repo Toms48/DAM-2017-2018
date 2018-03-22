@@ -1,7 +1,7 @@
-package MainPuebloDuerme;
+package Main;
 
 /*
- * Nombre: MainPuebloDuerme.mHombresLobo
+ * Nombre: Main.mHombresLobo
  * 
  * Comentario: simulara el juego de los hombres lobo/el pueblo/the werewolfs(?)
  * 
