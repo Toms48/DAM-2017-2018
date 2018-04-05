@@ -7,6 +7,7 @@ Las columnas serán:
 	fecha de nacimiento
 	número de carreras disputadas.*/
 
+/*Un SELECT para tener una tabla con los datos que me piden*/
 SELECT cab.ID, cab.Nombre, cab.Sexo, cab.FechaNacimiento, COUNT(car.ID) AS [Número de carreras disputadas]
 	FROM LTCaballosCarreras AS cc
 	INNER JOIN LTCarreras AS car
@@ -14,36 +15,100 @@ SELECT cab.ID, cab.Nombre, cab.Sexo, cab.FechaNacimiento, COUNT(car.ID) AS [Núme
 	INNER JOIN LTCaballos AS cab
 	ON cc.IDCaballo = cab.ID
 		GROUP BY cab.ID, cab.Nombre, cab.Sexo, cab.FechaNacimiento
+
+/*Creo la función (debe ir entre GO porque tiene que ser la única instrucción del bloque)*/
 GO
 CREATE FUNCTION FnCarrerasCaballo (@fechaInicio date, @fechaFin date)
-	RETURNS TABLE
-	AS RETURN (SELECT cab.ID, cab.Nombre, cab.Sexo, cab.FechaNacimiento, COUNT(car.ID) AS [Número de carreras disputadas]
-					FROM LTCaballosCarreras AS cc
-					INNER JOIN LTCarreras AS car
-					ON cc.IDCarrera = car.ID
-					INNER JOIN LTCaballos AS cab
-					ON cc.IDCaballo = cab.ID
-						WHERE car.Fecha BETWEEN @fechaInicio AND @fechaFin
-						GROUP BY cab.ID, cab.Nombre, cab.Sexo, cab.FechaNacimiento)
+	RETURNS TABLE AS
+	RETURN (SELECT cab.ID, cab.Nombre, cab.Sexo, cab.FechaNacimiento, COUNT(car.ID) AS [Número de carreras disputadas]
+				FROM LTCaballosCarreras AS cc
+				INNER JOIN LTCarreras AS car
+				ON cc.IDCarrera = car.ID
+				INNER JOIN LTCaballos AS cab
+				ON cc.IDCaballo = cab.ID
+					WHERE car.Fecha BETWEEN @fechaInicio AND @fechaFin
+					GROUP BY cab.ID, cab.Nombre, cab.Sexo, cab.FechaNacimiento)
 GO
 
+--Declaro las dos variable que voy a utilizar
 DECLARE @fechaInicio date, @fechaFin date
-SET @fechaInicio = '2018-01-03'
-SET @fechaFin = '2018-03-05'
+SET @fechaInicio = '2018-01-03' --Le doy un valor a la primera variable
+SET @fechaFin = '2018-03-05' --Le doy un valor a la segunda variable
 
+/*Utilizo la función con las dos variables de antes*/
 SELECT * FROM FnCarrerasCaballo (@fechaInicio, @fechaFin)
+
+
 
 /*2.Crea una función escalar llamada FnTotalApostadoCC que reciba como parámetros el ID de un caballo y
 el ID de una carrera y nos devuelva el dinero que se ha apostado a ese caballo en esa carrera.*/
 
-CREATE FUNCTION FnTotalApostadoCC (@IDCaballo smallint, @IDCarrera smallint)
-	RETURNS int
-	AS RETURN 
+/*Creo la función escalar (entre GO porque tiene que ser la única instrucción del bloque)*/
+GO
+ALTER FUNCTION FnTotalApostadoCC (@IDCaballo smallint, @IDCarrera smallint)
+	RETURNS smallmoney AS
+		BEGIN
+			DECLARE @dineroApostadoCaballoCarrera smallmoney
+
+			SELECT @dineroApostadoCaballoCarrera = Importe FROM LTApuestas
+				WHERE IDCaballo = @IDCaballo AND IDCarrera = @IDCarrera
+
+			RETURN @dineroApostadoCaballoCarrera
+		END
+GO
+
+--SELECT * FROM LTApuestas
+
+/*Declaro las variables que voy a utilizar y les doy unos valores con SET*/
+DECLARE @IDCaballo smallint, @IDCarrera smallint
+SET @IDCaballo = 1
+SET @IDCarrera = 1
+
+/*Utilizo la función escalar con las dos variables de antes*/
+SELECT dbo.FnTotalApostadoCC (@IDCaballo, @IDCarrera) AS [Dinero apostado a un caballo en una carrera]
+
+
 
 /*3.Crea una función escalar llamada FnPremioConseguido que reciba como parámetros el ID de una apuesta y
 nos devuelva el dinero que ha ganado dicha apuesta.
 Si todavía no se conocen las posiciones de los caballos, devolverá un NULL.*/
+SELECT * FROM LTApuestas
 
+GO
+CREATE FUNCTION FnPremioConseguido (@IDApuesta smallmoney)
+	RETURNS smallmoney AS
+		BEGIN
+			DECLARE @dineroGanadoApuesta smallmoney
+			DECLARE @posicion tinyint
+
+			SELECT @posicion = Posicion
+				FROM LTCaballosCarreras AS CC
+				INNER JOIN LTApuestas AS A
+				ON CC.IDCaballo = A.IDCaballo AND CC.IDCarrera = A.IDCarrera
+					Where A.ID = @IDApuesta
+
+			IF @posicion = 1
+				Select @dineroGanadoApuesta = A.Importe*CC.Premio1
+					FROM LTCaballosCarreras AS CC
+					INNER JOIN LTApuestas AS A
+					ON CC.IDCaballo = A.IDCaballo AND CC.IDCarrera = A.IDCarrera
+						Where A.ID = @IDApuesta
+			ELSE
+				IF @posicion = 2
+					Select @dineroGanadoApuesta = A.Importe*CC.Premio2
+						FROM LTCaballosCarreras AS CC
+						INNER JOIN LTApuestas AS A
+						ON CC.IDCaballo = A.IDCaballo AND CC.IDCarrera = A.IDCarrera
+							Where A.ID = @IDApuesta
+
+			RETURN @dineroGanadoApuesta
+		END
+GO
+
+DECLARE @IDApuesta smallmoney
+SET @IDApuesta = 1
+
+SELECT dbo.FnPremioConseguido (@IDApuesta) AS [Dinero]
 
 /*4.El procedimiento para calcular los premios en las apuestas de una carrera (los valores que deben figurar en la columna Premio1 y Premio2) es el siguiente:
 
