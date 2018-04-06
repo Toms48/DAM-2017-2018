@@ -45,7 +45,7 @@ el ID de una carrera y nos devuelva el dinero que se ha apostado a ese caballo e
 
 /*Creo la función escalar (entre GO porque tiene que ser la única instrucción del bloque)*/
 GO
-ALTER FUNCTION FnTotalApostadoCC (@IDCaballo smallint, @IDCarrera smallint)
+CREATE FUNCTION FnTotalApostadoCC (@IDCaballo smallint, @IDCarrera smallint)
 	RETURNS smallmoney AS
 		BEGIN
 			DECLARE @dineroApostadoCaballoCarrera smallmoney
@@ -73,26 +73,27 @@ SELECT dbo.FnTotalApostadoCC (@IDCaballo, @IDCarrera) AS [Dinero apostado a un c
 nos devuelva el dinero que ha ganado dicha apuesta.
 Si todavía no se conocen las posiciones de los caballos, devolverá un NULL.*/
 SELECT * FROM LTApuestas
+SELECT * FROM LTCaballosCarreras
 
 GO
-CREATE FUNCTION FnPremioConseguido (@IDApuesta smallmoney)
+ALTER FUNCTION FnPremioConseguido (@IDApuesta smallmoney)
 	RETURNS smallmoney AS
 		BEGIN
 			DECLARE @dineroGanadoApuesta smallmoney
 			DECLARE @posicion tinyint
 
 			SELECT @posicion = Posicion
-				FROM LTCaballosCarreras AS CC
-				INNER JOIN LTApuestas AS A
-				ON CC.IDCaballo = A.IDCaballo AND CC.IDCarrera = A.IDCarrera
-					Where A.ID = @IDApuesta
+				FROM LTCaballosCarreras AS cc
+				INNER JOIN LTApuestas AS a
+				ON cc.IDCaballo = a.IDCaballo AND cc.IDCarrera = a.IDCarrera
+					WHERE a.ID = @IDApuesta
 
 			IF @posicion = 1
-				Select @dineroGanadoApuesta = A.Importe*CC.Premio1
-					FROM LTCaballosCarreras AS CC
-					INNER JOIN LTApuestas AS A
-					ON CC.IDCaballo = A.IDCaballo AND CC.IDCarrera = A.IDCarrera
-						Where A.ID = @IDApuesta
+				Select @dineroGanadoApuesta = a.Importe*cc.Premio1
+					FROM LTCaballosCarreras AS cc
+					INNER JOIN LTApuestas AS a
+					ON cc.IDCaballo = a.IDCaballo AND cc.IDCarrera = a.IDCarrera
+						Where a.ID = @IDApuesta
 			ELSE
 				IF @posicion = 2
 					Select @dineroGanadoApuesta = A.Importe*CC.Premio2
@@ -100,13 +101,16 @@ CREATE FUNCTION FnPremioConseguido (@IDApuesta smallmoney)
 						INNER JOIN LTApuestas AS A
 						ON CC.IDCaballo = A.IDCaballo AND CC.IDCarrera = A.IDCarrera
 							Where A.ID = @IDApuesta
+				ELSE
+					IF @posicion > 2
+					SET @dineroGanadoApuesta = 0
 
 			RETURN @dineroGanadoApuesta
 		END
 GO
 
 DECLARE @IDApuesta smallmoney
-SET @IDApuesta = 1
+SET @IDApuesta = 3
 
 SELECT dbo.FnPremioConseguido (@IDApuesta) AS [Dinero]
 
@@ -124,14 +128,53 @@ SELECT dbo.FnPremioConseguido (@IDApuesta) AS [Dinero]
 
 Crea una función que devuelva una tabla con tres columnas: ID de la apuesta, Premio1 y Premio2.
 
-Debes usar la función del Ejercicio 2. Si lo estimas oportuno puedes crear otras funciones para realizar parte de los cálculos.
+Debes usar la función del Ejercicio 2. Si lo estimas oportuno puedes crear otras funciones para realizar parte de los cálculos.*/
+
 
 
 /*5.Crea una función FnPalmares que reciba un ID de caballo y un rango de fechas y nos devuelva el palmarés de ese caballo en ese intervalo de tiempo.
 El palmarés es el número de victorias, segundos puestos, etc.
 Se devolverá una tabla con dos columnas: Posición y NumVeces, que indicarán, respectivamente, cada una de las posiciones y las veces que el caballo ha obtenido ese resultado.
-Queremos que aparezcan 8 filas con las posiciones de la 1 a la 8. Si el caballo nunca ha finalizado en alguna de esas posiciones, aparecerá el valor 0 en la columna NumVeces.
+Queremos que aparezcan 8 filas con las posiciones de la 1 a la 8. Si el caballo nunca ha finalizado en alguna de esas posiciones, aparecerá el valor 0 en la columna NumVeces.*/
+SELECT * FROM LTCaballosCarreras
+	ORDER BY Posicion
+SELECT * FROM LTCarreras
 
+DECLARE @tabla8Posiciones table(
+	Posicion int
+)
+
+INSERT INTO @tabla8Posiciones (Posicion)
+	VALUES(1),(2),(3),(4)
+INSERT INTO @tabla8Posiciones (Posicion)
+	VALUES(5)
+INSERT INTO @tabla8Posiciones (Posicion)
+	VALUES(6)
+INSERT INTO @tabla8Posiciones (Posicion)
+	VALUES(7)
+INSERT INTO @tabla8Posiciones (Posicion)
+	VALUES(8)
+
+SELECT t8p.Posicion, COUNT(cc.Posicion) AS [NumVeces]
+	FROM LTCaballosCarreras AS cc
+	INNER JOIN LTCarreras AS car
+	ON cc.IDCarrera = car.ID AND car.Fecha BETWEEN '2018-01-03' AND '2018-03-05'
+	RIGHT JOIN @tabla8Posiciones AS t8p 
+	ON cc.Posicion = t8p.Posicion 
+		GROUP BY t8p.Posicion
+
+GO
+CREATE FUNCTION FnPalmares (@IDCaballo smallint, @fechaInicio date, @fechaFin date)
+	RETURNS TABLE AS
+	RETURN (SELECT Posicion
+				FROM LTCaballosCarreras AS cc
+				INNER JOIN LTCarreras AS car
+				ON cc.IDCarrera = car.ID
+				INNER JOIN LTCaballos AS cab
+				ON cc.IDCaballo = cab.ID
+					WHERE car.Fecha BETWEEN @fechaInicio AND @fechaFin
+					GROUP BY cab.ID, cab.Nombre, cab.Sexo, cab.FechaNacimiento)
+GO
 
 /*6.Crea una función FnCarrerasHipodromo que nos devuelva las carreras celebradas en un hipódromo en un rango de fechas.
 La función recibirá como parámetros el nombre del hipódromo y la fecha de inicio y fin del intervalo y
