@@ -145,15 +145,7 @@ DECLARE @tabla8Posiciones table(
 )
 
 INSERT INTO @tabla8Posiciones (Posicion)
-	VALUES(1),(2),(3),(4)
-INSERT INTO @tabla8Posiciones (Posicion)
-	VALUES(5)
-INSERT INTO @tabla8Posiciones (Posicion)
-	VALUES(6)
-INSERT INTO @tabla8Posiciones (Posicion)
-	VALUES(7)
-INSERT INTO @tabla8Posiciones (Posicion)
-	VALUES(8)
+	VALUES(1),(2),(3),(4),(5),(6),(7),(8)
 
 SELECT t8p.Posicion, COUNT(cc.Posicion) AS [NumVeces]
 	FROM LTCaballosCarreras AS cc

@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../Busca minas/Busca minas.iml" filepath="$PROJECT_DIR$/../Busca minas/Busca minas.iml" />
       <module fileurl="file://$PROJECT_DIR$/../Busca minas V1/Busca minas V1.iml" filepath="$PROJECT_DIR$/../Busca minas V1/Busca minas V1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Clase File/Clase File.iml" filepath="$PROJECT_DIR$/../Clase File/Clase File.iml" />
       <module fileurl="file://$PROJECT_DIR$/Pueblo duerme.iml" filepath="$PROJECT_DIR$/Pueblo duerme.iml" />
       <module fileurl="file://$PROJECT_DIR$/../Util/Util.iml" filepath="$PROJECT_DIR$/../Util/Util.iml" />
     </modules>

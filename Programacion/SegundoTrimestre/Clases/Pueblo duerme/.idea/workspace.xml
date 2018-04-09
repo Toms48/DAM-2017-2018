@@ -12,89 +12,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Casilla.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../Busca minas V1/src/Clases/Casilla.java">
+      <file leaf-file-name="ClaseFile.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../Clase File/src/ClaseFile.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="366">
-              <caret line="152" column="5" lean-forward="true" selection-start-line="152" selection-start-column="5" selection-end-line="152" selection-end-column="5" />
+            <state relative-caret-position="135">
+              <caret line="9" column="31" lean-forward="true" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
               <folding>
-                <element signature="method#Casilla#0;class#Casilla#0" expanded="false" />
-                <element signature="method#Casilla#2;class#Casilla#0" expanded="false" />
-                <element signature="method#setNumero#0;class#Casilla#0" expanded="false" />
-                <element signature="method#setDibujo#0;class#Casilla#0" expanded="false" />
-                <element signature="method#equals#0;class#Casilla#0" expanded="false" />
-                <element signature="method#toString#0;class#Casilla#0" expanded="false" />
+                <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ExcepcionCasilla.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../Busca minas V1/src/Excepciones/ExcepcionCasilla.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GestoraBuscaMinas.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/../Busca minas V1/src/Gestora/GestoraBuscaMinas.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="121">
-              <caret line="27" column="37" lean-forward="true" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
-              <folding>
-                <element signature="docComment;method#CrearTableroMedio#0;class#GestoraBuscaMinas#0" expanded="false" />
-                <element signature="method#CrearTableroMedio#0;class#GestoraBuscaMinas#0" expanded="false" />
-                <element signature="docComment;method#CrearTableroDificil#0;class#GestoraBuscaMinas#0" expanded="false" />
-                <element signature="method#CrearTableroDificil#0;class#GestoraBuscaMinas#0" expanded="false" />
-                <element signature="docComment;method#CrearTableroImposible#0;class#GestoraBuscaMinas#0" expanded="false" />
-                <element signature="method#CrearTableroImposible#0;class#GestoraBuscaMinas#0" expanded="false" />
-                <element signature="docComment;method#PintarTableroJugador#0;class#GestoraBuscaMinas#0" expanded="false" />
-                <element signature="method#PintarTableroJugador#0;class#GestoraBuscaMinas#0" expanded="false" />
-                <element signature="docComment;method#PintarTableroPerdedor#0;class#GestoraBuscaMinas#0" expanded="false" />
-                <element signature="method#PintarTableroPerdedor#0;class#GestoraBuscaMinas#0" expanded="false" />
-                <element signature="docComment;method#PintarTableroAdmin#0;class#GestoraBuscaMinas#0" expanded="false" />
-                <element signature="method#PintarTableroAdmin#0;class#GestoraBuscaMinas#0" expanded="false" />
-                <element signature="docComment;method#PintarTablero#0;class#GestoraBuscaMinas#0" expanded="false" />
-                <element signature="method#PintarTablero#0;class#GestoraBuscaMinas#0" expanded="false" />
-                <element signature="docComment;method#ContadorMinas#0;class#GestoraBuscaMinas#0" expanded="false" />
-                <element signature="method#ContadorMinas#0;class#GestoraBuscaMinas#0" expanded="false" />
-                <element signature="docComment;method#ContadorNoDescubierto#0;class#GestoraBuscaMinas#0" expanded="false" />
-                <element signature="method#ContadorNoDescubierto#0;class#GestoraBuscaMinas#0" expanded="false" />
-                <element signature="docComment;method#DescubrirCasilla#0;class#GestoraBuscaMinas#0" expanded="false" />
-                <element signature="method#DescubrirCasilla#0;class#GestoraBuscaMinas#0" expanded="false" />
-                <element signature="docComment;method#NivelFacil#0;class#GestoraBuscaMinas#0" expanded="false" />
-                <element signature="docComment;method#NivelMedio#0;class#GestoraBuscaMinas#0" expanded="false" />
-                <element signature="method#NivelMedio#0;class#GestoraBuscaMinas#0" expanded="false" />
-                <element signature="docComment;method#NivelDificil#0;class#GestoraBuscaMinas#0" expanded="false" />
-                <element signature="method#NivelDificil#0;class#GestoraBuscaMinas#0" expanded="false" />
-                <element signature="docComment;method#NivelImposible#0;class#GestoraBuscaMinas#0" expanded="false" />
-                <element signature="method#NivelImposible#0;class#GestoraBuscaMinas#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainBuscaMinas.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../Busca minas V1/src/Main/MainBuscaMinas.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="202">
-              <caret line="39" column="13" lean-forward="false" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
-              <folding>
-                <element signature="docComment;method#MostrarMenu#0;class#MainBuscaMinas#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RBuscaMinas.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../Busca minas V1/src/Resguardos/RBuscaMinas.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -156,11 +81,14 @@
         <option value="$PROJECT_DIR$/src/Gestora/gestoraPuebloDuerme.java" />
         <option value="$PROJECT_DIR$/src/Gestora/GestoraPuebloDuerme.java" />
         <option value="$PROJECT_DIR$/src/Test/TestGestoraPuebloDuerme.java" />
+        <option value="$PROJECT_DIR$/../Clase File/src/File.java" />
+        <option value="$PROJECT_DIR$/../Clase File/src/ClaseFile.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="-7" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
     <option name="width" value="697" />
     <option name="height" value="735" />
   </component>
@@ -324,66 +252,30 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="Pueblo duerme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Busca minas V1" type="462c0819:PsiDirectoryNode" />
+              <item name="Clase File" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Pueblo duerme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Busca minas V1" type="462c0819:PsiDirectoryNode" />
+              <item name="Clase File" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Pueblo duerme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Busca minas V1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Clases" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Pueblo duerme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Busca minas V1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Excepciones" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Pueblo duerme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Busca minas V1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Gestora" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Pueblo duerme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Busca minas V1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Pueblo duerme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Busca minas V1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Resguardos" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Pueblo duerme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Busca minas V1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Tests" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
       <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="configurable.group.language" />
@@ -408,7 +300,21 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.TestsCartaPuebloDuerme">
+  <component name="RunManager" selected="Application.ClaseFile">
+    <configuration name="ClaseFile" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" value="ClaseFile" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="Clase File" />
+      <envs />
+    </configuration>
     <configuration name="MainBuscaMinas" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -464,20 +370,6 @@
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="Busca minas V1" />
-      <envs />
-    </configuration>
-    <configuration name="TestTableroBuscaMinas" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" value="TestTableroBuscaMinas" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="Busca minas" />
       <envs />
     </configuration>
     <configuration name="TestsCartaPuebloDuerme" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -581,19 +473,19 @@
       <listeners />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Application.TestTableroBuscaMinas" />
-      <item index="1" class="java.lang.String" itemvalue="Application.TestCasilla" />
-      <item index="2" class="java.lang.String" itemvalue="Application.TestGestoraBuscaMinas" />
-      <item index="3" class="java.lang.String" itemvalue="Application.MainBuscaMinas" />
-      <item index="4" class="java.lang.String" itemvalue="Application.TestsCartaPuebloDuerme" />
+      <item index="0" class="java.lang.String" itemvalue="Application.TestCasilla" />
+      <item index="1" class="java.lang.String" itemvalue="Application.TestGestoraBuscaMinas" />
+      <item index="2" class="java.lang.String" itemvalue="Application.MainBuscaMinas" />
+      <item index="3" class="java.lang.String" itemvalue="Application.TestsCartaPuebloDuerme" />
+      <item index="4" class="java.lang.String" itemvalue="Application.ClaseFile" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Application.TestsCartaPuebloDuerme" />
-        <item index="1" class="java.lang.String" itemvalue="Application.TestCasilla" />
-        <item index="2" class="java.lang.String" itemvalue="Application.MainBuscaMinas" />
-        <item index="3" class="java.lang.String" itemvalue="Application.TestGestoraBuscaMinas" />
-        <item index="4" class="java.lang.String" itemvalue="Application.TestTableroBuscaMinas" />
+        <item index="0" class="java.lang.String" itemvalue="Application.ClaseFile" />
+        <item index="1" class="java.lang.String" itemvalue="Application.TestsCartaPuebloDuerme" />
+        <item index="2" class="java.lang.String" itemvalue="Application.TestCasilla" />
+        <item index="3" class="java.lang.String" itemvalue="Application.MainBuscaMinas" />
+        <item index="4" class="java.lang.String" itemvalue="Application.TestGestoraBuscaMinas" />
       </list>
     </recent_temporary>
   </component>
@@ -614,29 +506,30 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="0" width="697" height="735" extended-state="0" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2266244" sideWeight="0.49707174" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3771791" sideWeight="0.50732064" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29160064" sideWeight="0.49267936" order="2" side_tool="false" content_ui="tabs" x="59" y="242" width="1366" height="705" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29160064" sideWeight="0.49267936" order="2" side_tool="false" content_ui="tabs" x="59" y="242" width="1366" height="705" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37298092" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14860907" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3312203" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3312203" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2266244" sideWeight="0.49707174" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -705,13 +598,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../Busca minas/src/TestGestoraBuscaMinas.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
-          <caret line="43" column="0" lean-forward="false" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../Busca minas/src/ExcepcionCasilla.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -950,7 +836,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
           <caret line="25" column="59" lean-forward="false" selection-start-line="25" selection-start-column="59" selection-end-line="25" selection-end-column="59" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -958,12 +843,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="20" column="30" lean-forward="false" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="30" />
-          <folding>
-            <element signature="e#735#736#0" expanded="true" />
-            <element signature="e#786#787#0" expanded="true" />
-            <element signature="method#clone#0;class#CartaPuebloDuerme#0" expanded="false" />
-            <element signature="method#toString#0;class#CartaPuebloDuerme#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -971,7 +850,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="675">
           <caret line="45" column="18" lean-forward="false" selection-start-line="45" selection-start-column="18" selection-end-line="45" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -979,9 +857,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="27" column="37" lean-forward="false" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="37" />
-          <folding>
-            <element signature="docComment;method#RepartirCartas#0;class#GestoraPuebloDuerme#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -989,14 +864,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../Busca minas V1/src/Clases/Casilla.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
-          <caret line="152" column="5" lean-forward="true" selection-start-line="152" selection-start-column="5" selection-end-line="152" selection-end-column="5" />
+        <state relative-caret-position="1650">
+          <caret line="152" column="5" lean-forward="false" selection-start-line="152" selection-start-column="5" selection-end-line="152" selection-end-column="5" />
           <folding>
             <element signature="method#Casilla#0;class#Casilla#0" expanded="false" />
             <element signature="method#Casilla#2;class#Casilla#0" expanded="false" />
@@ -1016,28 +890,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../Busca minas V1/src/Main/MainBuscaMinas.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="39" column="13" lean-forward="false" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
-          <folding>
-            <element signature="docComment;method#MostrarMenu#0;class#MainBuscaMinas#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../Busca minas V1/src/Resguardos/RBuscaMinas.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../Busca minas V1/src/Gestora/GestoraBuscaMinas.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="121">
-          <caret line="27" column="37" lean-forward="true" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
+        <state relative-caret-position="15">
+          <caret line="27" column="37" lean-forward="false" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
           <folding>
             <element signature="docComment;method#CrearTableroMedio#0;class#GestoraBuscaMinas#0" expanded="false" />
             <element signature="method#CrearTableroMedio#0;class#GestoraBuscaMinas#0" expanded="false" />
@@ -1066,6 +922,34 @@
             <element signature="method#NivelDificil#0;class#GestoraBuscaMinas#0" expanded="false" />
             <element signature="docComment;method#NivelImposible#0;class#GestoraBuscaMinas#0" expanded="false" />
             <element signature="method#NivelImposible#0;class#GestoraBuscaMinas#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Busca minas V1/src/Main/MainBuscaMinas.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="39" column="13" lean-forward="false" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
+          <folding>
+            <element signature="docComment;method#MostrarMenu#0;class#MainBuscaMinas#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Busca minas V1/src/Resguardos/RBuscaMinas.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Clase File/src/ClaseFile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="31" lean-forward="true" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1122,7 +1006,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>Busca minas V1</last-edited>
+          <last-edited>Clase File</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
