@@ -1,10 +1,10 @@
 /*********************************************************************************************************************
 * Nombre: Ejercicio4_2
 *
-* Comentario: ---
+* Comentario: Estudia, estudia y trabaja
 *
 * Análisis:
-* 		-Entra: un caracter para la respuesta
+* 		-Entrada: un caracter para la respuesta
 * 	        	un numero que sea el dinero inicial
 * 				un numero para la apuesta del jugador
 * 				un numero por el que se apuesta
@@ -38,6 +38,9 @@ public class Ejercicio4_2 {
 
         Scanner teclado = new Scanner(System.in);
         File ficheroPalabras = new File("FicheroPalabras.txt");
+        FileWriter escritor = null;
+        InputStreamReader sr = new InputStreamReader(System.in);
+        BufferedReader br = new BufferedReader(sr);
 
         //Inicio
             //Crear fichero de texto
@@ -61,20 +64,40 @@ public class Ejercicio4_2 {
             do{
                 //Leer palabra
                 System.out.print("Introduzca su palabra: ");
-                palabra = teclado.next();
 
+                try {
+
+                    palabra = br.readLine();
+
+                }catch (IOException e){
+
+                    System.out.println("Error al leer");
+
+                }
+
+                //Hazlo en condiciones nene <3
                 //Escribir palabra en el fichero
                 try{
-                    FileWriter escritor = new FileWriter(ficheroPalabras);
+                     escritor = new FileWriter(ficheroPalabras, true); //Declara arriba
 
                     escritor.write(palabra);
-                    //escritor.write("\n");
+                    escritor.write("\n");
 
-                    escritor.close();
 
                 }
                 catch(IOException e){
                     e.printStackTrace();
+                }finally{
+
+                    try {
+
+                        escritor.close();
+
+                    }catch (IOException e){
+
+                     System.out.println("Error al cerrar fichero");
+                    }
+
                 }
 
                 //Preguntar para repetir (leer otra palabra)
