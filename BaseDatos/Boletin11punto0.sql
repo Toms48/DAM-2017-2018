@@ -168,6 +168,8 @@ CREATE FUNCTION FnPalmares (@IDCaballo smallint, @fechaInicio date, @fechaFin da
 					GROUP BY cab.ID, cab.Nombre, cab.Sexo, cab.FechaNacimiento)
 GO
 
+--TERMINAR
+
 /*6.Crea una función FnCarrerasHipodromo que nos devuelva las carreras celebradas en un hipódromo en un rango de fechas.
 La función recibirá como parámetros el nombre del hipódromo y la fecha de inicio y fin del intervalo y
 nos devolverá una tabla con las siguientes columnas:
@@ -176,8 +178,80 @@ nos devolverá una tabla con las siguientes columnas:
 	numero de apuestas realizadas
 	número de caballos inscritos
 	número de caballos que la finalizaron
-	nombre del ganador
+	nombre del ganador*/
+
+--Entradas: Nombre del hipódromo
+--			Fecha inicio y Fecha fin
+--Salidas: Tabla con las columnas anteriores
+
+SELECT * FROM LTCarreras
+SELECT * FROM LTApuestas
+
+GO
+	CREATE VIEW apuestasPorCarrera AS
+	SELECT COUNT(ID) AS [Cantidad de carreras], IDCarrera
+		FROM LTApuestas
+			GROUP BY IDCarrera
+GO
+	
+
+/*Un SELECT para tener una tabla con los datos que me piden*/
+SELECT NumOrden, COUNT(apu.ID) AS [Apuestas realizadas], apc.[Cantidad de carreras]
+	FROM LTCarreras AS car
+	INNER JOIN LTApuestas AS apu
+	ON car.ID = apu.IDCarrera
+	INNER JOIN LTCaballos AS cab
+	ON apu.IDCaballo = cab.ID
+	INNER JOIN apuestasPorCarrera AS apc
+	ON apu.IDCarrera = apc.IDCarrera
+		GROUP BY NumOrden, apc.[Cantidad de carreras]
+
+/*Creo la función (debe ir entre GO porque tiene que ser la única instrucción del bloque)*/
+GO
+CREATE FUNCTION FnCarrerasCaballo (@fechaInicio date, @fechaFin date)
+	RETURNS TABLE AS
+	RETURN (SELECT cab.ID, cab.Nombre, cab.Sexo, cab.FechaNacimiento, COUNT(car.ID) AS [Número de carreras disputadas]
+				FROM LTCaballosCarreras AS cc
+				INNER JOIN LTCarreras AS car
+				ON cc.IDCarrera = car.ID
+				INNER JOIN LTCaballos AS cab
+				ON cc.IDCaballo = cab.ID
+					WHERE car.Fecha BETWEEN @fechaInicio AND @fechaFin
+					GROUP BY cab.ID, cab.Nombre, cab.Sexo, cab.FechaNacimiento)
+GO
 
 
 /*7.Crea una función FnObtenerSaldo a la que pasemos el ID de un jugador y una fecha y nos devuelva su saldo en esa fecha.
-Si se omite la fecha, se devolverá el saldo actual.
+Si se omite la fecha, se devolverá el saldo actual.*/
+
+--Entradas: IDJugador y/o una Fecha
+--Salidas: Saldo
+
+SELECT * FROM LTApuntes
+
+/*Creo la función escalar (entre GO porque tiene que ser la única instrucción del bloque)*/
+GO
+CREATE FUNCTION FnObtenerSaldo (@IDJugador int, @Fecha date)
+	RETURNS smallmoney AS
+		BEGIN
+			DECLARE @saldoConsultado smallmoney
+
+			IF @Fecha = NULL
+				SELECT @saldoConsultado = Saldo FROM LTApuntes
+					WHERE IDJugador = @IDJugador AND Fecha = @Fecha
+
+			ELSE
+				SELECT @saldoConsultado = Saldo FROM LTApuntes
+					WHERE IDJugador = @IDJugador
+
+			RETURN @saldoConsultado
+		END
+GO
+
+/*Declaro las variables que voy a utilizar y les doy unos valores con SET*/
+DECLARE @IDJugador int, @Fecha date
+SET @IDJugador = 2
+SET @Fecha = NULL
+
+/*Utilizo la función escalar con las dos variables de antes*/
+SELECT dbo.FnObtenerSaldo(@IDJugador, @Fecha) AS [Saldo de un Jugador en una Fecha]
