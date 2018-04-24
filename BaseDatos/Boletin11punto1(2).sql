@@ -11,6 +11,51 @@ Columnas:
 	Cantidad perdida
 */
 
+SELECT * FROM LTApuntes
+SELECT IDJugador, Fecha, Importe, Saldo FROM LTApuntes
+
+/*GO
+ALTER VIEW [MaximoImportePorJugadorCadaDia] AS
+	SELECT IDJugador, MAX(Importe) AS [Importe maximo] FROM LTApuntes
+		WHERE Concepto NOT LIKE('Ingreso inicial')
+		GROUP BY IDJugador
+GO*/
+
+/*SELECT a.IDJugador, apuntes.Fecha, MAX(a.[Importe maximo])
+	FROM (SELECT IDJugador, MAX(Importe) AS [Importe maximo] FROM LTApuntes
+			WHERE Concepto NOT LIKE('Ingreso inicial')
+			GROUP BY IDJugador) AS a
+	INNER JOIN LTApuntes AS apuntes
+	ON a.IDJugador = apuntes.IDJugador
+		WHERE a.[Importe maximo] = apuntes.Importe
+	GROUP BY a.IDJugador, apuntes.Fecha
+	ORDER BY IDJugador*/
+
+--Happy Day
+SELECT a.IDJugador, MAX(a.Fecha) AS [Happy Day], a.[importe max] AS []
+	FROM (SELECT a.IDJugador, apuntes.Fecha, MAX(a.[Importe maximo]) AS [importe max]
+			FROM (SELECT IDJugador, MAX(Importe) AS [Importe maximo] FROM LTApuntes
+					WHERE Concepto NOT LIKE('Ingreso inicial')
+					GROUP BY IDJugador) AS a
+			INNER JOIN LTApuntes AS apuntes
+			ON a.IDJugador = apuntes.IDJugador
+				WHERE a.[Importe maximo] = apuntes.Importe
+			GROUP BY a.IDJugador, apuntes.Fecha) AS a
+	GROUP BY a.IDJugador, a.[importe max]
+	ORDER BY a.IDJugador, a.[importe max]
+
+--Black Day
+SELECT a.IDJugador, MAX(a.Fecha) AS [Black Day], a.[importe min] AS [Importe mínimo]
+	FROM (SELECT a.IDJugador, apuntes.Fecha, MIN(a.[Importe minimo]) AS [importe min]
+			FROM (SELECT IDJugador, MIN(Importe) AS [Importe minimo] FROM LTApuntes
+					WHERE Concepto NOT LIKE('Ingreso inicial')
+					GROUP BY IDJugador) AS a
+			INNER JOIN LTApuntes AS apuntes
+			ON a.IDJugador = apuntes.IDJugador
+				WHERE a.[Importe minimo] = apuntes.Importe
+			GROUP BY a.IDJugador, apuntes.Fecha) AS a
+	GROUP BY a.IDJugador, a.[importe min]--, a.Fecha
+	ORDER BY a.IDJugador, a.[importe min]--, a.Fecha
 
 /*2.Se ha creado un coeficiente para valorar los caballos.
 Se calcula sumando el número de carreras ganadas multiplicado por cinco más el número de carreras en las que ha quedado segundo multiplicado por tres.
