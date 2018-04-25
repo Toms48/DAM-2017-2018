@@ -63,12 +63,34 @@ CREATE VIEW BlackDay AS
 		--ORDER BY a.IDJugador, a.[importe min]--, a.Fecha
 GO
 
-SELECT j.ID, j.Nombre, j.Apellidos, hd.
+SELECT j.ID, j.Nombre, j.Apellidos, hd.[Happy Day], hd.[Importe máximo], bd.[Black Day], bd.[Importe mínimo]
 	FROM LTJugadores AS j
 	INNER JOIN HappyDay AS hd
 	ON j.ID = hd.IDJugador
 	INNER JOIN BlackDay AS bd
 	ON hd.IDJugador = bd.IDJugador
+	ORDER BY j.ID
+
+/*Creo la función (debe ir entre GO porque tiene que ser la única instrucción del bloque)*/
+GO
+CREATE FUNCTION HappyDayBlackDay (@fechaInicio date, @fechaFin date)
+	RETURNS TABLE AS
+	RETURN (SELECT j.ID, j.Nombre, j.Apellidos, hd.[Happy Day], hd.[Importe máximo], bd.[Black Day], bd.[Importe mínimo]
+				FROM LTJugadores AS j
+				INNER JOIN HappyDay AS hd
+				ON j.ID = hd.IDJugador
+				INNER JOIN BlackDay AS bd
+				ON hd.IDJugador = bd.IDJugador
+					WHERE (hd.[Happy Day] BETWEEN @fechaInicio AND @fechaFin) AND (bd.[Black Day] BETWEEN @fechaInicio AND @fechaFin))
+GO
+
+--Declaro las dos variable que voy a utilizar
+DECLARE @fechaInicio date, @fechaFin date
+SET @fechaInicio = '2018-03-03' --Le doy un valor a la primera variable
+SET @fechaFin = '2018-03-05' --Le doy un valor a la segunda variable
+
+/*Utilizo la función con las dos variables de antes*/
+SELECT * FROM HappyDayBlackDay (@fechaInicio, @fechaFin)
 
 /*2.Se ha creado un coeficiente para valorar los caballos.
 Se calcula sumando el número de carreras ganadas multiplicado por cinco más el número de carreras en las que ha quedado segundo multiplicado por tres.
