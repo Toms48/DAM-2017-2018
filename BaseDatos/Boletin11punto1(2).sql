@@ -176,14 +176,17 @@ CREATE FUNCTION FnValorCaballo (@IDCaballo smallint)
 								ON edad.ID = cab.ID
 								ORDER BY cab.ID) AS a
 
-			/*CASE @valorSinEdad
-			  WHEN 22978 THEN 'WECS 9500' 
-			  WHEN 23218 THEN 'WECS 9500'  
-			  WHEN 23219 THEN 'WECS 9500' 
-			  ELSE 'WECS 9520' 
-			END as wecs_system */
 
-			RETURN @dineroApostadoCaballoCarrera
+			SELECT nombre_artistico,
+				CASE tipo_artista
+					WHEN 'Cantaor' THEN 'Garganta privilegiada'
+					WHEN 'Tocaor' THEN 'Manitas de plata'
+					WHEN 'Bailaor' THEN 'Arte en movimiento'
+					ELSE 'Este se ha colado'
+				END AS Especialidad FROM BF_Artistas
+
+			RETURN @valorCaballo
+
 		END
 GO
 
@@ -210,6 +213,41 @@ Columnas:
 	Otra columna que tomará los valores G,C o P según si esa apuesta acertó el primero (Ganador), el segundo (Colocado) o no obtuvo premio (Pierde)
 */
 
+SELECT * FROM LTApuestas
+SELECT * FROM LTApuntes
+
+GO
+CREATE VIEW [ApuestaMasAlta] AS
+	SELECT MAX(apu.Importe) AS [Apuesta más alta]
+		FROM LTApuestas AS apu
+		INNER JOIN LTCarreras AS car
+		ON apu.IDCarrera = car.ID
+GO
+
+SELECT * FROM 
+
+/*Creo la función (debe ir entre GO porque tiene que ser la única instrucción del bloque)*/
+GO
+CREATE FUNCTION DineroMovido (@fechaInicio date, @fechaFin date)
+	RETURNS TABLE AS
+	RETURN (SELECT car.Hipodromo, SUM(apu.Importe) AS [Dinero movido]
+				FROM LTApuestas AS apu
+				INNER JOIN LTCarreras AS car
+				ON apu.IDCarrera = car.ID
+				INNER JOIN ApuestaMasAlta AS apumax
+				ON 
+					WHERE car.Fecha BETWEEN @fechaInicio AND @fechaFin
+					GROUP BY car.Hipodromo)
+GO
+
+--Declaro las dos variable que voy a utilizar
+DECLARE @fechaInicio date, @fechaFin date
+SET @fechaInicio = '2018-01-20' --Le doy un valor a la primera variable
+SET @fechaFin = '2018-03-02' --Le doy un valor a la segunda variable
+
+/*Utilizo la función con las dos variables de antes*/
+SELECT * FROM DineroMovido (@fechaInicio, @fechaFin)
+GO
 
 /*4.Haz una función DescalificaCaballo que reciba como parámetros el ID de un Caballo y en ID de una carrera y descalifique a ese caballo en esa carrera.
 Eso puede dar lugar, si el caballo quedó primero o segundo, a que haya que alterar los premios obtenidos.
