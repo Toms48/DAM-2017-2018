@@ -1,3 +1,4 @@
+GO
 /*1.Crea una función a la que pasemos un intervalo de tiempo y nos devuelva una tabla con el Happy day (el día que más ha ganado)
 y el black day (el día que más ha perdido) de cada jugador.
 Si hay más de un día en que haya ganado o perdido el máximo, tomaremos el más reciente.
@@ -91,6 +92,7 @@ SET @fechaFin = '2018-03-05' --Le doy un valor a la segunda variable
 
 /*Utilizo la función con las dos variables de antes*/
 SELECT * FROM HappyDayBlackDay (@fechaInicio, @fechaFin)
+GO
 
 /*2.Se ha creado un coeficiente para valorar los caballos.
 Se calcula sumando el número de carreras ganadas multiplicado por cinco más el número de carreras en las que ha quedado segundo multiplicado por tres.
@@ -109,6 +111,91 @@ Al resultado de todo eso de lo multiplica por un coeficiente de edad que se calc
 
 						Más de diez ............... 40
 */
+SELECT IDCaballo, COUNT(IDCaballo) AS [Cantidad de victorias] FROM LTCaballosCarreras
+	WHERE Posicion = 1 OR Posicion = 2
+	GROUP BY IDCaballo
+
+GO
+--Cantidad de veces que el caballo ha quedado en primer lugar
+CREATE VIEW [CantidadPrimerosPremios] AS
+SELECT IDCaballo, COUNT(IDCaballo) AS [Cantidad de victorias primero] FROM LTCaballosCarreras
+	WHERE Posicion = 1
+	GROUP BY IDCaballo
+GO
+
+GO
+--Cantidad de veces que el caballo ha quedado en segundo lugar
+CREATE VIEW [CantidadSegundosPremios] AS
+SELECT IDCaballo, COUNT(IDCaballo) AS [Cantidad de victorias segundo] FROM LTCaballosCarreras
+	WHERE Posicion = 2
+	GROUP BY IDCaballo
+GO
+
+GO
+--Cantidad de participaciones por caballo
+CREATE VIEW [CantidadParticipaciones] AS
+SELECT IDCaballo, COUNT(IDCaballo) AS [Cantidad de participaciones] FROM LTCaballosCarreras
+	GROUP BY IDCaballo
+GO
+
+GO
+--Edad del caballo
+CREATE VIEW [EdadCaballo] AS
+SELECT ID, Year(Current_Timestamp -CAST(FechaNacimiento AS SmallDateTime))-1900 AS [Años] FROM LTCaballos
+GO
+
+SELECT cab.ID, ISNULL(c1p.[Cantidad de victorias primero], 0) AS [Cantidad de victorias primero], ISNULL(c2p.[Cantidad de victorias segundo], 0) AS [Cantidad de victorias segundo], cpa.[Cantidad de participaciones] AS [Cantidad de participaciones], edad.Años AS [Años]
+	FROM LTCaballos AS cab
+	LEFT JOIN CantidadPrimerosPremios AS c1p
+	ON cab.ID = c1p.IDCaballo
+	LEFT JOIN CantidadSegundosPremios AS c2p
+	ON cab.ID = c2p.IDCaballo
+	LEFT JOIN CantidadParticipaciones AS cpa
+	ON cab.ID = cpa.IDCaballo
+	INNER JOIN EdadCaballo AS edad
+	ON edad.ID = cab.ID
+	ORDER BY cab.ID
+
+/*Creo la función escalar (entre GO porque tiene que ser la única instrucción del bloque)*/
+GO
+CREATE FUNCTION FnValorCaballo (@IDCaballo smallint)
+	RETURNS int AS
+		BEGIN
+			DECLARE @valorCaballo decimal(10,5)
+			DECLARE @valorSinEdad decimal(10,5)
+
+			SELECT @valorSinEdad = ((a.[Cantidad de victorias primero]*5) + (a.[Cantidad de victorias segundo]*3) / (a.[Cantidad de participaciones]*0.2)) FROM (SELECT cab.ID, ISNULL(c1p.[Cantidad de victorias primero], 0) AS [Cantidad de victorias primero], ISNULL(c2p.[Cantidad de victorias segundo], 0) AS [Cantidad de victorias segundo], cpa.[Cantidad de participaciones] AS [Cantidad de participaciones], edad.Años AS [Años]
+								FROM LTCaballos AS cab
+								LEFT JOIN CantidadPrimerosPremios AS c1p
+								ON cab.ID = c1p.IDCaballo
+								LEFT JOIN CantidadSegundosPremios AS c2p
+								ON cab.ID = c2p.IDCaballo
+								LEFT JOIN CantidadParticipaciones AS cpa
+								ON cab.ID = cpa.IDCaballo
+								INNER JOIN EdadCaballo AS edad
+								ON edad.ID = cab.ID
+								ORDER BY cab.ID) AS a
+
+			/*CASE @valorSinEdad
+			  WHEN 22978 THEN 'WECS 9500' 
+			  WHEN 23218 THEN 'WECS 9500'  
+			  WHEN 23219 THEN 'WECS 9500' 
+			  ELSE 'WECS 9520' 
+			END as wecs_system */
+
+			RETURN @dineroApostadoCaballoCarrera
+		END
+GO
+
+--SELECT * FROM LTApuestas
+
+/*Declaro las variables que voy a utilizar y les doy unos valores con SET*/
+DECLARE @IDCaballo smallint
+SET @IDCaballo = 1
+
+/*Utilizo la función escalar con las dos variables de antes*/
+SELECT dbo.FnTotalApostadoCC (@IDCaballo, @IDCarrera) AS [Dinero apostado a un caballo en una carrera]
+	
 
 
 /*3.Queremos saber la cantidad de dinero en apuestas que mueve cada hipódromo.

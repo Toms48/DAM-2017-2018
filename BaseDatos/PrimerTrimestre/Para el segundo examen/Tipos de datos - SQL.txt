@@ -4,9 +4,11 @@ Tipos de datos de textos
 
 	CHAR(tamaño) ------> Cadena de longitud fija
 	VARCHAR(tamaño) ---> Cadena de longitud variable
-	TINYTEXT ----------> Longitud máxima fr 255 caracteres
+	TINYTEXT ----------> Longitud máxima de 255 caracteres
 	TEXT --------------> Longitud máxima de 65.535 caracteres
 	LONGTEXT ----------> Longitud máxima de 4.294.967.295 caracteres
+
+
 
 Tipos de datos numéricos
 	
@@ -21,6 +23,8 @@ Tipos de datos numéricos
 	DECIMAL(tamaño,d) ----> "tamaño" es la cantidad de reales y decimales del número y "d" es la cantidad de decimales que tiene el número
 	
 	EJEMPLO: DECIMAL(5,2) ---> 123,45
+
+
 
 Tipos de datos de fechas
 	
