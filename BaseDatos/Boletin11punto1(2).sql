@@ -158,46 +158,49 @@ SELECT cab.ID, ISNULL(c1p.[Cantidad de victorias primero], 0) AS [Cantidad de vi
 
 /*Creo la función escalar (entre GO porque tiene que ser la única instrucción del bloque)*/
 GO
-CREATE FUNCTION FnValorCaballo (@IDCaballo smallint)
-	RETURNS int AS
+ALTER FUNCTION FnValorCaballo (@IDCaballo smallint)
+	RETURNS decimal(10,5) AS
 		BEGIN
 			DECLARE @valorCaballo decimal(10,5)
 			DECLARE @valorSinEdad decimal(10,5)
 
-			SELECT @valorSinEdad = ((a.[Cantidad de victorias primero]*5) + (a.[Cantidad de victorias segundo]*3) / (a.[Cantidad de participaciones]*0.2)) FROM (SELECT cab.ID, ISNULL(c1p.[Cantidad de victorias primero], 0) AS [Cantidad de victorias primero], ISNULL(c2p.[Cantidad de victorias segundo], 0) AS [Cantidad de victorias segundo], cpa.[Cantidad de participaciones] AS [Cantidad de participaciones], edad.Años AS [Años]
-								FROM LTCaballos AS cab
-								LEFT JOIN CantidadPrimerosPremios AS c1p
-								ON cab.ID = c1p.IDCaballo
-								LEFT JOIN CantidadSegundosPremios AS c2p
-								ON cab.ID = c2p.IDCaballo
-								LEFT JOIN CantidadParticipaciones AS cpa
-								ON cab.ID = cpa.IDCaballo
-								INNER JOIN EdadCaballo AS edad
-								ON edad.ID = cab.ID
-								ORDER BY cab.ID) AS a
+			SELECT @valorSinEdad = ( ((a.[Cantidad de victorias primero]*5) + (a.[Cantidad de victorias segundo]*3)) / (a.[Cantidad de participaciones]*0.2))
+				FROM (SELECT cab.ID, ISNULL(c1p.[Cantidad de victorias primero], 0) AS [Cantidad de victorias primero], ISNULL(c2p.[Cantidad de victorias segundo], 0) AS [Cantidad de victorias segundo], cpa.[Cantidad de participaciones] AS [Cantidad de participaciones], edad.Años AS [Años]
+							FROM LTCaballos AS cab
+							LEFT JOIN CantidadPrimerosPremios AS c1p
+							ON cab.ID = c1p.IDCaballo
+							LEFT JOIN CantidadSegundosPremios AS c2p
+							ON cab.ID = c2p.IDCaballo
+							LEFT JOIN CantidadParticipaciones AS cpa
+							ON cab.ID = cpa.IDCaballo
+							INNER JOIN EdadCaballo AS edad
+							ON edad.ID = cab.ID
+							WHERE cab.ID = @IDCaballo
+							/*ORDER BY cab.ID*/) AS a
 
 
-			SELECT nombre_artistico,
-				CASE tipo_artista
-					WHEN 'Cantaor' THEN 'Garganta privilegiada'
-					WHEN 'Tocaor' THEN 'Manitas de plata'
-					WHEN 'Bailaor' THEN 'Arte en movimiento'
-					ELSE 'Este se ha colado'
-				END AS Especialidad FROM BF_Artistas
+			SELECT @valorCaballo = CASE
+					WHEN Años <= 6 THEN @valorSinEdad * 100
+					WHEN Años = 7 THEN @valorSinEdad * 90
+					WHEN Años = 8 THEN @valorSinEdad * 75
+					WHEN Años = 9 THEN @valorSinEdad * 75
+					WHEN Años = 10 THEN @valorSinEdad * 65
+					WHEN Años > 10 THEN @valorSinEdad * 40
+				END FROM EdadCaballo
+					WHERE EdadCaballo.ID = @IDCaballo
 
 			RETURN @valorCaballo
 
 		END
 GO
 
---SELECT * FROM LTApuestas
 
 /*Declaro las variables que voy a utilizar y les doy unos valores con SET*/
 DECLARE @IDCaballo smallint
-SET @IDCaballo = 1
+SET @IDCaballo = 4
 
 /*Utilizo la función escalar con las dos variables de antes*/
-SELECT dbo.FnTotalApostadoCC (@IDCaballo, @IDCarrera) AS [Dinero apostado a un caballo en una carrera]
+SELECT dbo.FnValorCaballo(@IDCaballo) AS [Valor del caballo]
 	
 
 
@@ -214,28 +217,29 @@ Columnas:
 */
 
 SELECT * FROM LTApuestas
+SELECT * FROM LTJugadores
 SELECT * FROM LTApuntes
+SELECT * FROM LTCarreras
+SELECT * FROM LTCaballosCarreras
 
-GO
+/*GO
 CREATE VIEW [ApuestaMasAlta] AS
 	SELECT MAX(apu.Importe) AS [Apuesta más alta]
 		FROM LTApuestas AS apu
 		INNER JOIN LTCarreras AS car
 		ON apu.IDCarrera = car.ID
-GO
+			WHERE car.Fecha BETWEEN '2018-01-20' AND '2018-03-02'
+GO*/
 
-SELECT * FROM 
 
 /*Creo la función (debe ir entre GO porque tiene que ser la única instrucción del bloque)*/
 GO
-CREATE FUNCTION DineroMovido (@fechaInicio date, @fechaFin date)
+CREATE FUNCTION DineroMovido2Fechas (@fechaInicio date, @fechaFin date)
 	RETURNS TABLE AS
 	RETURN (SELECT car.Hipodromo, SUM(apu.Importe) AS [Dinero movido]
 				FROM LTApuestas AS apu
 				INNER JOIN LTCarreras AS car
 				ON apu.IDCarrera = car.ID
-				INNER JOIN ApuestaMasAlta AS apumax
-				ON 
 					WHERE car.Fecha BETWEEN @fechaInicio AND @fechaFin
 					GROUP BY car.Hipodromo)
 GO
@@ -246,8 +250,52 @@ SET @fechaInicio = '2018-01-20' --Le doy un valor a la primera variable
 SET @fechaFin = '2018-03-02' --Le doy un valor a la segunda variable
 
 /*Utilizo la función con las dos variables de antes*/
-SELECT * FROM DineroMovido (@fechaInicio, @fechaFin)
+SELECT * FROM DineroMovido2Fechas (@fechaInicio, @fechaFin)
+
+
+
+
+
+/*Creo la función (debe ir entre GO porque tiene que ser la única instrucción del bloque)*/
 GO
+CREATE FUNCTION MaximaApuesta2Fechas (@fechaInicio date, @fechaFin date)
+	RETURNS TABLE AS
+	RETURN (SELECT car.Hipodromo, MAX(apu.Importe) AS [Apuesta más alta], MAX(car.Fecha) AS [Fecha apuesta más alta]
+				FROM LTApuestas AS apu
+				INNER JOIN LTCarreras AS car
+				ON apu.IDCarrera = car.ID
+					WHERE car.Fecha BETWEEN @fechaInicio AND @fechaFin
+					GROUP BY car.Hipodromo
+			)
+GO
+
+--Declaro las dos variable que voy a utilizar
+DECLARE @fechaInicio date, @fechaFin date
+SET @fechaInicio = '2018-01-20' --Le doy un valor a la primera variable
+SET @fechaFin = '2018-03-02' --Le doy un valor a la segunda variable
+
+/*Utilizo la función con las dos variables de antes*/
+SELECT * FROM MaximaApuesta2Fechas (@fechaInicio, @fechaFin)
+
+GO
+DECLARE @fechaInicio date, @fechaFin date
+SET @fechaInicio = '2018-01-20'
+SET @fechaFin = '2018-03-02'
+
+SELECT dm2f.Hipodromo, dm2f.[Dinero movido], ma2f.[Fecha apuesta más alta], ma2f.[Apuesta más alta]
+	FROM DineroMovido2Fechas (@fechaInicio, @fechaFin) AS dm2f
+	INNER JOIN MaximaApuesta2Fechas (@fechaInicio, @fechaFin) AS ma2f
+	ON dm2f.Hipodromo = ma2f.Hipodromo
+GO
+
+SELECT car.Hipodromo, MAX(apu.Importe) AS [Apuesta más alta], cc.Posicion
+				FROM LTApuestas AS apu
+				INNER JOIN LTCarreras AS car
+				ON apu.IDCarrera = car.ID
+				INNER JOIN LTCaballosCarreras AS cc
+				ON car.ID = cc.IDCarrera
+					WHERE (car.Fecha BETWEEN '2018-01-20' AND '2018-03-02') AND 
+					GROUP BY car.Hipodromo, cc.Posicion
 
 /*4.Haz una función DescalificaCaballo que reciba como parámetros el ID de un Caballo y en ID de una carrera y descalifique a ese caballo en esa carrera.
 Eso puede dar lugar, si el caballo quedó primero o segundo, a que haya que alterar los premios obtenidos.
