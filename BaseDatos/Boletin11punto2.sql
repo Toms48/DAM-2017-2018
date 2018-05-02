@@ -6,46 +6,156 @@ El procedimiento insertará al jugador y generará su primer apunte.
 SELECT * FROM LTJugadores
 SELECT * FROM LTApuntes
 
-SELECT * FROM LTApuntes 
+SELECT MAX(Orden)+1 FROM LTApuntes
+	WHERE IDJugador = 1
 
 GO
 /*
-Versión 2
-Le añadimos un parámetro
-Vamos a configurar un valor por defecto para que los cambios sean transparentes al código
-Es decir, las llamadas al procedimeinto anterior seguirán funcionando
-Si no es posible, debemos mantener el antiguo y crear uno nuevo
+Entradas:
+	- ID del jugador
+	- Nombre del jugador
+	- Apellido del jugador
+	- Dirección del jugador
+	- Teléfono del jugador
+	- Ciudad del jugador
+	- Ingreso inicial
+			 
+Salidas: No tiene
 */
+BEGIN TRANSACTION
+GO
 CREATE PROCEDURE AltaJugador @IDJugador int, @NombreJugador varchar(20), @ApellidosJugador varchar(30), @DireccionJugador varchar(50), @TelefonoJugador char(9), @CiudadJugador varchar(20), @IngresoInicial smallmoney
 AS
 	BEGIN
 		INSERT INTO LTJugadores(ID, Nombre, Apellidos, Direccion, Telefono, Ciudad)
 			VALUES(@IDJugador, @NombreJugador, @ApellidosJugador, @DireccionJugador, @TelefonoJugador, @CiudadJugador)
 
-		IF EXISTS (SELECT * FROM LTApuntes WHERE IDJugador = @IDJugador)
+		INSERT INTO LTApuntes(IDJugador, Orden, Fecha, Importe, Saldo, Concepto)
+				VALUES(@IDJugador, 1, CURRENT_TIMESTAMP, @IngresoInicial, @IngresoInicial, 'Ingreso inicial')
+
+		/*IF EXISTS (SELECT * FROM LTApuntes WHERE IDJugador = @IDJugador)
 			BEGIN
 				INSERT INTO LTApuntes(IDJugador, Orden, Fecha, Importe, Saldo, Concepto)
-					VALUES(@IDJugador, (), CURRENT_TIMESTAMP, @IngresoInicial, @IngresoInicial, 'Ingreso inicial')
+					VALUES(@IDJugador, (SELECT MAX(Orden)+1 FROM LTApuntes WHERE IDJugador = @IDJugador), CURRENT_TIMESTAMP, @IngresoInicial, @IngresoInicial, 'Ingreso inicial')
 			END
 		ELSE
 			BEGIN
 				INSERT INTO LTApuntes(IDJugador, Orden, Fecha, Importe, Saldo, Concepto)
 					VALUES(@IDJugador, 1, CURRENT_TIMESTAMP, @IngresoInicial, @IngresoInicial, 'Ingreso inicial')
-			END
-
+			END*/
 		
 	END -- Procedure AltaJugador
+ROLLBACK
+COMMIT
 GO
+
+EXECUTE AltaJugador 999, 'Pajarito', 'Illane', 'Calle Alpiste', 666666666, 'Utrera', 500
 
 
 /*
 2.Escribe un procedimiento para inscribir un caballo en una carrera.
 El procedimiento tendrá como parámetros de entrada el ID de la carrera y el ID del caballo,
 y devolverá un parámetro de salida que indicará el número asignado al caballo en esa carrera.
+
 El número estará comprendido entre 1 y 99 y lo puedes asignar por el método que quieras,
 aunque teniendo en cuenta que no puede haber dos caballos con el mismo número en una carrera.
+
 Si la carrera no existe, si hay ocho caballos ya inscritos o si el caballo no existe o está ya inscrito en esa carrera, el parámetro de salida devolverá NULL.
 */
+SELECT * FROM LTCaballosCarreras
+	WHERE IDCarrera = 25
+	ORDER BY IDCarrera
+SELECT * FROM LTCaballos
+SELECT * FROM LTCarreras
+
+SELECT COUNT(IDCarrera) AS [Numero de caballos por carrera] FROM LTCaballosCarreras WHERE IDCarrera = 25
+SELECT * FROM LTCaballos WHERE ID = 2
+
+
+/* https://blog.sqlauthority.com/2007/04/29/sql-server-random-number-generator-script-sql-query/ */
+
+BEGIN TRANSACTION
+GO
+CREATE PROCEDURE InscribirCaballo @IDCarrera smallint, @IDCaballo smallint
+AS
+	BEGIN
+		DECLARE @valorReturn int
+		DECLARE @CaballosPorCarrera int = (SELECT COUNT(IDCarrera) AS [Numero de caballos por carrera] FROM LTCaballosCarreras WHERE IDCarrera = @IDCarrera)
+
+		WHILE @cont < 11
+		BEGIN
+		
+			---- Create the variables for the random number generation
+			DECLARE @Random INT
+			DECLARE @Upper INT = 99
+			DECLARE @Lower INT = 1
+
+			---- This will create a random number between 1 and 99
+			SET @Lower = 1 ---- The lowest random number
+			SET @Upper = 99 ---- The highest random number
+
+			SELECT @Random = ROUND(((@Upper - @Lower -1) * RAND() + @Lower), 0)
+			
+			PRINT 'Ya van '+CAST(@cont AS VarChar)+'
+			veces'
+			SET @cont = @cont + 1
+		END
+		
+
+		
+
+		IF EXISTS (SELECT * FROM LTCaballosCarreras WHERE IDCarrera = @IDCarrera)
+			BEGIN
+				IF (@CaballosPorCarrera < 8)
+					BEGIN
+						IF EXISTS (SELECT * FROM LTCaballos WHERE ID = @IDCaballo)
+							BEGIN
+								IF NOT EXISTS (SELECT * FROM LTCaballosCarreras WHERE IDCaballo = @IDCaballo AND IDCarrera = @IDCarrera)
+									BEGIN
+										INSERT INTO LTCaballosCarreras(IDCaballo, IDCarrera, Numero, Posicion, Premio1, Premio2)
+											VALUES(@IDCaballo, @IDCarrera, @Random, NULL, NULL, NULL)
+
+										SET @valorReturn = @Random
+
+										PRINT @valorReturn
+									END
+								ELSE
+									BEGIN
+										SET @valorReturn = NULL
+
+										PRINT 'El caballo seleccionado ya participa en esta carrera'
+									END
+							END
+						ELSE
+							BEGIN
+								SET @valorReturn = NULL
+
+								PRINT 'El caballo seleccionado no existe'
+							END
+					END
+				ELSE
+					BEGIN
+						SET @valorReturn = NULL
+
+						PRINT 'La carrera ya tiene el número máximo de caballos'
+					END
+			END
+		ELSE
+			BEGIN
+				SET @valorReturn = NULL
+
+				PRINT 'La carrera seleccionada no existe'
+			END
+
+	END --PROCEDURE InscribirCaballo
+ROLLBACK
+COMMIT
+GO
+
+EXECUTE InscribirCaballo 25, 
+
+SELECT * FROM LTCaballosCarreras
+	WHERE IDCarrera = 25
 
 /*
 3.Añade a la tabla LTJugadores una nueva columna llamada LimiteCredito de tipo SmallMoney con el valor por defecto 50.
