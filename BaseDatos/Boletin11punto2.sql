@@ -62,9 +62,9 @@ aunque teniendo en cuenta que no puede haber dos caballos con el mismo número en
 
 Si la carrera no existe, si hay ocho caballos ya inscritos o si el caballo no existe o está ya inscrito en esa carrera, el parámetro de salida devolverá NULL.
 */
-SELECT * FROM LTCaballosCarreras
-	WHERE IDCarrera = 25
-	ORDER BY IDCarrera
+SELECT TOP 1 Numero FROM LTCaballosCarreras
+	WHERE IDCarrera = 2
+	ORDER BY IDCarrera DESC
 SELECT * FROM LTCaballos
 SELECT * FROM LTCarreras
 
@@ -81,28 +81,13 @@ AS
 	BEGIN
 		DECLARE @valorReturn int
 		DECLARE @CaballosPorCarrera int = (SELECT COUNT(IDCarrera) AS [Numero de caballos por carrera] FROM LTCaballosCarreras WHERE IDCarrera = @IDCarrera)
-
-		WHILE @cont < 11
-		BEGIN
+		DECLARE @Random int = (ROUND(((99 - 1 -1) * RAND() + 1), 0))	--Print @Random		--Que el Pablo diga lo que no se me ocurrió a mi por parguela (¡Grande Pablo!)
+		DECLARE @NumeroUltimoCaballoInscrito int = (SELECT TOP 1 Numero FROM LTCaballosCarreras WHERE IDCarrera = @IDCarrera AND IDCaballo = @IDCaballo)
 		
-			---- Create the variables for the random number generation
-			DECLARE @Random INT
-			DECLARE @Upper INT = 99
-			DECLARE @Lower INT = 1
-
-			---- This will create a random number between 1 and 99
-			SET @Lower = 1 ---- The lowest random number
-			SET @Upper = 99 ---- The highest random number
-
-			SELECT @Random = ROUND(((@Upper - @Lower -1) * RAND() + @Lower), 0)
-			
-			PRINT 'Ya van '+CAST(@cont AS VarChar)+'
-			veces'
-			SET @cont = @cont + 1
-		END
-		
-
-		
+		WHILE @Random = @NumeroUltimoCaballoInscrito
+			BEGIN
+				SET @Random = (ROUND(((99 - 1 -1) * RAND() + 1), 0))
+			END
 
 		IF EXISTS (SELECT * FROM LTCaballosCarreras WHERE IDCarrera = @IDCarrera)
 			BEGIN
@@ -112,6 +97,7 @@ AS
 							BEGIN
 								IF NOT EXISTS (SELECT * FROM LTCaballosCarreras WHERE IDCaballo = @IDCaballo AND IDCarrera = @IDCarrera)
 									BEGIN
+
 										INSERT INTO LTCaballosCarreras(IDCaballo, IDCarrera, Numero, Posicion, Premio1, Premio2)
 											VALUES(@IDCaballo, @IDCarrera, @Random, NULL, NULL, NULL)
 
@@ -123,6 +109,7 @@ AS
 									BEGIN
 										SET @valorReturn = NULL
 
+										PRINT 'NULL'
 										PRINT 'El caballo seleccionado ya participa en esta carrera'
 									END
 							END
@@ -130,6 +117,7 @@ AS
 							BEGIN
 								SET @valorReturn = NULL
 
+								PRINT 'NULL'
 								PRINT 'El caballo seleccionado no existe'
 							END
 					END
@@ -137,6 +125,7 @@ AS
 					BEGIN
 						SET @valorReturn = NULL
 
+						PRINT 'NULL'
 						PRINT 'La carrera ya tiene el número máximo de caballos'
 					END
 			END
@@ -144,6 +133,7 @@ AS
 			BEGIN
 				SET @valorReturn = NULL
 
+				PRINT 'NULL'
 				PRINT 'La carrera seleccionada no existe'
 			END
 
@@ -152,7 +142,7 @@ ROLLBACK
 COMMIT
 GO
 
-EXECUTE InscribirCaballo 25, 
+EXECUTE InscribirCaballo 25, 4
 
 SELECT * FROM LTCaballosCarreras
 	WHERE IDCarrera = 25
