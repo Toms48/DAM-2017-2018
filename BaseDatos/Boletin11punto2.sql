@@ -71,21 +71,23 @@ SELECT * FROM LTCarreras
 SELECT COUNT(IDCarrera) AS [Numero de caballos por carrera] FROM LTCaballosCarreras WHERE IDCarrera = 25
 SELECT * FROM LTCaballos WHERE ID = 2
 
+SELECT Numero FROM LTCaballosCarreras WHERE IDCarrera = 25
 
 /* https://blog.sqlauthority.com/2007/04/29/sql-server-random-number-generator-script-sql-query/ */
 
 BEGIN TRANSACTION
 GO
-CREATE PROCEDURE InscribirCaballo @IDCarrera smallint, @IDCaballo smallint
+CREATE PROCEDURE InscribirCaballo @IDCarrera smallint, @IDCaballo smallint, @valorReturn int OUTPUT
 AS
 	BEGIN
-		DECLARE @valorReturn int
 		DECLARE @CaballosPorCarrera int = (SELECT COUNT(IDCarrera) AS [Numero de caballos por carrera] FROM LTCaballosCarreras WHERE IDCarrera = @IDCarrera)
 		DECLARE @Random int = (ROUND(((99 - 1 -1) * RAND() + 1), 0))	--Print @Random		--Que el Pablo diga lo que no se me ocurrió a mi por parguela (¡Grande Pablo!)
-		DECLARE @NumeroUltimoCaballoInscrito int = (SELECT TOP 1 Numero FROM LTCaballosCarreras WHERE IDCarrera = @IDCarrera AND IDCaballo = @IDCaballo)
-		
-		WHILE @Random = @NumeroUltimoCaballoInscrito
+		--DECLARE @NumeroUltimoCaballoInscrito int = (SELECT TOP 1 Numero FROM LTCaballosCarreras WHERE IDCarrera = @IDCarrera AND IDCaballo = @IDCaballo)
+		--SELECT Numero FROM LTCaballosCarreras WHERE IDCarrera = @IDCarrera
+
+		WHILE @Random IN (SELECT Numero FROM LTCaballosCarreras WHERE IDCarrera = @IDCarrera)
 			BEGIN
+				--PRINT 'Hola, soy un print para saber si se ejecuta el random'
 				SET @Random = (ROUND(((99 - 1 -1) * RAND() + 1), 0))
 			END
 
@@ -102,38 +104,28 @@ AS
 											VALUES(@IDCaballo, @IDCarrera, @Random, NULL, NULL, NULL)
 
 										SET @valorReturn = @Random
-
-										PRINT @valorReturn
 									END
 								ELSE
 									BEGIN
 										SET @valorReturn = NULL
-
-										PRINT 'NULL'
-										PRINT 'El caballo seleccionado ya participa en esta carrera'
+										PRINT 'El caballo seleccionado ya participa en esta carrera' --Depuración
 									END
 							END
 						ELSE
 							BEGIN
 								SET @valorReturn = NULL
-
-								PRINT 'NULL'
 								PRINT 'El caballo seleccionado no existe'
 							END
 					END
 				ELSE
 					BEGIN
 						SET @valorReturn = NULL
-
-						PRINT 'NULL'
 						PRINT 'La carrera ya tiene el número máximo de caballos'
 					END
 			END
 		ELSE
 			BEGIN
 				SET @valorReturn = NULL
-
-				PRINT 'NULL'
 				PRINT 'La carrera seleccionada no existe'
 			END
 
@@ -142,7 +134,9 @@ ROLLBACK
 COMMIT
 GO
 
-EXECUTE InscribirCaballo 25, 4
+DECLARE @salida int
+EXECUTE InscribirCaballo 25, 7, @salida OUTPUT
+PRINT ISNULL(@salida,666)
 
 SELECT * FROM LTCaballosCarreras
 	WHERE IDCarrera = 25
