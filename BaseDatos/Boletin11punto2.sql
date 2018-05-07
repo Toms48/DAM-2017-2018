@@ -161,7 +161,24 @@ El procedimiento recibirá como parámetros el jugador, la carrera, el caballo y e
 			Ninguna de las anteriores ................... 0
 
 */
+GO
+Create Procedure GrabarApuesta AS
+Begin
+	Declare @Salida SmallInt = 0
+	If -- La carrera existe
+		Set @Salida = 2
+	Else
+
+	Return @Salida
+End	-- Procedure GrabarApuesta
+GO
+--^Pruebas
+Declare @Terminacion SmallInt
+Execute @Terminacion = GrabarApuesta
+
+
 SELECT * FROM LTJugadores
+SELECT * FROM LTCarreras
 
 BEGIN TRANSACTION
 	ALTER TABLE LTJugadores
@@ -169,6 +186,24 @@ BEGIN TRANSACTION
 ROLLBACK
 COMMIT
 
+BEGIN TRANSACTION
+GO
+	CREATE PROCEDURE GrabarApuesta @IDJugador int, @IDCarrera smallint, @IDCaballo smallint, @Importe money
+	AS
+		DECLARE @Salida smallint
+
+		IF EXISTS (SELECT * FROM LTCaballosCarreras WHERE IDCarrera = @IDCarrera)
+			BEGIN
+				IF
+			END
+		ELSE
+			BEGIN
+				SET @Salida = 2
+			END
+
+ROLLBACK
+COMMIT
+GO
 
 /*
 4.Algunas veces se bonifica a los jugadores que más apuestan reglándoles saldo extra.
