@@ -150,18 +150,18 @@ El procedimiento recibirá como parámetros el jugador, la carrera, el caballo y e
 
 			Circunstancia								Valor
 
-			La carrera no existe ........................ 2
+			La carrera no existe ........................ 2								SI LA CARRERA EXISTE *
 
-			La carrera ya se ha disputado ............... 3
+			La carrera ya se ha disputado ............... 3								SI LA CARRERA NO SE HA DISPUTADO *
 
-			El caballo no corre en esa carrera .......... 5
+			El caballo no corre en esa carrera .......... 5								SI EL CABALLO CORRE EN ESA CARRERA *
 
-			El saldo del jugador no es suficiente ....... 10
+			El saldo del jugador no es suficiente ....... 10							SI EL SALDO DEL JUGADOR ES SUFICIENTE (que no supere el LimiteCredito) *
 
 			Ninguna de las anteriores ................... 0
 
 */
-GO
+/*GO
 Create Procedure GrabarApuesta AS
 Begin
 	Declare @Salida SmallInt = 0
@@ -174,36 +174,87 @@ End	-- Procedure GrabarApuesta
 GO
 --^Pruebas
 Declare @Terminacion SmallInt
-Execute @Terminacion = GrabarApuesta
+Execute @Terminacion = GrabarApuesta*/
 
 
 SELECT * FROM LTJugadores
 SELECT * FROM LTCarreras
+SELECT * FROM LTApuestas
+SELECT * FROM LTCaballosCarreras
+SELECT * FROM LTApuntes
 
+SELECT ID, Fecha FROM LTCarreras
+
+SELECT IDCarrera FROM LTCaballosCarreras
+	WHERE IDCaballo = 1
+
+SELECT IDJugador, MAX(Orden) FROM LTApuntes
+	--WHERE IDJugador = 1
+	GROUP BY IDJugador
+
+
+SELECT apuntes.IDJugador ,apuntes.Saldo, a.orden
+	FROM LTApuntes AS apuntes
+	INNER JOIN (SELECT IDJugador, MAX(Orden) AS orden FROM LTApuntes
+					GROUP BY IDJugador) AS a
+	ON apuntes.Orden = a.orden
+	WHERE 
+
+GO --ALTER para añadir la nuevaldoa columna LimiteCredito
 BEGIN TRANSACTION
 	ALTER TABLE LTJugadores
 	ADD LimiteCredito smallmoney NOT NULL DEFAULT(50)
 ROLLBACK
 COMMIT
+GO
 
 BEGIN TRANSACTION
 GO
 	CREATE PROCEDURE GrabarApuesta @IDJugador int, @IDCarrera smallint, @IDCaballo smallint, @Importe money
 	AS
-		DECLARE @Salida smallint
+		BEGIN
+			DECLARE @Salida smallint
+			DECLARE @SaldoActual money = (SELECT TOP 1 Saldo FROM LTApuntes
+											WHERE IDJugador = 1
+											ORDER BY Orden DESC)
 
-		IF EXISTS (SELECT * FROM LTCaballosCarreras WHERE IDCarrera = @IDCarrera)
-			BEGIN
-				IF
-			END
-		ELSE
-			BEGIN
-				SET @Salida = 2
-			END
-
+			IF EXISTS (SELECT * FROM LTCaballosCarreras WHERE IDCarrera = @IDCarrera)
+				BEGIN
+					IF ((SELECT Fecha FROM LTCarreras WHERE ID = @IDCarrera) > CURRENT_TIMESTAMP)
+						BEGIN
+							IF EXISTS (SELECT IDCarrera FROM LTCaballosCarreras WHERE IDCaballo = @IDCaballo AND IDCarrera = @IDCarrera)
+								BEGIN
+									IF ((@SaldoActual + (SELECT LimiteCredito FROM LTJugadores WHERE ID = @IDJugador)) >= 0)
+										BEGIN
+											SET @Salida = 0
+										END
+									ELSE
+										BEGIN
+											SET @Salida = 10
+										END
+								END
+							ELSE
+								BEGIN
+									SET @Salida = 5
+								END
+						END
+					ELSE
+						BEGIN
+							SET @Salida = 3
+						END
+				END
+			ELSE
+				BEGIN
+					SET @Salida = 2
+				END
+		END --Procedure GrabarApuesta
 ROLLBACK
 COMMIT
 GO
+
+Declare @Terminacion SmallInt
+Execute @Terminacion = GrabarApuesta 1, 11, 1, 10
+PRINT @Terminacion
 
 /*
 4.Algunas veces se bonifica a los jugadores que más apuestan reglándoles saldo extra.
