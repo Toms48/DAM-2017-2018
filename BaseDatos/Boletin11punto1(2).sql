@@ -158,7 +158,7 @@ SELECT cab.ID, ISNULL(c1p.[Cantidad de victorias primero], 0) AS [Cantidad de vi
 
 /*Creo la función escalar (entre GO porque tiene que ser la única instrucción del bloque)*/
 GO
-ALTER FUNCTION FnValorCaballo (@IDCaballo smallint)
+CREATE FUNCTION FnValorCaballo (@IDCaballo smallint)
 	RETURNS decimal(10,5) AS
 		BEGIN
 			DECLARE @valorCaballo decimal(10,5)
@@ -197,7 +197,7 @@ GO
 
 /*Declaro las variables que voy a utilizar y les doy unos valores con SET*/
 DECLARE @IDCaballo smallint
-SET @IDCaballo = 4
+SET @IDCaballo = 1
 
 /*Utilizo la función escalar con las dos variables de antes*/
 SELECT dbo.FnValorCaballo(@IDCaballo) AS [Valor del caballo]
@@ -277,16 +277,18 @@ SET @fechaFin = '2018-03-02' --Le doy un valor a la segunda variable
 /*Utilizo la función con las dos variables de antes*/
 SELECT * FROM MaximaApuesta2Fechas (@fechaInicio, @fechaFin)
 
-GO
-DECLARE @fechaInicio date, @fechaFin date
-SET @fechaInicio = '2018-01-20'
-SET @fechaFin = '2018-03-02'
+/******************************************** TABLA SIN LA COLUMNA GCP ***************************************
+	GO
+	DECLARE @fechaInicio date, @fechaFin date
+	SET @fechaInicio = '2018-01-20'
+	SET @fechaFin = '2018-03-02'
 
-SELECT dm2f.Hipodromo, dm2f.[Dinero movido], ma2f.[Fecha apuesta más alta], ma2f.[Apuesta más alta]
-	FROM DineroMovido2Fechas (@fechaInicio, @fechaFin) AS dm2f
-	INNER JOIN MaximaApuesta2Fechas (@fechaInicio, @fechaFin) AS ma2f
-	ON dm2f.Hipodromo = ma2f.Hipodromo
-GO
+	SELECT dm2f.Hipodromo, dm2f.[Dinero movido], ma2f.[Fecha apuesta más alta], ma2f.[Apuesta más alta]
+		FROM DineroMovido2Fechas (@fechaInicio, @fechaFin) AS dm2f
+		INNER JOIN MaximaApuesta2Fechas (@fechaInicio, @fechaFin) AS ma2f
+		ON dm2f.Hipodromo = ma2f.Hipodromo
+	GO
+**************************************************************************************************************/
 
 SELECT car.Hipodromo, MAX(apu.Importe) AS [Apuesta más alta], cc.Posicion
 				FROM LTApuestas AS apu
