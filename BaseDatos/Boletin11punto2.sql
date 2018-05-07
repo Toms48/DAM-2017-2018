@@ -148,19 +148,27 @@ El saldo del jugador más el valor de esa columna no puede ser nunca inferior a 0
 Escribe un procedimiento para grabar una apuesta.
 El procedimiento recibirá como parámetros el jugador, la carrera, el caballo y el importe a apostar y devolverá con return un código de terminación según la siguiente tabla:
 
-Circunstancia								Valor
+			Circunstancia								Valor
 
-La carrera no existe ........................ 2
+			La carrera no existe ........................ 2
 
-La carrera ya se ha disputado ............... 3
+			La carrera ya se ha disputado ............... 3
 
-El caballo no corre en esa carrera .......... 5
+			El caballo no corre en esa carrera .......... 5
 
-El saldo del jugador no es suficiente ....... 10
+			El saldo del jugador no es suficiente ....... 10
 
-Ninguna de las anteriores ................... 0
+			Ninguna de las anteriores ................... 0
 
 */
+SELECT * FROM LTJugadores
+
+BEGIN TRANSACTION
+	ALTER TABLE LTJugadores
+	ADD LimiteCredito smallmoney NOT NULL DEFAULT(50)
+ROLLBACK
+COMMIT
+
 
 /*
 4.Algunas veces se bonifica a los jugadores que más apuestan reglándoles saldo extra.
