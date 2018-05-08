@@ -192,13 +192,12 @@ SELECT IDJugador, MAX(Orden) FROM LTApuntes
 	--WHERE IDJugador = 1
 	GROUP BY IDJugador
 
-
-SELECT apuntes.IDJugador ,apuntes.Saldo, a.orden
+/*SELECT apuntes.IDJugador ,apuntes.Saldo, a.orden
 	FROM LTApuntes AS apuntes
 	INNER JOIN (SELECT IDJugador, MAX(Orden) AS orden FROM LTApuntes
 					GROUP BY IDJugador) AS a
 	ON apuntes.Orden = a.orden
-	WHERE 
+	WHERE */
 
 GO --ALTER para añadir la nuevaldoa columna LimiteCredito
 BEGIN TRANSACTION
@@ -226,6 +225,12 @@ GO
 								BEGIN
 									IF ((@SaldoActual + (SELECT LimiteCredito FROM LTJugadores WHERE ID = @IDJugador)) >= 0)
 										BEGIN
+											INSERT INTO LTApuestas(ID, Clave, IDCaballo, IDCarrera, Importe, IDJugador)
+												VALUES( ((SELECT TOP 1 ID FROM LTApuestas ORDER BY ID DESC)+1), NULL, @IDCaballo, @IDCarrera, @Importe, @IDJugador)
+
+											INSERT INTO LTApuntes(IDJugador, Orden, Fecha, Importe, Saldo, Concepto)
+												VALUES(@IDJugador, (SELECT TOP 1 Orden FROM LTApuntes WHERE IDJugador = @IDJugador ORDER BY Orden DESC), CURRENT_TIMESTAMP, NULL, NULL, NULL)
+
 											SET @Salida = 0
 										END
 									ELSE
