@@ -186,6 +186,45 @@ nos devolverá una tabla con las siguientes columnas:
 
 SELECT * FROM LTCarreras
 SELECT * FROM LTApuestas
+SELECT * FROM LTCaballosCarreras
+
+GO
+CREATE FUNCTION FnCantidadApuestas (@NombreHipodromo varchar(40), @FechaInicio date, @FechaFin date)
+	RETURNS TABLE AS
+	RETURN (SELECT car.Hipodromo, COUNT(apu.ID) AS [Numero de apuestas]
+				FROM LTCarreras AS car
+				INNER JOIN LTApuestas AS apu
+				ON car.ID = apu.IDCarrera
+					WHERE (car.Hipodromo = @NombreHipodromo) AND (car.Fecha BETWEEN @FechaInicio AND @FechaFin)
+					GROUP BY car.Hipodromo)
+GO
+
+SELECT * FROM dbo.FnCantidadApuestas ('Gran Hipodromo de Andalucia', '2018-01-20', '2018-03-03')
+
+GO
+CREATE FUNCTION FnCantidadCaballos (@NombreHipodromo varchar(40), @FechaInicio date, @FechaFin date)
+	RETURNS TABLE AS
+	RETURN (SELECT car.ID, COUNT(cc.IDCaballo) AS [Cantidad de caballos inscritos]
+				FROM LTCarreras AS car
+				INNER JOIN LTCaballosCarreras AS cc
+				ON car.ID = cc.IDCarrera
+					WHERE (car.Hipodromo = @NombreHipodromo) AND (car.Fecha BETWEEN @FechaInicio AND @FechaFin)
+					GROUP BY car.ID)
+GO
+
+SELECT * FROM dbo.FnCantidadCaballos ('Gran Hipodromo de Andalucia', '2018-01-20', '2018-03-03')
+
+SELECT IDCarrera, COUNT(Posicion) AS [Caballos que han acabado la carrera] FROM LTCaballosCarreras
+	GROUP BY IDCarrera
+	ORDER BY IDCarrera
+
+
+
+
+
+
+
+
 
 GO
 	CREATE VIEW apuestasPorCarrera AS
