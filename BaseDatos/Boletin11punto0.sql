@@ -189,19 +189,20 @@ SELECT * FROM LTApuestas
 SELECT * FROM LTCaballosCarreras
 
 GO
-CREATE FUNCTION FnCantidadApuestas (@NombreHipodromo varchar(40), @FechaInicio date, @FechaFin date)
+ALTER FUNCTION FnCantidadApuestas (@NombreHipodromo varchar(40), @FechaInicio date, @FechaFin date)
 	RETURNS TABLE AS
-	RETURN (SELECT car.Hipodromo, COUNT(apu.ID) AS [Numero de apuestas]
+	RETURN (SELECT car.ID, COUNT(apu.ID) AS [Numero de apuestas]
 				FROM LTCarreras AS car
 				INNER JOIN LTApuestas AS apu
 				ON car.ID = apu.IDCarrera
 					WHERE (car.Hipodromo = @NombreHipodromo) AND (car.Fecha BETWEEN @FechaInicio AND @FechaFin)
-					GROUP BY car.Hipodromo)
+					GROUP BY car.ID)
 GO
 
 SELECT * FROM dbo.FnCantidadApuestas ('Gran Hipodromo de Andalucia', '2018-01-20', '2018-03-03')
 
 GO
+
 CREATE FUNCTION FnCantidadCaballos (@NombreHipodromo varchar(40), @FechaInicio date, @FechaFin date)
 	RETURNS TABLE AS
 	RETURN (SELECT car.ID, COUNT(cc.IDCaballo) AS [Cantidad de caballos inscritos]
@@ -214,50 +215,52 @@ GO
 
 SELECT * FROM dbo.FnCantidadCaballos ('Gran Hipodromo de Andalucia', '2018-01-20', '2018-03-03')
 
-SELECT IDCarrera, COUNT(Posicion) AS [Caballos que han acabado la carrera] FROM LTCaballosCarreras
-	GROUP BY IDCarrera
-	ORDER BY IDCarrera
-
-
-
-
-
-
-
-
-
 GO
-	CREATE VIEW apuestasPorCarrera AS
-	SELECT COUNT(ID) AS [Cantidad de carreras], IDCarrera
-		FROM LTApuestas
-			GROUP BY IDCarrera
-GO
-	
-
-/*Un SELECT para tener una tabla con los datos que me piden*/
-SELECT NumOrden, COUNT(apu.ID) AS [Apuestas realizadas], apc.[Cantidad de carreras]
-	FROM LTCarreras AS car
-	INNER JOIN LTApuestas AS apu
-	ON car.ID = apu.IDCarrera
-	INNER JOIN LTCaballos AS cab
-	ON apu.IDCaballo = cab.ID
-	INNER JOIN apuestasPorCarrera AS apc
-	ON apu.IDCarrera = apc.IDCarrera
-		GROUP BY NumOrden, apc.[Cantidad de carreras]
-
-/*Creo la función (debe ir entre GO porque tiene que ser la única instrucción del bloque)*/
-GO
-CREATE FUNCTION FnCarrerasCaballo (@fechaInicio date, @fechaFin date)
+CREATE FUNCTION FnCaballosTerminanCarrera (@NombreHipodromo varchar(40), @FechaInicio date, @FechaFin date)
 	RETURNS TABLE AS
-	RETURN (SELECT cab.ID, cab.Nombre, cab.Sexo, cab.FechaNacimiento, COUNT(car.ID) AS [Número de carreras disputadas]
+	RETURN (SELECT cc.IDCarrera, COUNT(cc.Posicion) AS [Caballos que han acabado la carrera]
 				FROM LTCaballosCarreras AS cc
 				INNER JOIN LTCarreras AS car
 				ON cc.IDCarrera = car.ID
+					WHERE (car.Hipodromo = @NombreHipodromo) AND (car.Fecha BETWEEN @FechaInicio AND @FechaFin)
+					GROUP BY IDCarrera)
+GO
+
+SELECT * FROM dbo.FnCaballosTerminanCarrera ('Gran Hipodromo de Andalucia', '2018-01-20', '2018-03-03')
+
+GO
+CREATE FUNCTION FnCaballoGanador (@NombreHipodromo varchar(40), @FechaInicio date, @FechaFin date)
+	RETURNS TABLE AS
+	RETURN (SELECT cab.Nombre, cc.IDCaballo, cc.IDCarrera
+				FROM LTCaballosCarreras AS cc
 				INNER JOIN LTCaballos AS cab
 				ON cc.IDCaballo = cab.ID
-					WHERE car.Fecha BETWEEN @fechaInicio AND @fechaFin
-					GROUP BY cab.ID, cab.Nombre, cab.Sexo, cab.FechaNacimiento)
+				INNER JOIN LTCarreras AS car
+				ON cc.IDCarrera = car.ID
+					WHERE cc.Posicion = 1 AND car.Hipodromo = @NombreHipodromo AND car.Fecha BETWEEN @FechaInicio AND @FechaFin)
 GO
+
+SELECT * FROM dbo.FnCaballoGanador ('Gran Hipodromo de Andalucia', '2018-01-20', '2018-03-03')
+
+(@NombreHipodromo, @FechaInicio, @FechaFin)
+
+GO
+ALTER FUNCTION FnCarrerasHipodromo (@NombreHipodromo varchar(40), @FechaInicio date, @FechaFin date)
+	RETURNS TABLE AS
+	RETURN (SELECT Fecha, NumOrden, [CantidadApuestas].[Numero de apuestas], CantidadCaballos.[Cantidad de caballos inscritos], CaballosTerminanCarrera.[Caballos que han acabado la carrera], CaballoGanador.Nombre AS [Nombre del ganador]
+				FROM LTCarreras AS car
+				INNER JOIN (SELECT * FROM dbo.FnCantidadApuestas (@NombreHipodromo, @FechaInicio, @FechaFin)) AS [CantidadApuestas]
+				ON car.ID = CantidadApuestas.ID
+				INNER JOIN (SELECT * FROM dbo.FnCantidadCaballos (@NombreHipodromo, @FechaInicio, @FechaFin)) AS [CantidadCaballos]
+				ON car.ID = CantidadCaballos.ID
+				INNER JOIN (SELECT * FROM dbo.FnCaballosTerminanCarrera (@NombreHipodromo, @FechaInicio, @FechaFin)) AS [CaballosTerminanCarrera]
+				ON car.ID = CaballosTerminanCarrera.IDCarrera
+				INNER JOIN (SELECT Nombre, IDCarrera FROM dbo.FnCaballoGanador (@NombreHipodromo, @FechaInicio, @FechaFin)) AS [CaballoGanador]
+				ON car.ID = CaballoGanador.IDCarrera
+					WHERE car.Hipodromo = @NombreHipodromo AND car.Fecha BETWEEN @FechaInicio AND @FechaFin)
+GO
+
+SELECT * FROM dbo.FnCarrerasHipodromo ('Gran Hipodromo de Andalucia', '2018-01-20', '2018-03-03')
 
 
 /*7.Crea una función FnObtenerSaldo a la que pasemos el ID de un jugador y una fecha y nos devuelva su saldo en esa fecha.
