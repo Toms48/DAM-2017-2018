@@ -186,7 +186,8 @@ CREATE FUNCTION FnValorCaballo (@IDCaballo smallint)
 					WHEN Años = 9 THEN @valorSinEdad * 75
 					WHEN Años = 10 THEN @valorSinEdad * 65
 					WHEN Años > 10 THEN @valorSinEdad * 40
-				END FROM EdadCaballo
+				END
+				FROM EdadCaballo
 					WHERE EdadCaballo.ID = @IDCaballo
 
 			RETURN @valorCaballo
