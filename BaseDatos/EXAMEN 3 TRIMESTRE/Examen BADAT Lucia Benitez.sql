@@ -10,6 +10,9 @@ ALTER AUTHORIZATION ON DATABASE::LeoFest TO sa
 --sus componentes actuales. La fecha de disolución y el ID de la banda se pasarán como parámetros. Si no se especifica fecha, 
 --se tomará la actual.
 
+SELECT * FROM LFBandas
+SELECT * FROM LFMusicosBandas
+
 GO
 CREATE PROCEDURE DisolverBanda
 	@IDBanda INT
@@ -25,7 +28,7 @@ BEGIN
 
 				UPDATE LFMusicosBandas
 				SET FechaAbandono = CAST(CURRENT_TIMESTAMP AS DATE)
-				WHERE IDBanda = @IDBanda
+				WHERE IDBanda = @IDBanda AND FechaAbandono IS NULL --Se pide que se cambien los que están actualmente en la banda, significa que tenemos que cambiar los que están a NULL
 			END
 		ELSE
 			BEGIN
@@ -35,7 +38,7 @@ BEGIN
 
 				UPDATE LFMusicosBandas
 				SET FechaAbandono = @FechaDisolucion
-				WHERE IDBanda = @IDBanda
+				WHERE IDBanda = @IDBanda AND FechaAbandono IS NULL --Se pide que se cambien los que están actualmente en la banda, significa que tenemos que cambiar los que están a NULL
 			END
 	COMMIT
 END
@@ -198,134 +201,129 @@ SELECT * FROM LFTemasBandasEdiciones
 SELECT * FROM LFEdiciones
 SELECT * FROM LFEstilos
 
-SELECT IDBanda, FechaAbandono FROM LFMusicosBandas
-	WHERE FechaAbandono IS NOT NULL
-	ORDER BY IDBanda
+--SELECT para tener el número de miembros activos en el grupo
+GO
+CREATE VIEW MiembrosActivos105 AS
+SELECT b.ID, COUNT(IDMusico) * 105 [Cantidad de miembros activos * 105]
+	FROM LFMusicosBandas AS mb
+	RIGHT JOIN LFBandas AS b
+	ON mb.IDBanda = b.ID AND FechaAbandono IS NULL
+	GROUP BY b.ID
+GO
 
-SELECT IDBanda, COUNT(IDBanda) AS [Miembros activos] FROM LFMusicosBandas
-	WHERE FechaAbandono IS NOT NULL
-	GROUP BY IDBanda
+/*GO
+CREATE FUNCTION FnMiembrosActivos (@IDBanda smallint)
+	RETURNS int AS
+	BEGIN
+		RETURN (SELECT COUNT(IDMusico) [Cantidad de miembros activos]
+				FROM LFMusicosBandas AS mb
+				WHERE mb.IDBanda = @IDBanda AND FechaAbandono IS NULL
+			)
+	END
+GO
+SELECT dbo.FnMiembrosActivos (7)*/
+
+
+
+--SELECT para tener el numero de actuaniones
+/*SELECT tbe.IDBanda, tbe.IDFestival, tbe.Ordinal, YEAR(edi.FechaHoraInicio)
+	FROM LFTemasBandasEdiciones AS tbe
+	INNER JOIN LFEdiciones AS edi
+	ON tbe.IDFestival = edi.IDFestival AND tbe.Ordinal = edi.Ordinal
+		ORDER BY YEAR(edi.FechaHoraInicio)
+
+SELECT tbe.IDBanda, COUNT(tbe.IDBanda) * 107 AS [Cantidad de actuaciones]--, YEAR(edi.FechaHoraInicio) AS [Año de las actuaciones]
+
+	FROM LFTemasBandasEdiciones AS tbe
+	INNER JOIN LFEdiciones		AS edi  ON tbe.IDFestival = edi.IDFestival AND tbe.Ordinal = edi.Ordinal
+	INNER JOIN LFBandas			AS b	ON tbe.IDBanda = b.ID
+	INNER JOIN LFBandasEstilos	AS be	ON b.ID = be.IDBanda
+	INNER JOIN LFEstilos		AS est  ON be.IDEstilo = est.ID
+
+		WHERE YEAR(edi.FechaHoraInicio) BETWEEN YEAR(DATEADD(YEAR, -3, CURRENT_TIMESTAMP)) AND YEAR(CURRENT_TIMESTAMP)
+		GROUP BY tbe.IDBanda--, YEAR(edi.FechaHoraInicio)
+		--ORDER BY YEAR(edi.FechaHoraInicio)
+
+SELECT tbe.IDBanda, COUNT(tbe.IDBanda) *
+	CASE
+		WHEN est.Estilo = 'Rock' THEN (107 + 5.35)
+		WHEN est.Estilo = 'Flamenco' THEN (107 + 5.35)
+		WHEN est.Estilo = 'Jazz' THEN (107 + 5.35)
+		WHEN est.Estilo = 'Blues' THEN (107 + 5.35)
+		WHEN est.Estilo = 'Reggaeton' THEN (107 - 53.5)
+		WHEN est.Estilo = 'Hip-Hop' THEN (107 - 53.5)
+		ELSE 107
+	END AS [Cantidad de actuaciones]--, YEAR(edi.FechaHoraInicio) AS [Año de las actuaciones]
+
+	FROM LFTemasBandasEdiciones AS tbe
+	INNER JOIN LFEdiciones AS edi
+	ON tbe.IDFestival = edi.IDFestival AND tbe.Ordinal = edi.Ordinal
+	INNER JOIN LFBandas AS b
+	ON tbe.IDBanda = b.ID
+	INNER JOIN LFBandasEstilos AS be
+	ON b.ID = be.IDBanda
+	INNER JOIN LFEstilos AS est
+	ON be.IDEstilo = est.ID
+		WHERE YEAR(edi.FechaHoraInicio) BETWEEN YEAR(DATEADD(YEAR, -3, CURRENT_TIMESTAMP)) AND YEAR(CURRENT_TIMESTAMP)
+		GROUP BY tbe.IDBanda, est.Estilo--, YEAR(edi.FechaHoraInicio)
+		--ORDER BY YEAR(edi.FechaHoraInicio)*/
+
+GO
+CREATE VIEW Actuaciones3Anios107 AS
+SELECT b.ID, ISNULL(a2.[Cantidad de actuaciones107],0) AS [Cantidad de actuaciones]
+	FROM (SELECT a1.IDBanda, SUM(a1.[Cantidad de actuaciones * 107]) AS [Cantidad de actuaciones107]
+			FROM ( SELECT tbe.IDBanda, COUNT(tbe.IDBanda) *
+				CASE
+					WHEN est.Estilo = 'Rock' THEN (107 + 5.35)
+					WHEN est.Estilo = 'Flamenco' THEN (107 + 5.35)
+					WHEN est.Estilo = 'Jazz' THEN (107 + 5.35)
+					WHEN est.Estilo = 'Blues' THEN (107 + 5.35)
+					WHEN est.Estilo = 'Reggaeton' THEN (107 - 53.5)
+					WHEN est.Estilo = 'Hip-Hop' THEN (107 - 53.5)
+					ELSE 107
+				END AS [Cantidad de actuaciones * 107]--, YEAR(edi.FechaHoraInicio) AS [Año de las actuaciones]
+
+				FROM LFTemasBandasEdiciones AS tbe
+				INNER JOIN LFEdiciones AS edi
+				ON tbe.IDFestival = edi.IDFestival AND tbe.Ordinal = edi.Ordinal
+				INNER JOIN LFBandas AS b
+				ON tbe.IDBanda = b.ID
+				INNER JOIN LFBandasEstilos AS be
+				ON b.ID = be.IDBanda
+				INNER JOIN LFEstilos AS est
+				ON be.IDEstilo = est.ID
+					WHERE YEAR(edi.FechaHoraInicio) BETWEEN YEAR(DATEADD(YEAR, -3, CURRENT_TIMESTAMP)) AND YEAR(CURRENT_TIMESTAMP)
+					GROUP BY tbe.IDBanda, est.Estilo--, YEAR(edi.FechaHoraInicio)
+					--ORDER BY YEAR(edi.FechaHoraInicio)
+			) AS a1
+			GROUP BY a1.IDBanda
+		 ) AS a2
+	RIGHT JOIN LFBandas AS b
+	ON a2.IDBanda = b.ID
+GO
+
+SELECT ma105.[Cantidad de miembros activos * 105] + a3a107.[Cantidad de actuaciones]
+	FROM LFBandas AS b
+	RIGHT JOIN MiembrosActivos105 AS ma105
+	ON b.ID = ma105.ID
+	RIGHT JOIN Actuaciones3Anios107 AS a3a107
+	ON b.ID = a3a107.ID
 
 GO
 CREATE PROCEDURE TomasActualizarCache
 AS
 BEGIN
-	
-	--SELECT para tener el número de miembros activos en el grupo y multiplicarlo por 105
-	SELECT IDBanda, COUNT(IDBanda) * 105 AS [Miembros activos * 105] FROM LFMusicosBandas
-		WHERE FechaAbandono IS NOT NULL
-		GROUP BY IDBanda
 
-	--SELECT para tener el numero de actuaniones
-	/*SELECT tbe.IDBanda, tbe.IDFestival, tbe.Ordinal, YEAR(edi.FechaHoraInicio)
-		FROM LFTemasBandasEdiciones AS tbe
-		INNER JOIN LFEdiciones AS edi
-		ON tbe.IDFestival = edi.IDFestival AND tbe.Ordinal = edi.Ordinal
-			ORDER BY YEAR(edi.FechaHoraInicio)*/
-
-	/*SELECT tbe.IDBanda, COUNT(tbe.IDBanda) * 107 AS [Cantidad de actuaciones]--, YEAR(edi.FechaHoraInicio) AS [Año de las actuaciones]
-		FROM LFTemasBandasEdiciones AS tbe
-		INNER JOIN LFEdiciones AS edi
-		ON tbe.IDFestival = edi.IDFestival AND tbe.Ordinal = edi.Ordinal
-		INNER JOIN LFBandas AS b
-		ON tbe.IDBanda = b.ID
-		INNER JOIN LFBandasEstilos AS be
-		ON b.ID = be.IDBanda
-		INNER JOIN LFEstilos AS est
-		ON be.IDEstilo = est.ID
-			WHERE YEAR(edi.FechaHoraInicio) BETWEEN YEAR(DATEADD(YEAR, -3, CURRENT_TIMESTAMP)) AND YEAR(CURRENT_TIMESTAMP)
-			GROUP BY tbe.IDBanda--, YEAR(edi.FechaHoraInicio)
-			--ORDER BY YEAR(edi.FechaHoraInicio)*/
-
-	/*SELECT tbe.IDBanda, COUNT(tbe.IDBanda) *
-		CASE
-			WHEN est.Estilo = 'Rock' THEN (107 + 5.35)
-			WHEN est.Estilo = 'Flamenco' THEN (107 + 5.35)
-			WHEN est.Estilo = 'Jazz' THEN (107 + 5.35)
-			WHEN est.Estilo = 'Blues' THEN (107 + 5.35)
-			WHEN est.Estilo = 'Reggaeton' THEN (107 - 53.5)
-			WHEN est.Estilo = 'Hip-Hop' THEN (107 - 53.5)
-			ELSE 107
-		END AS [Cantidad de actuaciones]--, YEAR(edi.FechaHoraInicio) AS [Año de las actuaciones]
-
-		FROM LFTemasBandasEdiciones AS tbe
-		INNER JOIN LFEdiciones AS edi
-		ON tbe.IDFestival = edi.IDFestival AND tbe.Ordinal = edi.Ordinal
-		INNER JOIN LFBandas AS b
-		ON tbe.IDBanda = b.ID
-		INNER JOIN LFBandasEstilos AS be
-		ON b.ID = be.IDBanda
-		INNER JOIN LFEstilos AS est
-		ON be.IDEstilo = est.ID
-			WHERE YEAR(edi.FechaHoraInicio) BETWEEN YEAR(DATEADD(YEAR, -3, CURRENT_TIMESTAMP)) AND YEAR(CURRENT_TIMESTAMP)
-			GROUP BY tbe.IDBanda, est.Estilo--, YEAR(edi.FechaHoraInicio)
-			--ORDER BY YEAR(edi.FechaHoraInicio)*/
-	SELECT a.IDBanda, SUM(a.[Cantidad de actuaciones * 107]) FROM ( SELECT tbe.IDBanda, COUNT(tbe.IDBanda) *
-						CASE
-							WHEN est.Estilo = 'Rock' THEN (107 + 5.35)
-							WHEN est.Estilo = 'Flamenco' THEN (107 + 5.35)
-							WHEN est.Estilo = 'Jazz' THEN (107 + 5.35)
-							WHEN est.Estilo = 'Blues' THEN (107 + 5.35)
-							WHEN est.Estilo = 'Reggaeton' THEN (107 - 53.5)
-							WHEN est.Estilo = 'Hip-Hop' THEN (107 - 53.5)
-							ELSE 107
-						END AS [Cantidad de actuaciones * 107]--, YEAR(edi.FechaHoraInicio) AS [Año de las actuaciones]
-
-						FROM LFTemasBandasEdiciones AS tbe
-						INNER JOIN LFEdiciones AS edi
-						ON tbe.IDFestival = edi.IDFestival AND tbe.Ordinal = edi.Ordinal
-						INNER JOIN LFBandas AS b
-						ON tbe.IDBanda = b.ID
-						INNER JOIN LFBandasEstilos AS be
-						ON b.ID = be.IDBanda
-						INNER JOIN LFEstilos AS est
-						ON be.IDEstilo = est.ID
-							WHERE YEAR(edi.FechaHoraInicio) BETWEEN YEAR(DATEADD(YEAR, -3, CURRENT_TIMESTAMP)) AND YEAR(CURRENT_TIMESTAMP)
-							GROUP BY tbe.IDBanda, est.Estilo--, YEAR(edi.FechaHoraInicio)
-							--ORDER BY YEAR(edi.FechaHoraInicio)
-					) AS a
-		GROUP BY a.IDBanda
-
-	SELECT MiembrosActivos.IDBanda, (MiembrosActivos.[Miembros activos * 105] + ISNULL(CantidadActuaciones.[107],0))
-		FROM (SELECT IDBanda, COUNT(IDBanda) * 105 AS [Miembros activos * 105] FROM LFMusicosBandas
-				WHERE FechaAbandono IS NOT NULL
-				GROUP BY IDBanda) AS [MiembrosActivos]
-		LEFT JOIN (SELECT a.IDBanda, SUM(a.[Cantidad de actuaciones * 107]) AS [107] FROM ( SELECT tbe.IDBanda, COUNT(tbe.IDBanda) *
-						CASE
-							WHEN est.Estilo = 'Rock' THEN (107 + 5.35)
-							WHEN est.Estilo = 'Flamenco' THEN (107 + 5.35)
-							WHEN est.Estilo = 'Jazz' THEN (107 + 5.35)
-							WHEN est.Estilo = 'Blues' THEN (107 + 5.35)
-							WHEN est.Estilo = 'Reggaeton' THEN (107 - 53.5)
-							WHEN est.Estilo = 'Hip-Hop' THEN (107 - 53.5)
-							ELSE 107
-						END AS [Cantidad de actuaciones * 107]--, YEAR(edi.FechaHoraInicio) AS [Año de las actuaciones]
-
-						FROM LFTemasBandasEdiciones AS tbe
-						INNER JOIN LFEdiciones AS edi
-						ON tbe.IDFestival = edi.IDFestival AND tbe.Ordinal = edi.Ordinal
-						INNER JOIN LFBandas AS b
-						ON tbe.IDBanda = b.ID
-						INNER JOIN LFBandasEstilos AS be
-						ON b.ID = be.IDBanda
-						INNER JOIN LFEstilos AS est
-						ON be.IDEstilo = est.ID
-							WHERE YEAR(edi.FechaHoraInicio) BETWEEN YEAR(DATEADD(YEAR, -3, CURRENT_TIMESTAMP)) AND YEAR(CURRENT_TIMESTAMP)
-							GROUP BY tbe.IDBanda, est.Estilo--, YEAR(edi.FechaHoraInicio)
-							--ORDER BY YEAR(edi.FechaHoraInicio)
-						) AS a
-					GROUP BY a.IDBanda) AS [CantidadActuaciones]
-		ON MiembrosActivos.IDBanda = CantidadActuaciones.IDBanda
-
-
-	UPDATE LFMusicos
-		SET CacheMinimo = (SELECT IDBanda, COUNT(IDBanda) * 105 AS [Miembros activos * 105] FROM LFMusicosBandas
-								WHERE FechaAbandono IS NOT NULL
-								GROUP BY IDBanda)
-		WHERE IDBanda = (SELECT IDBanda, COUNT(IDBanda) * 105 AS [Miembros activos * 105] FROM LFMusicosBandas
-								WHERE FechaAbandono IS NOT NULL
-								GROUP BY IDBanda).IDBanda
-
+	BEGIN TRANSACTION
+		UPDATE LFBandas
+			SET CacheMinimo = (ma105.[Cantidad de miembros activos * 105] + a3a107.[Cantidad de actuaciones])
+			FROM LFBandas AS b
+			INNER JOIN MiembrosActivos105 AS ma105
+			ON b.ID = ma105.ID
+			INNER JOIN Actuaciones3Anios107 AS a3a107
+			ON b.ID = a3a107.ID
+	ROLLBACK
+	COMMIT
 
 END --PROCEDURE TomasActualizarCache
 GO
