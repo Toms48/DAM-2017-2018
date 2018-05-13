@@ -5,54 +5,99 @@ GO
 --Autorizar como propietaria de la base de datos
 ALTER AUTHORIZATION ON DATABASE::LeoFest TO sa
 
+GO
 --Ejercicio 1
 --Escribe un procedimiento almacenado que de de baja a una banda, actualizando su fecha de disolución y la fecha de abandono de todos 
---sus componentes actuales. La fecha de disolución y el ID de la banda se pasarán como parámetros. Si no se especifica fecha, 
---se tomará la actual.
+--sus componentes actuales. La fecha de disolución y el ID de la banda se pasarán como parámetros.
+--Si no se especifica fecha, se tomará la actual.
 
+GO --Por Lucía
+		SELECT * FROM LFBandas
+		SELECT * FROM LFMusicosBandas
+
+		CREATE PROCEDURE DisolverBanda
+			@IDBanda INT
+			,@FechaDisolucion DATE = NULL
+		AS
+		BEGIN
+			BEGIN TRANSACTION
+				IF(@FechaDisolucion = NULL)
+					BEGIN
+						UPDATE LFBandas
+						SET FechaDisolucion = CAST(CURRENT_TIMESTAMP AS DATE)
+						WHERE ID = @IDBanda
+
+						UPDATE LFMusicosBandas
+						SET FechaAbandono = CAST(CURRENT_TIMESTAMP AS DATE)
+						WHERE IDBanda = @IDBanda
+					END
+				ELSE
+					BEGIN
+						UPDATE LFBandas
+						SET FechaDisolucion = @FechaDisolucion
+						WHERE ID = @IDBanda
+
+						UPDATE LFMusicosBandas
+						SET FechaAbandono = @FechaDisolucion
+						WHERE IDBanda = @IDBanda
+					END
+			COMMIT
+		END
+		GO
+
+		SET DATEFORMAT YMD
+
+		BEGIN TRANSACTION
+		--Sin pasar una fecha
+		EXECUTE DisolverBanda 1
+		--Pasando una fecha
+		EXECUTE DisolverBanda 1, '2016-05-24'
+		ROLLBACK TRANSACTION
+GO
+
+
+GO --Por Tomás
 SELECT * FROM LFBandas
 SELECT * FROM LFMusicosBandas
 
-GO
-CREATE PROCEDURE DisolverBanda
-	@IDBanda INT
-	,@FechaDisolucion DATE = NULL
+ALTER PROCEDURE DisolverBanda2 @IDBanda smallint, @FechaDisolucion date = NULL
 AS
 BEGIN
-	BEGIN TRANSACTION
-		IF(@FechaDisolucion = NULL)
-			BEGIN
-				UPDATE LFBandas
-				SET FechaDisolucion = CAST(CURRENT_TIMESTAMP AS DATE)
+	IF (@FechaDisolucion IS NULL)
+		BEGIN
+			--UPDATE para actualizar la fecha de disolución de la banda que le pasamos por parámetros
+			UPDATE LFBandas
+				SET FechaDisolucion = CAST(CURRENT_TIMESTAMP AS date) --Como se cumple la condición de que no le hemos mandado una fecha por defecto lo pone a NULL y tenemos que poner la fecha actual (Casteamos porque CURRENT_TIMESTAMP es datetime)
 				WHERE ID = @IDBanda
 
-				UPDATE LFMusicosBandas
-				SET FechaAbandono = CAST(CURRENT_TIMESTAMP AS DATE)
-				WHERE IDBanda = @IDBanda AND FechaAbandono IS NULL --Se pide que se cambien los que están actualmente en la banda, significa que tenemos que cambiar los que están a NULL
-			END
-		ELSE
-			BEGIN
-				UPDATE LFBandas
-				SET FechaDisolucion = @FechaDisolucion
+			--UPDATE para actualizar la fecha de abandono del músico de la banda pasada por parámetro
+			UPDATE LFMusicosBandas
+				SET FechaAbandono = CAST(CURRENT_TIMESTAMP AS date) --Como se cumple la condición de que no le hemos mandado una fecha por defecto lo pone a NULL y tenemos que poner la fecha actual (Casteamos porque CURRENT_TIMESTAMP es datetime)
+				WHERE (IDBanda = @IDBanda) AND (FechaAbandono IS NULL) --Tenemos que actualizar la fecha de abandono donde (el ID de la banda sea el que le pasamos) y (que el músico no tenga ya una fecha de abandono) --Se pide que se cambien los que están actualmente en la banda, significa que tenemos que cambiar los que están a NULL
+		END
+	ELSE
+		BEGIN
+			--UPDATE para actualizar la fecha de disolución de la banda que le pasamos por parámetros
+			UPDATE LFBandas
+				SET FechaDisolucion = @FechaDisolucion --Como ahora sí le pasamos una fecha de disolución por parámetro se la asignamos y yasta tio, así de fasi bro
 				WHERE ID = @IDBanda
 
-				UPDATE LFMusicosBandas
-				SET FechaAbandono = @FechaDisolucion
-				WHERE IDBanda = @IDBanda AND FechaAbandono IS NULL --Se pide que se cambien los que están actualmente en la banda, significa que tenemos que cambiar los que están a NULL
-			END
-	COMMIT
+			--UPDATE para actualizar la fecha de abandono del músico de la banda pasada por parámetro
+			UPDATE LFMusicosBandas
+				SET FechaAbandono = @FechaDisolucion --Como ahora sí le pasamos una fecha de disolución por parámetro se la asignamos
+				WHERE (IDBanda = @IDBanda) AND (FechaAbandono IS NULL) --Tenemos que actualizar la fecha de abandono donde (el ID de la banda sea el que le pasamos) y (que el músico no tenga ya una fecha de abandono) --Se pide que se cambien los que están actualmente en la banda, significa que tenemos que cambiar los que están a NULL
+		END
 END
 GO
 
-SET DATEFORMAT YMD
-
 BEGIN TRANSACTION
---Sin pasar una fecha
-EXECUTE DisolverBanda 1
---Pasando una fecha
-EXECUTE DisolverBanda 1, '2016-05-24'
-ROLLBACK TRANSACTION
+	--Ejecutamos el procedimiento pero sin fecha
+	EXECUTE DisolverBanda2 2
 
+	--Ejecutamos el procedimiento pasandole los dos parámetros
+	EXECUTE DisolverBanda2 2, '2018-05-24'
+ROLLBACK
+COMMIT
 
 --Ejercicio 2
 --Escribe una función que reciba como parámetro un año y nos devuelva una tabla indicando cuantas canciones (temas) de cada estilo se han cantado
