@@ -2,7 +2,6 @@
 --Escribe un procedimiento almacenado que de de baja a una banda, actualizando su fecha de disolución y la fecha de abandono de todos 
 --sus componentes actuales. La fecha de disolución y el ID de la banda se pasarán como parámetros.
 --Si no se especifica fecha, se tomará la actual.
-
 SELECT * FROM LFBandas
 SELECT * FROM LFMusicosBandas
 
@@ -43,6 +42,85 @@ BEGIN TRANSACTION
 	EXECUTE DisolverBanda2 2, '2018-05-24'
 ROLLBACK
 COMMIT
+
+--Ejercicio 2
+--Escribe una función que reciba como parámetro un año y nos devuelva una tabla indicando cuantas canciones (temas) de cada estilo se han cantado
+--en los distintos festivales celebrados a lo largo de ese año, el mismo dato para el año inmediatamente anterior y una cuarta columna en la que 
+--aparezca un símbolo "+” si ha aumentado el número de canciones de ese estilo respecto al año anterior, un "-” si ha disminuido y un "=” si no varía.
+
+--El resultado tendrá cuatro columnas: Estilo, número de interpretaciones de ese estilo en el año anterior, número de interpretaciones de ese 
+--estilo en el año que nos piden y símbolo que indique aumento o disminución.
+--Puedes hacer otras funciones auxiliares a las que llames, pero no declarar vistas.
+SELECT * FROM LFTemasBandasEdiciones
+SELECT * FROM LFTemas
+SELECT * FROM LFEstilos
+
+SELECT * FROM LFEdiciones
+SELECT * FROM LFFestivales
+
+SELECT COUNT(t.Titulo) AS [Cantidad de temas], es.Estilo
+	FROM LFEdiciones AS e
+	INNER JOIN LFTemasBandasEdiciones AS tbe
+	ON e.IDFestival = tbe.IDFestival AND e.Ordinal = tbe.Ordinal
+	INNER JOIN LFTemas AS t
+	ON tbe.IDTema = t.ID
+	INNER JOIN LFEstilos AS es
+	ON t.IDEstilo = es.ID
+		GROUP BY es.Estilo
+
+GO
+ALTER FUNCTION TemasPorEstilo (@anio int)
+RETURNS TABLE AS
+RETURN(SELECT COUNT(t.Titulo) AS [Cantidad de temas], es.Estilo
+			FROM LFEdiciones AS e
+			INNER JOIN LFTemasBandasEdiciones AS tbe
+			ON e.IDFestival = tbe.IDFestival AND e.Ordinal = tbe.Ordinal
+			INNER JOIN LFTemas AS t
+			ON tbe.IDTema = t.ID
+			INNER JOIN LFEstilos AS es
+			ON t.IDEstilo = es.ID
+				WHERE @anio BETWEEN YEAR(e.FechaHoraFin) AND YEAR(e.FechaHoraInicio)
+				GROUP BY es.Estilo)
+GO
+
+GO
+ALTER FUNCTION TemasPorEstiloAnterior (@anio int)
+RETURNS TABLE AS
+RETURN(SELECT COUNT(t.Titulo) AS [Cantidad de temas año anterior], es.Estilo
+			FROM LFEdiciones AS e
+			INNER JOIN LFTemasBandasEdiciones AS tbe
+			ON e.IDFestival = tbe.IDFestival AND e.Ordinal = tbe.Ordinal
+			INNER JOIN LFTemas AS t
+			ON tbe.IDTema = t.ID
+			INNER JOIN LFEstilos AS es
+			ON t.IDEstilo = es.ID
+				WHERE (@anio -1) BETWEEN YEAR(e.FechaHoraFin) AND YEAR(e.FechaHoraInicio)
+				GROUP BY es.Estilo)
+GO
+
+SELECT * FROM dbo.TemasPorEstilo (2008)
+SELECT * FROM dbo.TemasPorEstiloAnterior (2008)
+
+GO
+ALTER FUNCTION Ejercicio2 (@anio int)
+RETURNS TABLE AS
+RETURN(SELECT es.Estilo, ISNULL(tpea.[Cantidad de temas año anterior],0) AS [Cantidad de temas año anterior], ISNULL(tpe.[Cantidad de temas],0) AS [Cantidad de temas], 
+			CASE
+				WHEN ISNULL(tpe.[Cantidad de temas],0) = ISNULL(tpea.[Cantidad de temas año anterior],0) THEN '='
+				WHEN ISNULL(tpe.[Cantidad de temas],0) > ISNULL(tpea.[Cantidad de temas año anterior],0) THEN '+'
+				WHEN ISNULL(tpe.[Cantidad de temas],0) < ISNULL(tpea.[Cantidad de temas año anterior],0) THEN '-'
+			END AS [Comparación]
+			FROM LFEstilos AS es
+			LEFT JOIN (SELECT * FROM dbo.TemasPorEstilo (@anio)) AS tpe
+			ON es.Estilo = tpe.Estilo
+			LEFT JOIN (SELECT * FROM dbo.TemasPorEstiloAnterior(@anio)) AS tpea
+			ON es.Estilo = tpea.Estilo)
+GO
+
+SELECT * FROM dbo.Ejercicio2 (2008)
+
+
+
 
 --Ejercicio 4
 --Escribe un procedimiento almacenado que actualice la columna caché de la tabla LFBandas de acuerdo a las siguientes reglas:
