@@ -119,7 +119,52 @@ GO
 
 SELECT * FROM dbo.Ejercicio2 (2008)
 
+--Ejercicio 3
+--Escribe un procedimiento TemaEjecutado y anote en la tabla LFBandasEdiciones que una banda ha interpretado ese tema en una edición concreta de un festival.
 
+--Los datos de entrada son:
+	--Titulo
+	--IDAutor
+	--Estilo (nombre del estilo)
+	--Duracion
+	--El Id de un festival
+	--El ordinal de la edición
+	--El ID de una banda
+	--Una fecha/hora
+
+--Si el tema es nuevo y no está dado de alta en la base de datos, se insertará en la tabla correspondiente. Si el estilo no existe, también se dará de alta.
+SELECT * FROM LFTemas
+SELECT * FROM LFEstilos
+SELECT * FROM LFBandasEdiciones
+
+SELECT * FROM 
+
+GO
+CREATE PROCEDURE TemaEjecutado
+	@Titulo varchar(120),
+	@IDAutor int,
+	@Estilo varchar(30),
+	@Duracion time,
+	@IDFestival int,
+	@Ordinal tinyint,
+	@IDBanda smallint,
+	@FechaHora smalldatetime
+AS
+BEGIN
+	--Si el estilo no existe
+	IF NOT EXISTS (SELECT * FROM LFEstilos WHERE Estilo = @Estilo)
+		BEGIN
+			INSERT INTO LFEstilos (ID, Estilo)
+				VALUES ()
+		END
+	--Si el tema no existe se dará de alta
+	IF NOT EXISTS (SELECT * FROM LFTemas WHERE Titulo = @Titulo)
+		BEGIN
+			INSERT INTO LFTemas (Titulo, IDAutor, IDEstilo, Duracion)
+				VALUES(@Titulo, @IDAutor, (SELECT /*TOP 1*/ IDEstilo FROM LFTemas /*WHERE IDJugador = 1*/ ORDER BY IDEstilo DESC))
+		END
+END
+GO
 
 
 --Ejercicio 4
