@@ -137,7 +137,7 @@ SELECT * FROM LFTemas
 SELECT * FROM LFEstilos
 SELECT * FROM LFBandasEdiciones
 
-SELECT * FROM 
+SELECT TOP 1 ID FROM LFEstilos ORDER BY ID DESC
 
 GO
 CREATE PROCEDURE TemaEjecutado
@@ -155,17 +155,23 @@ BEGIN
 	IF NOT EXISTS (SELECT * FROM LFEstilos WHERE Estilo = @Estilo)
 		BEGIN
 			INSERT INTO LFEstilos (ID, Estilo)
-				VALUES ()
+				VALUES ((SELECT TOP 1 ID FROM LFEstilos ORDER BY ID DESC) +1, @Estilo)
 		END
+
 	--Si el tema no existe se dará de alta
 	IF NOT EXISTS (SELECT * FROM LFTemas WHERE Titulo = @Titulo)
 		BEGIN
 			INSERT INTO LFTemas (Titulo, IDAutor, IDEstilo, Duracion)
-				VALUES(@Titulo, @IDAutor, (SELECT /*TOP 1*/ IDEstilo FROM LFTemas /*WHERE IDJugador = 1*/ ORDER BY IDEstilo DESC))
+				VALUES(@Titulo, @IDAutor, (SELECT ID FROM LFEstilos WHERE Estilo = @Estilo), @Duracion)
 		END
+
+	INSERT INTO LFBandasEdiciones (IDBanda, IDFestival, Ordinal)
+		VALUES (@IDBanda, @IDFestival, @Ordinal)
+
 END
 GO
 
+EXECUTE TemaEjecutado 'A ver si', 11, 'Me muero', 3, 1, 1, 1, time
 
 --Ejercicio 4
 --Escribe un procedimiento almacenado que actualice la columna caché de la tabla LFBandas de acuerdo a las siguientes reglas:
