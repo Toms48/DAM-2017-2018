@@ -178,6 +178,7 @@ AS
 			BEGIN
 				SET @codigoError = 1
 			END
+
 		RETURN @codigoError
 	END
 GO
