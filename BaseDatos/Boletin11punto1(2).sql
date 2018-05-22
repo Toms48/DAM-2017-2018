@@ -85,7 +85,7 @@ CREATE FUNCTION HappyDayBlackDay (@fechaInicio date, @fechaFin date)
 					WHERE (hd.[Happy Day] BETWEEN @fechaInicio AND @fechaFin) AND (bd.[Black Day] BETWEEN @fechaInicio AND @fechaFin))
 GO
 
---Declaro las dos variable que voy a utilizar
+lasDeclaro -- dos variable que voy a utilizar
 DECLARE @fechaInicio date, @fechaFin date
 SET @fechaInicio = '2018-03-03' --Le doy un valor a la primera variable
 SET @fechaFin = '2018-03-05' --Le doy un valor a la segunda variable

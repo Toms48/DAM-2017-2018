@@ -118,7 +118,7 @@ GO
 
 --PROCEDURE AsignarImportes
 GO
-ALTER PROCEDURE AsignarImportes
+CREATE PROCEDURE AsignarImportes
 AS
 BEGIN
 	UPDATE CLPedidos
@@ -162,24 +162,13 @@ SELECT e.ID, COUNT(p.ID) AS [Numero de pedidos]
 	ON e.ID = p.IDEstablecimiento
 	GROUP BY e.ID
 
-GO
-CREATE FUNCTION Prueba2 (@IDEstablecimiento smallint)
-RETURNS TABLE AS
-RETURN(SELECT e.ID, COUNT(p.ID) AS [Numero de pedidos]
-			FROM CLEstablecimientos AS e
-			INNER JOIN CLPedidos AS p
-			ON e.ID = p.IDEstablecimiento
-			WHERE e.ID = @IDEstablecimiento
-			GROUP BY e.ID)
-GO
-
 --Función para saber cuantos pedidos hay por establecimientos
 /*
 ENTRADAS: ID del establecimiento
 SALIDAS: el número de pedidos
 */
 GO
-CREATE FUNCTION PedidosEstablecimientoFinal (@IDEstablecimiento smallint)
+ALTER FUNCTION PedidosEstablecimientoFinal (@IDEstablecimiento smallint, @FechaInicio smalldatetime, @FechaFin smalldatetime)
 RETURNS int AS
 BEGIN
 	DECLARE @pedidosEstablecimiento int
@@ -188,7 +177,7 @@ BEGIN
 										FROM CLEstablecimientos AS e
 										INNER JOIN CLPedidos AS p
 										ON e.ID = p.IDEstablecimiento
-										WHERE e.ID = @IDEstablecimiento
+										WHERE e.ID = @IDEstablecimiento AND p.Fecha BETWEEN @FechaInicio AND @FechaFin
 										GROUP BY e.ID
 
 	RETURN @pedidosEstablecimiento
@@ -210,7 +199,7 @@ ENTRADAS: ID del establecimiento
 SALIDAS: el número de platos vendidos
 */
 GO
-ALTER FUNCTION PlatosEstablecimientoFinal (@IDEstablecimiento smallint)
+CREATE FUNCTION PlatosEstablecimientoFinal (@IDEstablecimiento smallint, @FechaInicio smalldatetime, @FechaFin smalldatetime)
 RETURNS int AS
 BEGIN
 	DECLARE @platosEstablecimiento int
@@ -221,7 +210,7 @@ BEGIN
 											ON e.ID = p.IDEstablecimiento
 											INNER JOIN CLPedidosPlatos AS pp
 											ON p.ID = pp.IDPedido
-											WHERE e.ID = @IDEstablecimiento
+											WHERE e.ID = @IDEstablecimiento AND p.Fecha BETWEEN @FechaInicio AND @FechaFin
 											GROUP BY e.ID
 
 	RETURN @platosEstablecimiento
@@ -243,7 +232,7 @@ ENTRADAS: ID del establecimiento
 SALIDAS:el número de vinos vendidos
 */
 GO
-ALTER FUNCTION VinosEstablecimientoFinal (@IDEstablecimiento smallint)
+ALTER FUNCTION VinosEstablecimientoFinal (@IDEstablecimiento smallint, @FechaInicio smalldatetime, @FechaFin smalldatetime)
 RETURNS int AS
 BEGIN
 	DECLARE @vinosEstablecimiento int
@@ -254,7 +243,7 @@ BEGIN
 										ON e.ID = p.IDEstablecimiento
 										INNER JOIN CLPedidosVinos AS pv
 										ON p.ID = pv.IDPedido
-										WHERE e.ID = @IDEstablecimiento
+										WHERE e.ID = @IDEstablecimiento AND p.Fecha BETWEEN @FechaInicio AND @FechaFin
 										GROUP BY e.ID
 
 	RETURN @vinosEstablecimiento
@@ -276,7 +265,7 @@ ENTRADAS: ID del establecimiento
 SALIDAS: el número de clientes
 */
 GO
-create FUNCTION CantidadClientesFinal (@IDEstablecimiento smallint)
+ALTER FUNCTION CantidadClientesFinal (@IDEstablecimiento smallint, @FechaInicio smalldatetime, @FechaFin smalldatetime)
 RETURNS int AS
 BEGIN
 	DECLARE @CLIENTESEstablecimiento int
@@ -287,7 +276,7 @@ BEGIN
 										ON e.ID = p.IDEstablecimiento
 										INNER JOIN CLClientes AS c
 										ON p.IDCliente = c.ID
-										WHERE e.ID = @IDEstablecimiento
+										WHERE e.ID = @IDEstablecimiento AND p.Fecha BETWEEN @FechaInicio AND @FechaFin
 										GROUP BY e.ID
 
 	RETURN @CLIENTESEstablecimiento
@@ -303,23 +292,34 @@ GO
 CREATE FUNCTION Ejercicio2 (@FechaInicio smalldatetime, @FechaFin smalldatetime)
 RETURNS TABLE AS
 RETURN(
-
-	SELECT e.ID, e.Denominacion, e.Ciudad
+	SELECT 
+		e.ID,
+		e.Denominacion,
+		e.Ciudad,
+		dbo.PedidosEstablecimientoFinal(e.ID, @FechaInicio, @FechaFin) AS [Cantidad de pedidos realizados],
+		dbo.PlatosEstablecimientoFinal(e.ID, @FechaInicio, @FechaFin) AS [Cantidad de platos pedidos],
+		dbo.VinosEstablecimientoFinal(e.ID, @FechaInicio, @FechaFin) AS [Cantidad de vinos pedidos],
+		dbo.CantidadClientesFinal(e.ID, @FechaInicio, @FechaFin) AS [Cantidad de clientes]
 		FROM CLEstablecimientos AS e
-	
-	/*
-	Aquí va un SELECT utilizando las funciones anteriores para poder tener todas las columnas que nos piden
-	Tendriamos que poner WHERE para que la fecha del pedido esté en el rango de fechas que nosotros le mandamos
-		WHERE p.Fecha BETWEEN @FechaInicio AND @FechaFin
-	*/
-)
+	)
 GO
 
-/*
-Aquí escribimos un SELECT que llame a la última función, pasandole los parámetros de fechas se nos queda un ejercicio lamar de bien hecho
-(solo que a mi no me ha dado tiempo de terminarlo)
-*/
+--Tomás que coño haces 
+--Jorge, dejame en paz
 
+--Declaro las dos variable que voy a utilizar
+DECLARE @FechaInicio smalldatetime, @FechaFin smalldatetime
+SET @FechaInicio = '2017-07-01T00:00:00' --Le doy un valor a la primera variable
+SET @FechaFin = '2017-08-31T00:00:00' --Le doy un valor a la segunda variable
+
+/*Utilizo la función con las dos variables de antes*/
+SELECT * FROM dbo.Ejercicio2(@FechaInicio, @FechaFin)
+
+/*
+Aquí va un SELECT utilizando las funciones anteriores para poder tener todas las columnas que nos piden
+Tendriamos que poner WHERE para que la fecha del pedido esté en el rango de fechas que nosotros le mandamos
+	WHERE p.Fecha BETWEEN @FechaInicio AND @FechaFin
+*/
 
 
 
