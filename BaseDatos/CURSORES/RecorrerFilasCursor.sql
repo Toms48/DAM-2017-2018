@@ -2,8 +2,8 @@ USE Ejemplos
 GO
 DECLARE @ID Int
 DECLARE @Palabrita NVarChar(20)
-DECLARE RecorrePalabras CURSOR FOR SELECT ID, Words FROM Palabras2
-	ORDER BY Words
+DECLARE RecorrePalabras CURSOR FOR SELECT ID, Palabra FROM Palabras2
+	ORDER BY Palabra
 --Bucle para recorrer una tabla con un Cursor
 OPEN RecorrePalabras
 -- Posicionamos el cursor
