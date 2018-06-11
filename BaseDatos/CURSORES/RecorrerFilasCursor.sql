@@ -24,3 +24,20 @@ GO
 
 SELECT * FROM employee
 	WHERE job_lvl <= 75
+
+DECLARE @IDEmpleado char(9)
+DECLARE @JobLevel tinyint
+
+DECLARE RecorrerNiveles CURSOR FOR SELECT emp_id, job_lvl FROM employee
+		WHERE job_lvl <= 75
+OPEN RecorrerNiveles
+	FETCH NEXT FROM RecorrerNiveles INTO @IDEmpleado, @JobLevel
+	WHILE @@FETCH_STATUS <> -1
+		BEGIN
+
+			PRINT @IDEmpleado
+
+			FETCH NEXT FROM RecorrerNiveles INTO @IDEmpleado, @JobLevel
+		END
+CLOSE RecorrerNiveles
+DEALLOCATE RecorrerNiveles
